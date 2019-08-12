@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: medifor-proto
+Version: 1.0.0a3
+Summary: Protocol wrapper for MediFor Analytics
+Home-page: gitlab.mediforprogram.com/medifor/medifor-proto/py
+Author: Data Machines Corp.
+Author-email: chrismonson@datamachines.io
+License: Apache License, Version 2.0
+Description: UNKNOWN
+Platform: UNKNOWN

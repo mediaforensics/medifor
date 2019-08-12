@@ -1,0 +1,5 @@
+.staged
+.remove_*
+
+*/__pycache__
+*/env

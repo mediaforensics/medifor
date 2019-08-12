@@ -1,0 +1,426 @@
+syntax = "proto3";
+
+package mediforproto;
+
+import "google/rpc/status.proto";
+
+option java_package = "com.mediforprogram.proto";
+option java_outer_classname = "AnalyticProto";
+option go_package = "gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforproto";
+
+enum ManipulationType {
+  MANIP_UNKNOWN = 0;
+  MANIP_FILTER = 1;
+  MANIP_ADJUST_COLOR = 2;
+  MANIP_REMOVE = 3;
+  MANIP_CONTENT_AWARE_FILL = 4;
+  MANIP_PAINTBRUSH_TOOL = 5;
+  MANIP_PATCH_TOOL = 6;
+  MANIP_BLUR = 7;
+  MANIP_SPLICE = 8;
+  MANIP_CLONE = 9;
+  MANIP_CROP = 10;
+  MANIP_FLIP = 11;
+  MANIP_RESIZE = 12;
+  MANIP_SEAM_CARVING = 13;
+  MANIP_ROTATE = 14;
+  MANIP_SKEW = 15;
+  MANIP_WARP = 16;
+  MANIP_METADATA = 17;
+  MANIP_ANTIFORENSICS = 18;
+  MANIP_IMAGE_RECAPTURE = 19;
+  MANIP_CGI = 20;
+  MANIP_FRAME_INSERTION = 21;
+  MANIP_FRAME_DROP = 22;
+  MANIP_AUDIO = 23;
+  MANIP_DOUBLE_JPG = 24;
+  MANIP_OTHER = 25;
+}
+
+enum SpecificityType {
+  SPEC_GLOBAL = 0;
+  SPEC_FRAME = 1;
+  SPEC_PIXEL = 2;
+  SPEC_METADATA = 3;
+}
+
+enum DetectionStage {
+  DETECTION_STAGE_NONE = 0;
+  DETECTION_STAGE_QUEUED = 1;
+  DETECTION_STAGE_CLAIMED = 2;
+  DETECTION_STAGE_FINISHED = 3;
+}
+
+enum DetectionStatus {
+  DETECTION_STATUS_NONE = 0;
+  DETECTION_STATUS_SUCCESS = 1;
+  DETECTION_STATUS_FAILURE = 2;
+}
+
+// Detection holds round-trip information for any of the "DetectFoo" request/response endpoints.
+message Detection {
+  // Standard RPC status - we stash the actual RPC error/non-error here.
+  google.rpc.Status status = 1;
+
+  // Round-trip request-response timings. Milliseconds since the Epoch.
+  int64 start_time_millis = 2;
+  int64 end_time_millis = 3;
+
+  // The request made to the analytic.
+  oneof request {
+    ImageManipulationRequest img_manip_req = 11;
+    VideoManipulationRequest vid_manip_req = 12;
+    ImageSpliceRequest img_splice_req = 13;
+    ImageCameraMatchRequest img_cam_match_req = 14;
+  }
+
+  // The response received from the analytic.
+  oneof response {
+    ImageManipulation img_manip = 21;
+    VideoManipulation vid_manip = 22;
+    ImageSplice img_splice = 23;
+    ImageCameraMatch img_cam_match = 24;
+  }
+}
+
+// AnnotatedDetection annotates a detection with information about the analytic
+// that produced it.
+message AnnotatedDetection {
+  string id = 1;
+  string version = 2;
+
+  Detection detection = 3;
+
+  // This is not usually present. When there is no id field, check here to see if you have id_version.
+  string analytic_id = 4;
+}
+
+// Resource holds information about, typically, a blob of data. It references this
+// data by URI, which might be a file path, for example.
+message Resource {
+  // The location of the media. For local files, this just looks like a file path.
+  string uri = 1;
+
+  // The mime type of this resource (file).
+  string type = 2;
+
+  // Free-form notes about this resource.
+  string notes = 3;
+}
+
+message IntRange {
+  int32 start = 1;
+  int32 end = 2;
+}
+
+message ScoredIntRange {
+  IntRange range = 1;
+  double score = 2;
+}
+
+message MaskIntRange {
+  IntRange range = 1;
+  Resource mask = 2;
+}
+
+message FloatRange {
+  double start = 1;
+  double end = 2;
+}
+
+message ScoredFloatRange {
+  FloatRange range = 1;
+  double score = 2;
+}
+
+enum OptOutType {
+  // Nothing was opted out (everything processed). The default value.
+  OPT_OUT_NONE = 0;
+
+  // Everything was opted out. No procesing was attempted. Note that this
+  // should *not* be used to indicate "we tried but got an error". This is
+  // a "look before you leap" value, indicating "we noticed that there
+  // was no point in trying in the first place". A legitimate use of this
+  // might be to indicate that the image's mime type is unknown, for example.
+  OPT_OUT_ALL = 1;
+
+  // No score will be provided for this image, but *localization information
+  // will*. Use this if you know where things look suspicious, but don't
+  // think you can produce a score.
+  OPT_OUT_DETECTION = 2;
+
+  // No masks will be provided for this image.
+  OPT_OUT_LOCALIZATION = 3;
+}
+
+enum VideoOptOutType {
+  // No score will be provided for this video.
+  VIDEO_OPT_OUT_DETECTION = 0;
+
+  // No temporal information for manipulations are to be provided.
+  VIDEO_OPT_OUT_TEMPORAL = 1;
+
+  // No spatial information for manipulations are to be provided.
+  VIDEO_OPT_OUT_SPATIAL = 2;
+}
+
+message ImageLocalization {
+  // The grayscale image mask indicating where manipulations have been
+  // detected. As of late January 2019, the range is [0, 255] and 0 means
+  // "manipulated".
+  //
+  // TODO: After February 2019, the sense of this might be reversed. Document.
+  Resource mask = 1;
+
+  // A grayscale mask indicating where no detection was attempted.
+  // A value of 255 means "opted out for this pixel".
+  Resource mask_optout = 2;
+
+  // If a pixel value in the mask parameter is at or below this threshold,
+  // it is determined to be a "manipulated" pixel. Otherwise not.
+  // In other words, manipulated = val <= threshold.
+  // The equality allows the default 0 value to be meaningful in, e.g., binary
+  // mask images.
+  //
+  // TODO: After February 2019, may become manipulated = val > threshold.
+  double mask_threshold = 3;
+}
+
+// Next ID: 10
+message ImageManipulation {
+  // A value in [0, 1], where 1 indicates "definitely manipulated" and 0 means
+  // "definitely not". Leave unset (default value) if not used, and indicate that
+  // with an appropriate opt_out value.
+  double score = 1;
+
+  // Set has_confidence to true and set a confidence value between 0 and 1 if
+  // you know how confident you are about your score. 0 is "not at all confident"
+  // and 1 is "completely confident" in the *accuracy of your score*.
+  double confidence = 2;
+  bool has_confidence = 9;
+
+  // If any portion of processing was opted out, specify which here.
+  // Opting out of detection indicates that the score is meaningless (leave it
+  // as the default, please).
+  // Opting out of localization means the localization parameter and masks are
+  // not meaningful.
+  OptOutType opt_out = 3;
+
+  // Any additional information that might be useful to analysts can go into this
+  // free-form string field.
+  string explanation = 4;
+
+  // Localization information indicates *where* a manipulation appears to be.
+  // Includes mask information.
+  ImageLocalization localization = 5;
+
+  // If specified, incidates at what level the manipulation was found.
+  SpecificityType specificity = 6;
+
+  // What kind of manipulation(s) were detected.
+  repeated ManipulationType manipulation_type = 7;
+
+  // Supplemental information, if available (e.g., depictions of reasoning).
+  // Any kind of file can be output and referenced here, including JSON
+  // metadata, image data with graphs, etc.
+  repeated Resource supplement = 8;
+}
+
+// ImageManipulationRequest is used to ask an analytic indicator whether
+// a particular image is likely to have been manipulated after capture.
+// NextID: 5
+message ImageManipulationRequest {
+  // A unique ID for each request. Usually a UUID4 is used here.
+  string request_id = 1;
+
+  // The image to check for manipulation.
+  Resource image = 2;
+
+  // The location on the local file system where output masks and supplemental
+  // files should be written. The locations of these must be referenced in the
+  // response, or they will be lost. Similarly, any files written outside of
+  // this directory are not guaranteed to survive the return trip: this
+  // directory is an indicator of what the *caller* is able to pull from (but
+  // the path is from the service's perspective), so writing outside of it may
+  // render the files inaccessible.
+  string out_dir = 3;
+
+  // The high-provenance device ID, if known, of the device that captured the
+  // image.
+  string hp_device_id = 4;
+}
+
+message VideoLocalization {
+  // A list of all start/end frame indices where manipulation was detected.
+  repeated ScoredIntRange frame_detection = 1;
+
+  // Only used if detection optout = OPT_OUT_LOCALIZATION.
+  repeated IntRange frame_optout = 2;
+
+  // A list of all audio time indices where manipulation was detected.
+  repeated ScoredFloatRange audio_detection = 3;
+
+  // Only used if detection optout = OPT_OUT_LOCALIZATION.
+  repeated FloatRange audio_optout = 4;
+
+  // Frame masks showing where and in what frames manipulation was detected.
+  repeated MaskIntRange video_mask = 5;
+
+  // Frame masks showing where and in what frames the algorithm opted to not
+  // process anything.
+  repeated MaskIntRange video_mask_optout = 6;
+
+  // A threshold in [0, 255] indicating how to interpret manipulation mask frames.
+  // See the similar mask_threshold for images for more details.
+  double video_mask_threshold = 7;
+}
+
+// Next ID: 10
+message VideoManipulation {
+  // A value in [0, 1] where 1 indicates "definitely manipulated".
+  // Leave as the default if detection is opted out.
+  double score = 1;
+
+  // Set has_confidence to true and set a confidence value between 0 and 1 if
+  // you know how confident you are about your score. 0 is "not at all confident"
+  // and 1 is "completely confident" in the *accuracy of your score*.
+  double confidence = 2;
+  bool has_confidence = 9;
+
+  // Opt out of detection, temporal, or spatial localization. Empty means no opt outs.
+  repeated VideoOptOutType opt_out = 3;
+
+  // A free-form explanation of why manipulation is detected. For human consumption.
+  string explanation = 4;
+
+  // Information about where and when manipulation occurred. If temporal and
+  // spatial optouts are present, this is assumed to be meaningless.
+  VideoLocalization localization = 5;
+
+  // How specific the detection is.
+  SpecificityType specificity = 6;
+
+  // What kinds of manipulation were detected.
+  repeated ManipulationType manipulation_type = 7;
+
+  // Supplemental information, if available (e.g., depictions of reasoning).
+  repeated Resource supplement = 8;
+}
+
+// Next ID: 10
+message VideoManipulationRequest {
+  // An ID unique to each request. Often a UUID4.
+  string request_id = 1;
+
+  // Pointer to the file URI, with type information.
+  Resource video = 2;
+
+  // Location where data should be written by the analytic. See
+  // ImageManipulationRequest's similar field for more detail.
+  string out_dir = 3;
+
+  // The high-provenance device ID, if known, of the device that captured the
+  // video.
+  string hp_device_id = 9;
+
+  bool keep_workspace = 4;
+  bool skip_audio = 5;
+  bool skip_visual = 6;
+  bool debug_resources = 7;
+  int32 gpu_ord = 8;
+}
+
+// Next ID: 10
+message Link {
+  // For provenance: source and target image URIs.
+  string from_uri = 1;
+  string to_uri = 2;
+
+  // Value between 0 and 1 indicating that a given "from" image is spliced into
+  // a given "to" image. If there is a known confidence level, mark
+  // has_confidence true, and set the actual confidence value to a value
+  // between 0 (not confident) and 1 (very confident).
+  double score = 3;
+  double confidence = 4;
+  bool has_confidence = 9;
+
+  // Mask showing which part of the source media was used.
+  ImageLocalization from_mask = 5;
+
+  // Mask showing where the source part was placed into the destination media.
+  ImageLocalization to_mask = 6;
+
+  // Optional explanation for why this link is believed to exist.
+  string explanation = 7;
+
+  repeated ManipulationType manipulation_type = 8;
+}
+
+message ImageSplice{
+  OptOutType opt_out = 1;
+  Link link = 2;
+}
+
+message ImageSpliceRequest {
+  // An ID unique to each request. Often a UUID4.
+  string request_id = 1;
+
+  // The "main" image.
+  Resource probe_image = 2;
+
+  // The "source" image, from which a piece is likely to have been taken to put
+  // into the probe image.
+  Resource donor_image = 3;
+
+  // Location where files should be written. See ImageManipulationRequest's
+  // out_dir for details.
+  string out_dir = 4;
+}
+
+message ImageCameraMatch {
+  // A value in [0, 1][ where 1 indicates "definitely this camera" and 0 menas "definitely not".
+  double score = 1;
+
+  // Set to true if a score can be set. Leaving it default means "opting out of producing a score".
+  // Use the explanation field in that case to communicate whye no score was supplied.
+  bool has_score = 2;
+
+  // Any additional explanation for the given score.
+  string explanation = 3;
+
+  // Localization information (pixel mask) indicating any regions of interest
+  // used in making the camera ID decision.
+  ImageLocalization localization = 4;
+
+  // Set to true if localization information is specified. Leave at default if
+  // no localization info is provided.
+  bool has_localization = 5;
+
+  // Supplemental information, output any type of file, may be surfaced to a user.
+  repeated Resource supplement = 6;
+}
+
+message ImageCameraMatchRequest {
+  // An ID unique to each request. Often a UUID4.
+  string request_id = 1;
+
+  // Location where data should be written by the analytic. See
+  // ImageManipulationRequest's similar field for more detail.
+  string out_dir = 2;
+
+  // The image to check.
+  Resource image = 3;
+
+  // The camera ID this image is assumed to have.
+  string camera_id = 4;
+}
+
+message Empty {}
+
+service Analytic {
+  rpc DetectImageManipulation(ImageManipulationRequest) returns (ImageManipulation);
+  rpc DetectImageSplice(ImageSpliceRequest) returns (ImageSplice);
+  rpc DetectVideoManipulation(VideoManipulationRequest) returns (VideoManipulation);
+  rpc DetectImageCameraMatch(ImageCameraMatchRequest) returns (ImageCameraMatch);
+  rpc Kill(Empty) returns (Empty);
+}
