@@ -118,7 +118,7 @@ import time
 
 from google.protobuf import json_format
 
-from analyticservice import AnalyticService
+from medifor.v1.analyticservice import AnalyticService
 
 
 _DEFAULT_CHILD_IN_KEY = 'ANALYTIC_FIFO_IN'

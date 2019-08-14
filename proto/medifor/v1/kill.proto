@@ -8,7 +8,7 @@ option java_package = "com.mediforprogram.proto";
 option java_outer_classname = "KillProto";
 option go_package = "gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforproto";
 
-import "analytic.proto";
+import "medifor/v1/analytic.proto";
 
 service Killable {
   rpc Kill(Empty) returns (Empty);

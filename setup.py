@@ -40,9 +40,6 @@ setup(name=pkg_name,
           'medifor.v1.fusion_pb2_grpc',
           'medifor.v1.analyticservice',
           'medifor.v1.fusionservice',
-          # 'google.rpc.__init__', # needed for py2 proto
-          # 'google.rpc.status_pb2',
-          # 'google.rpc.code_pb2',
-          # 'google.rpc.error_details_pb2',
+
       ]
       )
