@@ -1,0 +1,124 @@
+syntax = "proto3";
+
+package mediforproto;
+
+import "google/rpc/status.proto";
+
+option java_package = "com.mediaforensics.proto";
+option java_outer_classname = "FusionProto";
+option go_package = "github.com/mediaforensics/wrapper/pkg/mediforproto";
+
+import "analytic.proto";
+
+// Fusion holds round-trip information for any of the "FuseFoo" request/response endpoints.
+message Fusion {
+  // Standard RPC status - we stash the actual RPC error/non-error here.
+  google.rpc.Status status = 1;
+
+  // Round-trip request-response timings. Milliseconds since the Epoch.
+  int64 start_time_millis = 2;
+  int64 end_time_millis = 3;
+
+  // The request made to the analytic.
+  oneof request {
+    FuseImageManipulationRequest img_manip_req = 11;
+    FuseVideoManipulationRequest vid_manip_req = 12;
+    FuseImageSpliceRequest img_splice_req = 13;
+    FuseImageCameraMatchRequest img_cam_match_req = 14;
+  }
+
+  // The response received from the analytic.
+  oneof response {
+    ImageManipulation img_manip = 21;
+    VideoManipulation vid_manip = 22;
+    ImageSplice img_splice = 23;
+    ImageCameraMatch img_cam_match = 24;
+  }
+}
+
+// Next Tag: 4
+message AnnotatedImageManipulation {
+  string id = 1;
+  string version = 2;
+  ImageManipulation data = 3;
+}
+
+// Next Tag: 6
+message FuseImageManipulationRequest {
+  string request_id = 1;
+  string out_dir = 2;
+
+  ImageManipulationRequest img_manip_req = 3;
+  repeated AnnotatedImageManipulation img_manip = 4;
+
+  // If this is set, the fusion algorithm should produce mask output. Otherwise
+  // it should only produce a score.
+  bool want_masks = 5;
+}
+
+// Next Tag: 4
+message AnnotatedVideoManipulation {
+  string id = 1;
+  string version = 2;
+  VideoManipulation data = 3;
+}
+
+// Next Tag: 6
+message FuseVideoManipulationRequest {
+  string request_id = 1;
+  string out_dir = 2;
+
+  VideoManipulationRequest vid_manip_req = 3;
+  repeated AnnotatedVideoManipulation vid_manip = 4;
+
+  // If this is set, the fusion algorithm should produce mask output. Otherwise
+  // it should only produce a score.
+  bool want_masks = 5;
+}
+
+// Next Tag: 4
+message AnnotatedImageSplice {
+  string id = 1;
+  string version = 2;
+  ImageSplice data = 3;
+}
+
+// Next Tag: 6
+message FuseImageSpliceRequest {
+  string request_id = 1;
+  string out_dir = 2;
+
+  ImageSpliceRequest img_splice_req = 3;
+  repeated AnnotatedImageSplice img_splice = 4;
+
+  // If this is set, the fusion algorithm should produce mask output. Otherwise
+  // it should only produce a score.
+  bool want_masks = 5;
+}
+
+// Next Tag: 4
+message AnnotatedImageCameraMatch {
+  string id = 1;
+  string version = 2;
+  ImageCameraMatch data = 3;
+}
+
+// Next Tag: 6
+message FuseImageCameraMatchRequest {
+  string request_id = 1;
+  string out_dir = 2;
+
+  ImageCameraMatchRequest img_cam_match_req = 3;
+  repeated AnnotatedImageCameraMatch img_cam_match = 4;
+
+  // If this is set, the fusion algorithm should produce mask output. Otherwise
+  // it should only produce a score.
+  bool want_masks = 5;
+}
+
+service Fuser {
+  rpc FuseImageManipulation(FuseImageManipulationRequest) returns (ImageManipulation);
+  rpc FuseImageSplice(FuseImageSpliceRequest) returns (ImageSplice);
+  rpc FuseVideoManipulation(FuseVideoManipulationRequest) returns (VideoManipulation);
+  rpc FuseImageCameraMatch(FuseImageCameraMatchRequest) returns (ImageCameraMatch);
+}
