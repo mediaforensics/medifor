@@ -16,7 +16,12 @@ from google.protobuf import json_format
 from medifor.v1 import analytic_pb2, analytic_pb2_grpc
 
 
-### Library Functions ###
+"""
+Initialize mimetypes library and add additional mimetypes not currently recognized.
+The mimetype of an image/video is provided to the analytic as additional metadata
+and is used to determine which endpoint to use when using the detect_batch
+method.
+"""
 mimetypes.init()
 
 mimetypes.add_type("image/x-adobe-dng", ".dng")
@@ -58,6 +63,11 @@ additional_video_types = frozenset([
 ])
 
 def get_media_type(uri):
+    """
+    'get_media_type' takes a filepath and returns the typestring and media type.
+    If the mimetype is not discernable, the typestring returned will be
+    "application/octet-stream", and the media type "application".
+    """
     filename, ext = os.path.splitext(uri)
     typestring = mimetypes.types_map.get(ext, 'application/octet-stream')
 
@@ -70,11 +80,27 @@ def get_media_type(uri):
     return typestring, typestring.split("/")[0]
 
 class MediforClient:
+    """
+    MediforClient provides a client for communicating with media forensic analytics.
+    The client will establish a connection with the analytic at the host and port
+    specified when instantiating the class.  Path translation coming soon.
+    """
     def __init__(self, host="localhost", port="50051", src='', targ='', osrc='', otarg=''):
         self.conn = "{!s}:{!s}".format(host, port)
+        self.src = src
+        self.targ = targ
+        self.osrc = osrc
+        self.otarg = otarg
+        
         # self.stub = analytic_pb2_grpc.AnalyticStub(channel)
 
     def detect_one(self, req, task):
+        """
+        'detect_one' sends a single request of type 'DetectImageManipulation' or
+        'DetectVideoManipulation'.  Takes as argument a request (of type
+        "ImageManipulationRequest" or "VideoManipulationRequest") and a task string
+        (either "imgManip" or "vidManip").  Returns the appropriate response proto.
+        """
         with grpc.insecure_channel(self.conn) as channel:
             stub = analytic_pb2_grpc.AnalyticStub(channel)
             if task == "imgManip":
@@ -86,6 +112,12 @@ class MediforClient:
                 raise
 
     def img_manip(self, img, output_dir):
+        """
+        'img_manip' builds an "ImageManipulationRequest" using the image uri
+        and output directory provided as an argument, and calls 'detect_one'
+        using the built request and the "imgManip" task.  Returns the response
+        "ImageManipulation" proto.
+        """
         req = analytic_pb2.ImageManipulationRequest()
         mime, _ = get_media_type(img)
         req.image.uri = img
@@ -96,6 +128,12 @@ class MediforClient:
         return self.detect_one(req, "imgManip")
 
     def vid_manip(self, vid, output_dir):
+        """
+        'vid_manip' builds an "VideoManipulationRequest" using the image uri
+        and output directory provided as an argument, and calls 'detect_one'
+        using the built request and the "vidManip" task.  Returns the response
+        "VideoManipulation" proto.
+        """
         req = analytic_pb2.VideoManipulationRequest()
         mime, _ = get_media_type(vid)
         req.video.uri = vid
@@ -107,6 +145,17 @@ class MediforClient:
 
 
     def detect_batch(self, dir, output_dir):
+        """
+        'detect_batch' takes as input a directory of media (image or video) files
+        and a parent output directory.  The input directory should contain only
+        image or video files, and the function will not parse subdirectories.  The
+        output directory specified acts as the parent directory for all of the analytic
+        output files.  For each file in the input directory the function will
+        build the approriate proto, assigning each request a UUID and using this
+        UUID to specify the subfolder with the output directory which is used as
+        the out_dir when building the request.  Returns a dictionary that maps
+        the request_id to the response proto.
+        """
         # Simple directory parsing, assume one level and only image/video files
         for _, _, files in os.walk(dir): break
 
