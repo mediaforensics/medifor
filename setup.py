@@ -22,7 +22,7 @@ setup(name=pkg_name,
       author_email='help@mediforprogram.com',
       url='gitlab.mediforprogram.com/medifor/medifor-proto/py',
       license='Apache License, Version 2.0',
-      packages=['medifor', 'medifor.v1'],#, 'medifor.v2'],
+      packages=find_packages(),
       install_requires=[
           'setuptools==39.0.1',
           'grpcio==1.15.0',
