@@ -1,6 +1,4 @@
 # MediaForensics Protocol Buffer and Analytic Service Code
-Contact: help@mediforprogram.com
-
 
 This repository is intended to provide all of the tools necessary to build and test
 media forensic analytics for use as microservices within a distributed system.
