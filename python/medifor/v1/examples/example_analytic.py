@@ -17,8 +17,16 @@ def process_image(req, resp):
     resp.score = 0.5
     logging.info("done")
 
+def process_video(req, resp):
+    logging.info("got request %s for video %s", req.request_id, req.video.uri)
+
+    time.sleep(2)
+    resp.score = 0.5
+    logging.info("done")
+
 if __name__ == '__main__':
     svc = analyticservice.AnalyticService()
     svc.RegisterImageManipulation(process_image)
+    svc.RegisterVideoManipulation(process_video)
 
     sys.exit(svc.Run())

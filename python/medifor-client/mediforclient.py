@@ -7,7 +7,6 @@ import os.path
 import sys
 import uuid
 
-
 import logging
 
 from grpc_health.v1 import health_pb2
@@ -15,8 +14,6 @@ from grpc_health.v1 import health_pb2_grpc
 from google.protobuf import json_format
 
 from medifor.v1 import analytic_pb2, analytic_pb2_grpc
-
-
 
 
 ### Library Functions ###
@@ -82,12 +79,8 @@ class MediforClient:
             stub = analytic_pb2_grpc.AnalyticStub(channel)
             if task == "imgManip":
                 return stub.DetectImageManipulation(req)
-            elif task == "imgSplice":
-                return stub.DetectImageSplice(req)
             elif task == "vidManip":
                 return stub.DetectVideoManipulation(req)
-            elif task == "camVal":
-                return stub.DetectImageCameraMatch(req)
             else:
                 logging.error("Invalid Task")
                 raise
@@ -113,6 +106,31 @@ class MediforClient:
         return self.detect_one(req, "vidManip")
 
 
+    def detect_batch(self, dir, output_dir):
+        # Simple directory parsing, assume one level and only image/video files
+        for _, _, files in os.walk(dir): break
+
+        results = {}
+        for f in files:
+            mime, type = get_media_type(f)
+            logging.info("Processing {!s} of type {!s}".format(f, type))
+            if type == "image":
+                task = "imgManip"
+                req = analytic_pb2.ImageManipulationRequest()
+                req.image.uri = f
+                req.image.type = mime
+
+            elif type == "video":
+                task = "vidManip"
+                req = analytic_pb2.VideoManipulationRequest()
+                req.video.uri = f
+                req.video.type = mime
+
+            req.request_id = str(uuid.uuid4())
+            req.out_dir = os.path.join(output_dir, req.request_id)
+            results[req.request_id] = self.detect_one(req, task)
+
+        return results
 
 
 class Context:
@@ -134,10 +152,32 @@ def main(ctx, host, port, src, targ, osrc, otarg):
 @click.pass_context
 @click.argument('img')
 @click.option('--out', '-o', required=True, help="Output directory for analytic to use.")
-# @click.option('--dev_id', default="", help="Camera ID for the provided image, if available.")
 def imgmanip(ctx, img, out):
     client = ctx.obj.client
     print(json_format.MessageToJson(client.img_manip(img, out)))
+
+@main.command()
+@click.pass_context
+@click.argument('vid')
+@click.option('--out', '-o', required=True, help="Output directory for analytic to use.")
+def vidmanip(ctx, vid, out):
+    client = ctx.obj.client
+    print(json_format.MessageToJson(client.vid_manip(vid, out)))
+
+@main.command()
+@click.pass_context
+@click.option('--dir', '-d', required=True, help="Input directory containing images or videos.")
+@click.option('--out', '-o', required=True, help="Output directory for analytic to use.")
+def detectbatch(ctx, dir, out):
+    client = ctx.obj.client
+    results = client.detect_batch(dir, out)
+    output_dict = {}
+    for id, resp in results.items():
+        json_resp = json_format.MessageToJson(resp)
+        output_dict[id] = json_resp
+
+    print(output_dict)
+
 
 if __name__ == '__main__':
     main(obj=Context())
