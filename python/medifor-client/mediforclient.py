@@ -113,7 +113,6 @@ class MediforClient:
         return self.detect_one(req, "vidManip")
 
 
-    def detect_batch(self, dir):
 
 
 class Context:
