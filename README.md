@@ -266,8 +266,3 @@ A very short and simple script.  Now you can of course choose to include more
 of the actual analysis in this script or create and register additional functions,
 but hopefully this illustrates how quickly and easily an analytic can be wrapped
 using the medifor library.
-
-#TODO
-* Dockerfile
-* PyTorch
-* "quickstart"
