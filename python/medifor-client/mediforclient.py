@@ -79,45 +79,136 @@ def get_media_type(uri):
 
     return typestring, typestring.split("/")[0]
 
-class MediforClient:
+def _map_src_targ(src, targ, fname):
+    src = os.path.normpath(os.path.abspath(os.path.expanduser(src))).rstrip('/')
+    targ = os.path.normpath(os.path.abspath(os.path.expanduser(targ))).rstrip('/')
+    fname = os.path.normpath(os.path.abspath(os.path.expanduser(fname)))
+
+    if not os.path.isdir(src):
+        raise ValueError('Source mapping must be a directory, but got {!r}'.format(src))
+
+    if not fname.startswith(src):
+        raise ValueError('Not a child of source: cannot map {!r} with {!r} -> {!r}'.format(fname, src, targ))
+
+    suffix = fname[len(src):].lstrip('/')
+    return os.path.join(targ, suffix)
+
+class MediforClient(analytic_pb2_grpc.AnalyticStub):
     """
     MediforClient provides a client for communicating with media forensic analytics.
-    The client will establish a connection with the analytic at the host and port
-    specified when instantiating the class.  Path translation coming soon.
+
+    For src->targ and osrc->otarg mappings, no mapping is done if either
+    end of the pair is None. If only one end is None, a ValueError
+    exception is raised.
+
+    Args:
+        host: The host address of the analytic service.
+        port: The port of the analytic service
+        src: The host-local input directory (maps to targ in the container).
+        targ: The container-local input directory (mapped from src on host).
+        osrc: The host-local output directory (maps to otarg in the container).
+        otarg: The container-local output directory (mapped from osrc on host).
+
+    Raises:
+        ValueError: if either endpoint of src/targ or osrc/otarg is None
+            but the other is specified.
     """
     def __init__(self, host="localhost", port="50051", src='', targ='', osrc='', otarg=''):
-        self.conn = "{!s}:{!s}".format(host, port)
+        port = str(port)
+        self.addr = "{!s}:{!s}".format(host, port)
         self.src = src
         self.targ = targ
         self.osrc = osrc
         self.otarg = otarg
-        
-        # self.stub = analytic_pb2_grpc.AnalyticStub(channel)
+
+        if bool(src) != bool(targ):
+            raise ValueError('src->targ mapping specified, but one end is None: {}->{}'.format(src, targ))
+
+        if bool(osrc) != bool(otarg):
+            raise ValueError('osrc->otarg mapping specified, but one end is None: {}->{}'.format(osrc, otarg))
+
+        channel = grpc.insecure_channel(self.addr)
+        super(MediforClient, self).__init__(channel)
+        self.health_stub = health_pb2_grpc.HealthStub(channel)
+
+    def map(self, fname):
+        """Map filename to in-container name, using src and targ directories.
+
+        Args:
+            fname: The name of the file to map.
+
+        Returns:
+            A new filename, mapped to the target directory.
+        """
+        if not self.src:
+            return fname
+        return _map_src_targ(self.src, self.targ, fname)
+
+    def unmap(self, fname):
+        """Unmap input filename from in-container to on-host. Opposite of map."""
+        if not self.src:
+            return fname
+        return _map_src_targ(self.targ, self.src, fname)
+
+    def o_map(self, fname):
+        """Unmap output filename from in-container to on-host. Opposite of o_unmap."""
+        if not self.osrc:
+            return fname
+        return _map_src_targ(self.osrc, self.otarg, fname)
+
+    def o_unmap(self, fname):
+        """Map filename from in-container name to in-host name, using osrc and otarg.
+
+        Args:
+            fname: The name of the file to map.
+
+        Returns:
+            A new filename, mapped to the source directory.
+        """
+        if not self.osrc:
+            return fname
+        return _map_src_targ(self.otarg, self.osrc, fname)
+
+    def health(self):
+        return self.health_stub.Check(health_pb2.HealthCheckRequest())
 
     def detect_one(self, req, task):
         """
-        'detect_one' sends a single request of type 'DetectImageManipulation' or
-        'DetectVideoManipulation'.  Takes as argument a request (of type
-        "ImageManipulationRequest" or "VideoManipulationRequest") and a task string
-        (either "imgManip" or "vidManip").  Returns the appropriate response proto.
+        Calls the specified analytic service and returns result.
+
+        Args:
+            req: Request protobuf of type 'ImageManipulationRequest', or
+                'VideoManipulationRequest'.
+            task: String specifying which endpoint to call ('imgManip'/'vidManip')
+
+        Raises:
+            ValueError: If the task type is invalid
+
+        Returns:
+            The response protobuf returned by the analytic.
         """
-        with grpc.insecure_channel(self.conn) as channel:
-            stub = analytic_pb2_grpc.AnalyticStub(channel)
-            if task == "imgManip":
-                return stub.DetectImageManipulation(req)
-            elif task == "vidManip":
-                return stub.DetectVideoManipulation(req)
-            else:
-                logging.error("Invalid Task")
-                raise
+
+        if task == "imgManip":
+            return self.DetectImageManipulation(req)
+        elif task == "vidManip":
+            return self.DetectVideoManipulation(req)
+        else:
+            logging.error("Invalid Task")
+            raise ValueError("{!s} is not a valid task type".format(task))
 
     def img_manip(self, img, output_dir):
         """
-        'img_manip' builds an "ImageManipulationRequest" using the image uri
-        and output directory provided as an argument, and calls 'detect_one'
-        using the built request and the "imgManip" task.  Returns the response
-        "ImageManipulation" proto.
+        Builds an "ImageManipulationRequest" and calls 'detect_one'
+
+        Args:
+            img: The image uri to be provided to the analytic.
+            output_dir: The output directoy for analytic output files
+
+        Returns:
+            The response "ImageManipulation" protobuf.
         """
+        img = self.map(img)
+        output_dir = self.o_map(output_dir)
         req = analytic_pb2.ImageManipulationRequest()
         mime, _ = get_media_type(img)
         req.image.uri = img
@@ -129,11 +220,17 @@ class MediforClient:
 
     def vid_manip(self, vid, output_dir):
         """
-        'vid_manip' builds an "VideoManipulationRequest" using the image uri
-        and output directory provided as an argument, and calls 'detect_one'
-        using the built request and the "vidManip" task.  Returns the response
-        "VideoManipulation" proto.
+        Builds a "VideoManipulationRequest" and calls 'detect_one'
+
+        Args:
+            vid: The video uri to be provided to the analytic.
+            output_dir: The output directoy for analytic output files
+
+        Returns:
+            The response "VideoManipulation" protobuf.
         """
+        vid = self.map(vid)
+        output_dir = self.o_map(output_dir)
         req = analytic_pb2.VideoManipulationRequest()
         mime, _ = get_media_type(vid)
         req.video.uri = vid
@@ -146,21 +243,26 @@ class MediforClient:
 
     def detect_batch(self, dir, output_dir):
         """
-        'detect_batch' takes as input a directory of media (image or video) files
-        and a parent output directory.  The input directory should contain only
-        image or video files, and the function will not parse subdirectories.  The
-        output directory specified acts as the parent directory for all of the analytic
-        output files.  For each file in the input directory the function will
-        build the approriate proto, assigning each request a UUID and using this
-        UUID to specify the subfolder with the output directory which is used as
-        the out_dir when building the request.  Returns a dictionary that maps
-        the request_id to the response proto.
+        Traverses an input directory building and sending the appropriate request
+        proto based on the media type of the files.
+
+        Args:
+            dir: The input directoy containing media files.  Should contain only
+                image or video files and any subdirectories will not be used.
+            output_dir: The parent directory for analytic output directories.
+                Each request will have it's own output directory underneath this
+                parent directory.
+
+        Returns:
+            A dictionary that maps the request_id (automatically generated UUID)
+            to the response proto.
         """
         # Simple directory parsing, assume one level and only image/video files
         for _, _, files in os.walk(dir): break
-
+        output_dir = self.o_map(output_dir)
         results = {}
         for f in files:
+            f = self.map(f)
             mime, type = get_media_type(f)
             logging.info("Processing {!s} of type {!s}".format(f, type))
             if type == "image":
