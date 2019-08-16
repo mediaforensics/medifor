@@ -264,3 +264,44 @@ A very short and simple script.  Now you can of course choose to include more
 of the actual analysis in this script or create and register additional functions,
 but hopefully this illustrates how quickly and easily an analytic can be wrapped
 using the medifor library.
+
+#### Using the MediFor Client
+Once an analytic has been wrapped using the medifor library, it can be tested
+using the [medifor client](python/medifor/medifor-client).  The medifor client
+can be used in two primary ways:
+ 1) To run the analytic over a single image/video
+ 2) To run the analytic over every image/video in a specified directory.
+
+Usage fo the client:
+```
+$ python mediforclient [flags] <command> [options]
+```
+The client as three different commands, `imgmanip`, `vidmanip`, and `detectbatch`.
+Each of command has it's own set of flags and arguments in addition to the global
+flags provided to the client.  The global flags include the host and port of the
+analytic as well as flags for path translation for mapping image/video uri and
+output  directories from the client perspective to the analytic container
+perspective.  The client defaults to not using any path translation and looking
+for the analytic at `localhost:50051`. For more information use:
+```
+$ python mediforclient --help
+```
+
+The `imgmanip` and `vidmanip` commands operate in the same manner and take the
+media file uri as a postitional argument and the output directory as a required
+flag.  Example usage:
+```
+$ python mediforclient imgmanip /path/to/image.jpg -o /output
+```
+The `detectbatch` command has two required flags, the input directory and the
+output directory.  The input directory is the path to the folder containing the
+media files.  The input directory should contain only image or media files, and
+currently the client will not traverse any subdirectories.  The output directory
+is used as the parent directory for the output folders for each file.  Each request
+is given a UUID before being sent to the analytic.  This UUID is used to name the
+output folder (which is a subdirectory for the output directory provided.  The
+UUID is also used as the key for the results which are output as JSON.  Example
+usage:
+```
+$ pyton mediforeclient detectbatch -d /path/to/image_folder/ -o /output
+```
