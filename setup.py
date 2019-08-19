@@ -10,7 +10,7 @@ def iter_protos(parent=None):
 
 from setuptools import setup, find_packages
 
-pkg_name = 'medifor_proto'
+pkg_name = 'medifor'
 
 setup(name=pkg_name,
       package_dir={
@@ -40,6 +40,7 @@ setup(name=pkg_name,
           'medifor.v1.fusion_pb2_grpc',
           'medifor.v1.analyticservice',
           'medifor.v1.fusionservice',
-
+          'medifor.v1.mediforclient',
+          'medifor.v1.cli'
       ]
       )
