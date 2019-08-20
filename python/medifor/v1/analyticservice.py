@@ -122,6 +122,7 @@ class AnalyticService:
         server = grpc.server(futures.ThreadPoolExecutor(max_workers=max_workers),
                              options=(('grpc.so_reuseport', 0),))
         analytic_pb2_grpc.add_AnalyticServicer_to_server(_AnalyticServicer(self), server)
+        streamingproxy_pb2_grpc.add_StreamingProxyServicer_to_server(_StreamingProxyServicer(self), server)
         health_pb2_grpc.add_HealthServicer_to_server(self._health_servicer, server)
         if not server.add_insecure_port('[::]:{:d}'.format(analytic_port)):
             raise RuntimeError("can't bind to port {}: already in use".format(analytic_port))
