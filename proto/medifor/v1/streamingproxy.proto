@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package mediforproto;
+
+import "google/rpc/status.proto";
+
+option java_package = "com.mediforprogram.proto";
+option java_outer_classname = "StreamingProxyProto";
+option go_package = "gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforproto";
+
+import "medifor/v1/analytic.proto";
+
+// FileChunk contains a single chunk of a file. It is intended to be part of a
+// streaming protocol, so size and offset are implied
+message FileChunk {
+  // The name of the file. Should be sent with every chunk. Works best when every file sent is uniquely named.
+  string name = 1;
+
+  // The (optional) MIME type of the file.
+  string mime_type = 2;
+
+  // This chunk's offset into the file specified by the name above.
+  int64 offset = 3;
+
+  // The total size of the file.
+  int64 total_bytes = 4;
+
+  // The value of this chunk.
+  bytes value = 5;
+}
+
+// DetectionChunk is part of the streaming detection protocol, where detection
+// objects are sent (both as request and response) along with the files that go
+// with them.
+message DetectionChunk {
+  oneof value {
+    // A Detection proto that contains a request and/or response, depending on
+    // what is needed. Note that any chunks provided should cover all necessary
+    // inputs/outputs as specified in this proto.
+    Detection detection = 1;
+
+    // Chunks of file(s) used for or provided in the detection above. Any files
+    // mentioned in the Detection should be provided here as needed. For
+    // example, on request all Resource URIs should be represented in these
+    // file chunks as file chunk names. On response, all response URIs should
+    // be present in a similar way.
+    FileChunk file_chunk = 2;
+  }
+}
+
+service StreamingProxy {
+  rpc DetectStream(stream DetectionChunk) returns (stream DetectionChunk);
+}

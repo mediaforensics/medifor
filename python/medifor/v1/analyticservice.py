@@ -14,6 +14,9 @@ from concurrent import futures
 
 import medifor.v1.analytic_pb2 as analytic_pb2
 import medifor.v1.analytic_pb2_grpc as analytic_pb2_grpc
+import medifor.v1.streamingproxy_pb2_grpc as streamingproxy_pb2_grpc
+import medifor.v1.streamingproxy_pb2 as streamingproxy_pb2
+
 import grpc
 from grpc_health.v1 import health
 from grpc_health.v1 import health_pb2
@@ -32,18 +35,24 @@ def OptOutVideoAll(resp):
     OptOutVideoLocalization(resp)
     resp.opt_out.append(analytic_pb2.VIDEO_OPT_OUT_DETECTION)
 
+def recv_into(stream, tmp_dir):
+    i = 0
+    f_bytes = []
+    for chunk in stream:
+        if i == 0:
+            det = chunk.detection
+            fname = chunk.file_chunk.name
+        f_bytes.append(chunk.file_chunk.value)
 
-def OptOutVideoLocalization(resp):
-    """Opt out of all video localization types for a given video. Modifies resp."""
-    resp.opt_out.extend([analytic_pb2.VIDEO_OPT_OUT_TEMPORAL,
-                         analytic_pb2.VIDEO_OPT_OUT_SPATIAL])
+    with open(tmp_dir, 'wb') as f:
+        f.write(bytes(int(x,0) for x in f_bytes))
 
 
-def OptOutVideoAll(resp):
-    """Opt out of all video processing for a given video. Modifies resp."""
-    OptOutVideoLocalization(resp)
-    resp.opt_out.append(analytic_pb2.VIDEO_OPT_OUT_DETECTION)
 
+    return det, fname
+
+def send_from(det):
+    pass
 
 class _AnalyticServicer(analytic_pb2_grpc.AnalyticServicer):
     """The class registered with gRPC, handles endpoints."""
@@ -63,6 +72,35 @@ class _AnalyticServicer(analytic_pb2_grpc.AnalyticServicer):
 
     def DetectImageCameraMatch(self, req, ctx):
         return self.svc._CallEndpoint(self.svc.IMAGE_CAMERA_MATCH, req, analytic_pb2.ImageCameraMatch(), ctx)
+
+class _StreamingProxyServicer(streamingproxy_pb2_grpc.StreamingProxyServicer):
+    """The class registered with grpc that handles streaming requests from the client"""
+
+    def __init__(self, svc):
+        self.svc = svc
+
+        def DetectStream(self, stream, ctx):
+            # Create temp directory
+            # Determine the reqest type
+            # Write file to temporary location
+            # Send request to analytic (correct endpoint)
+            # Get response and package in detection
+            # Stream detection back
+            # Clean up
+            tmp_dir = os.path.join(svc.tmp_dir, "medifor-streamingproxy")
+            try:
+                os.mkdir(tmp_dir)
+            except FileExistsError:
+                pass
+
+            det, f_name = recv_into(stream, tmp_dir)
+            det = svc.detect(det,fname, ctx)
+
+            send_from(det)
+
+            # Need to properly loop over filechunks to get both files for splice
+            # Need to do actual checks
+            # Need to loop over output files and properly stream
 
 class AnalyticService:
     """Actual implementation of the service, with function registration."""
@@ -106,6 +144,32 @@ class AnalyticService:
             server.stop(0)
             logging.error("Caught exception: %s", e)
             return -1
+
+    def detect(self, det, fname, ctx):
+        """Detect determines which endpoint to used based on the request type"""
+
+        type = det.WhichOneOf("request")
+        if type == "img_manip_req":
+            req = det.img_manip_req
+            req.image.uri = fname
+            resp = self._CallEndpoint(self.IMAGE_MANIPULATION, req, analytic_pb2.ImageManipulation(), ctx)
+            det.img_manip.CopyFrom(resp)
+        elif type == "vid_manip_req":
+            req = det.vid_manip_req
+            resp = self._CallEndpoint(self.VIDEO_MANIPULATION, req, analytic_pb2.VideoManipulation(), ctx)
+            det.vid_manip.CopyFrom(resp)
+        elif type == "img_splice_req":
+            req = det.img_splice_req
+            resp =  self._CallEndpoint(self.IMAGE_SPLICE, req, analytic_pb2.ImageSplice(), ctx)
+            det.CopyFrom(resp)
+        elif type == "img_cam_match_req":
+            req = det.img_cam_match_req
+            resp =  self._CallEndpoint(self.IMAGE_CAMERA_MATCH, req, analytic_pb2.ImageCameraMatch(), ctx)
+            det.CopyFrom(resp)
+
+        return det
+
+
 
     def RegisterImageManipulation(self, f):
         return self._RegisterImpl(self.IMAGE_MANIPULATION, f)
