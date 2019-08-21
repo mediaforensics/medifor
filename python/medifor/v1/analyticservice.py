@@ -1,5 +1,6 @@
 from __future__ import print_function, division, unicode_literals, absolute_import
 
+import base64
 import contextlib
 import json
 import logging
@@ -36,23 +37,94 @@ def OptOutVideoAll(resp):
     resp.opt_out.append(analytic_pb2.VIDEO_OPT_OUT_DETECTION)
 
 def recv_into(stream, tmp_dir):
-    i = 0
-    f_bytes = []
-    for chunk in stream:
-        if i == 0:
-            det = chunk.detection
-            fname = chunk.file_chunk.name
-        f_bytes.append(chunk.file_chunk.value)
+    curr_name = None
+    curr_file = None
+    det = None
+    name_map = {}
+    for c in stream:
+        if c.HasField('detection'):
+            det = c.detection
+            continue
 
-    with open(tmp_dir, 'wb') as f:
-        f.write(bytes(int(x,0) for x in f_bytes))
+        if c.file_chunk.name != curr_name:
+            if curr_file: curr_file.close()
+
+            curr_name = c.file_chunk.name
+            if not curr_name:
+                raise ValueError("file chunk has no name.")
+            local_name = get_actual_local_name(curr_name, tmp_dir)
+            name_map[curr_name] = local_name
+            curr_file = open(local_name, "wb")
+
+        curr_file.write(c.file_chunk.value)
+
+    if curr_file: curr_file.close()
+
+    if not det: raise ValueError("no detection in stream")
+    rewrite_uris(det, name_map)
+
+    return det
+
+def get_actual_local_name(name, tmp_dir):
+    url_safe_bytes = base64.urlsafe_b64encode(name.encode("utf-8"))
+    url_safe_name = str(url_safe_bytes, "utf-8")
+
+    return os.path.join(tmp_dir, url_safe_name)
 
 
-
-    return det, fname
+def rewrite_uris(det, name_map):
+    def recurse_proto(proto):
+        for descriptor in proto.DESCRIPTOR.fields:
+            value  = getattr(proto, descriptor.name)
+            name  = descriptor.name
+            if descriptor.type == descriptor.TYPE_MESSAGE:
+                if descriptor.label == descriptor.LABEL_REPEATED:
+                    map(recurse_proto, value)
+                else:
+                    recurse_proto(value)
+            else:
+                if name == "uri" and value != "":
+                    # print("Name is {!s}, uri is {!s}".format(name, proto.uri))
+                    proto.uri = name_map.get(proto.uri, proto.uri)
+    recurse_proto(det)
 
 def send_from(det):
-    pass
+
+    # Get all output files
+    if det.HasField("img_manip"):
+        resp = det.img_manip
+    elif det.HasField("vid_manip"):
+        resp = det.vid_manip
+    elif det.HasField("img_splice"):
+        resp = det.img_splice
+    elif det.HasField("img_cam_match"):
+        resp = det.img_cam_match
+    else:
+        raise ValueError("No valid response in detection")
+
+    def recurse_proto(proto):
+        filenames = []
+        for descriptor in proto.descriptor.fields:
+            value = getattr(proto, descriptor.name)
+            name = descriptor.name
+            if descriptor.type == descriptor.TYPE_MESSAGE:
+                if descriptor.label == descriptor.LABEL_REPEATED:
+                    filenames.extend(map(recurse_proto, value))
+                else:
+                    recurse_proto(value)
+            else:
+                if name == "uri" and value != "":
+                    filenames.append(proto.uri)
+
+        return filenames
+    recurse_proto(det)
+
+# def get_splice_req(req, fnames):
+#     donor_name = req.donor_image.uri
+#     probe_name = req.probe_image.uri
+#
+#     for name in fnames:
+#         if fname.split
 
 class _AnalyticServicer(analytic_pb2_grpc.AnalyticServicer):
     """The class registered with gRPC, handles endpoints."""
@@ -93,8 +165,8 @@ class _StreamingProxyServicer(streamingproxy_pb2_grpc.StreamingProxyServicer):
             except FileExistsError:
                 pass
 
-            det, f_name = recv_into(stream, tmp_dir)
-            det = svc.detect(det,fname, ctx)
+            det = recv_into(stream, tmp_dir)
+            det = svc.detect(det, ctx)
 
             send_from(det)
 
@@ -113,9 +185,10 @@ class AnalyticService:
 
     _ALLOWED_IMPLS = frozenset([IMAGE_MANIPULATION, VIDEO_MANIPULATION, IMAGE_SPLICE, IMAGE_CAMERA_MATCH])
 
-    def __init__(self):
+    def __init__(self, tmp_dir="/tmp"):
         self._impls = {}
         self._health_servicer = health.HealthServicer()
+        self.tmp_dir = tmp_dir
 
     def Start(self, analytic_port=50051, max_workers=10, concurrency_safe=False):
         self.concurrency_safe = concurrency_safe
@@ -146,13 +219,12 @@ class AnalyticService:
             logging.error("Caught exception: %s", e)
             return -1
 
-    def detect(self, det, fname, ctx):
+    def detect(self, det, fnames, ctx):
         """Detect determines which endpoint to used based on the request type"""
 
         type = det.WhichOneOf("request")
         if type == "img_manip_req":
             req = det.img_manip_req
-            req.image.uri = fname
             resp = self._CallEndpoint(self.IMAGE_MANIPULATION, req, analytic_pb2.ImageManipulation(), ctx)
             det.img_manip.CopyFrom(resp)
         elif type == "vid_manip_req":
