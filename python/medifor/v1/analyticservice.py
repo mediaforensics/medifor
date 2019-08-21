@@ -88,43 +88,62 @@ def rewrite_uris(det, name_map):
                     proto.uri = name_map.get(proto.uri, proto.uri)
     recurse_proto(det)
 
-def send_from(det):
+# def send_from(det):
 
-    # Get all output files
-    if det.HasField("img_manip"):
-        resp = det.img_manip
-    elif det.HasField("vid_manip"):
-        resp = det.vid_manip
-    elif det.HasField("img_splice"):
-        resp = det.img_splice
-    elif det.HasField("img_cam_match"):
-        resp = det.img_cam_match
-    else:
-        raise ValueError("No valid response in detection")
+    # # Get all output files
+    # if det.HasField("img_manip"):
+    #     resp = det.img_manip
+    # elif det.HasField("vid_manip"):
+    #     resp = det.vid_manip
+    # elif det.HasField("img_splice"):
+    #     resp = det.img_splice
+    # elif det.HasField("img_cam_match"):
+    #     resp = det.img_cam_match
+    # else:
+    #     raise ValueError("No valid response in detection")
+    #
+    # def recurse_proto(proto):
+    #     filenames = []
+    #     for descriptor in proto.descriptor.fields:
+    #         value = getattr(proto, descriptor.name)
+    #         name = descriptor.name
+    #         if descriptor.type == descriptor.TYPE_MESSAGE:
+    #             if descriptor.label == descriptor.LABEL_REPEATED:
+    #                 filenames.extend(map(recurse_proto, value))
+    #             else:
+    #                 recurse_proto(value)
+    #         else:
+    #             if name == "uri" and value != "":
+    #                 filenames.append(proto.uri)
+    #
+    #     return filenames
+    # outputs = recurse_proto(resp)
+    #
+    #
+    # response_list = [streamingproxy_pb2.DetectionChunk(detection=det)]
+    #
+    #
+    # for fname in outputs:
+    #     s = os.stat(fname)
+    #     f = open(fname, 'rb')
+    #     buf = []
+    #     while offset < s.st_size:
+    #         offset += len(buf)
+    #         buf = f.read(1024*1024)
+    #         response_list.append(streamingproxy_pb2.DetectionChunk(file_chunk=streamingproxy_pb2.FileChunk(
+    #             name=fname,
+    #             value=buf,
+    #             total_bytes=s.st_size
+    #         )))
+    #         if not buf:
+    #             break
+    #
+    #
+    #     for r in response_list:
+    #         yield r
 
-    def recurse_proto(proto):
-        filenames = []
-        for descriptor in proto.descriptor.fields:
-            value = getattr(proto, descriptor.name)
-            name = descriptor.name
-            if descriptor.type == descriptor.TYPE_MESSAGE:
-                if descriptor.label == descriptor.LABEL_REPEATED:
-                    filenames.extend(map(recurse_proto, value))
-                else:
-                    recurse_proto(value)
-            else:
-                if name == "uri" and value != "":
-                    filenames.append(proto.uri)
 
-        return filenames
-    recurse_proto(det)
 
-# def get_splice_req(req, fnames):
-#     donor_name = req.donor_image.uri
-#     probe_name = req.probe_image.uri
-#
-#     for name in fnames:
-#         if fname.split
 
 class _AnalyticServicer(analytic_pb2_grpc.AnalyticServicer):
     """The class registered with gRPC, handles endpoints."""
@@ -168,7 +187,58 @@ class _StreamingProxyServicer(streamingproxy_pb2_grpc.StreamingProxyServicer):
             det = recv_into(stream, tmp_dir)
             det = svc.detect(det, ctx)
 
-            send_from(det)
+            # send_from(det)
+            # Get all output files
+            if det.HasField("img_manip"):
+                resp = det.img_manip
+            elif det.HasField("vid_manip"):
+                resp = det.vid_manip
+            elif det.HasField("img_splice"):
+                resp = det.img_splice
+            elif det.HasField("img_cam_match"):
+                resp = det.img_cam_match
+            else:
+                raise ValueError("No valid response in detection")
+
+            def recurse_proto(proto):
+                filenames = []
+                for descriptor in proto.descriptor.fields:
+                    value = getattr(proto, descriptor.name)
+                    name = descriptor.name
+                    if descriptor.type == descriptor.TYPE_MESSAGE:
+                        if descriptor.label == descriptor.LABEL_REPEATED:
+                            filenames.extend(map(recurse_proto, value))
+                        else:
+                            recurse_proto(value)
+                    else:
+                        if name == "uri" and value != "":
+                            filenames.append(proto.uri)
+
+                return filenames
+            outputs = recurse_proto(resp)
+
+
+            response_list = [streamingproxy_pb2.DetectionChunk(detection=det)]
+
+
+            for fname in outputs:
+                s = os.stat(fname)
+                f = open(fname, 'rb')
+                buf = []
+                while offset < s.st_size:
+                    offset += len(buf)
+                    buf = f.read(1024*1024)
+                    response_list.append(streamingproxy_pb2.DetectionChunk(file_chunk=streamingproxy_pb2.FileChunk(
+                        name=fname,
+                        value=buf,
+                        total_bytes=s.st_size
+                    )))
+                    if not buf:
+                        break
+
+
+                for r in response_list:
+                    yield r
 
             # Need to properly loop over filechunks to get both files for splice
             # Need to do actual checks
