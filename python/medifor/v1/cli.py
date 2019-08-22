@@ -60,6 +60,16 @@ def detectbatch(ctx, dir, out):
 
     print(output_dict)
 
+@main.command()
+@click.pass_context
+@click.option('--probe', '-f', required=True, help="Input file (image/video) path.")
+@click.option('--donor', '-d', required=False, help="Additional image file for splice task.")
+@click.option('--container_out', '-o', required=True, help="Output directory for analytic to use.")
+@click.option('--local_out', required=True, help="Output directory for client to use.")
+def streamdetect(ctx, probe, donor, container_out, local_out):
+    print(probe, donor, container_out, local_out)
+    client = ctx.obj.client
+    print(json_format.MessageToJson(client.stream_detection(probe=probe, donor=donor, output_dir=container_out, client_output_path=local_out)))
 
 if __name__ == '__main__':
     main(obj=Context())

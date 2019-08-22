@@ -52,7 +52,7 @@ def recv_into(stream, tmp_dir):
             curr_name = c.file_chunk.name
             if not curr_name:
                 raise ValueError("file chunk has no name.")
-            local_name = get_actual_local_name(curr_name, tmp_dir)
+            local_name = get_local_name(curr_name, tmp_dir)
             name_map[curr_name] = local_name
             curr_file = open(local_name, "wb")
 
@@ -65,7 +65,7 @@ def recv_into(stream, tmp_dir):
 
     return det
 
-def get_actual_local_name(name, tmp_dir):
+def get_local_name(name, tmp_dir):
     url_safe_bytes = base64.urlsafe_b64encode(name.encode("utf-8"))
     url_safe_name = str(url_safe_bytes, "utf-8")
 
@@ -73,20 +73,31 @@ def get_actual_local_name(name, tmp_dir):
 
 
 def rewrite_uris(det, name_map):
-    def recur_proto(proto):
-        for descriptor in proto.DESCRIPTOR.fields:
-            name  = descriptor.name
-            value  = getattr(proto, name)
-            if descriptor.type == descriptor.TYPE_MESSAGE:
-                if descriptor.label == descriptor.LABEL_REPEATED:
-                    recur_proto(v) for v in value
-                else:
-                    recur_proto(value)
-            else:   # Need check for Resource here
-                if name == "uri" and value != "":
-                    # print("Name is {!s}, uri is {!s}".format(name, proto.uri))
-                    proto.uri = name_map.get(proto.uri, proto.uri)
-    recur_proto(det)
+    def walk_proto(proto):
+        if not proto:
+            return
+
+        if isinstance(value, (list, tuple)):
+            for v in value:
+                walk_proto(v)
+
+        desc = getattr(proto, 'DESCRIPTOR', None)
+        if not desc:
+            return
+
+        if proto.DESCRIPTOR.full_name == 'mediforproto.Resource' and proto.uri != "":
+            proto.uri = name_map.get(proto.uri, proto.uri)
+            return
+
+        for fd in proto.DESCRIPTOR.fields:
+            value  = getattr(proto, fd.name, None)
+            if fd.label == descriptor.LABEL_REPEATED:
+                for v in value:
+                    walk_proto(v)
+            else:
+                walk_proto(value)
+
+    walk_proto(det)
 
 class _AnalyticServicer(analytic_pb2_grpc.AnalyticServicer):
     """The class registered with gRPC, handles endpoints."""
@@ -113,71 +124,77 @@ class _StreamingProxyServicer(streamingproxy_pb2_grpc.StreamingProxyServicer):
     def __init__(self, svc):
         self.svc = svc
 
-        def DetectStream(self, stream, ctx):
-            # Create temp directory
-            # Determine the reqest type
-            # Write file to temporary location
-            # Send request to analytic (correct endpoint)
-            # Get response and package in detection
-            # Stream detection back
-            # Clean up
-            tmp_dir = os.path.join(svc.tmp_dir, "medifor-streamingproxy")
+    def DetectStream(self, stream, ctx):
+        # Create temp directory
+        # Determine the reqest type
+        # Write file to temporary location
+        # Send request to analytic (correct endpoint)
+        # Get response and package in detection
+        # Stream detection back
+        # Clean up
+        tmp_dir = os.path.join(self.svc.tmp_dir, "medifor-streamingproxy")
+        try:
+            os.mkdir(tmp_dir)
+        except FileExistsError:
+            pass
+
+        det = recv_into(stream, tmp_dir)
+        det = self.svc.detect(det, ctx)
+
+        # send_from(det)
+        # Get all output files
+        if det.HasField("img_manip"):
+            resp = det.img_manip
+        elif det.HasField("vid_manip"):
+            resp = det.vid_manip
+        elif det.HasField("img_splice"):
+            resp = det.img_splice
+        elif det.HasField("img_cam_match"):
+            resp = det.img_cam_match
+        else:
+            raise ValueError("No valid response in detection")
+
+        def walk_proto(proto):
+        # Refactor
+            if not proto:
+                return
+
+            desc = getattr(proto, 'DESCRIPTOR', None)
+            if not desc:
+                return
+
+            if proto.DESCRIPTOR.full_name == 'mediforproto.Resource' and proto.uri != "":
+                yield proto.uri
+                return
+
+            for fd in proto.DESCRIPTOR.fields:
+                value  = getattr(proto, fd.name, None)
+                if fd.label == descriptor.LABEL_REPEATED:
+                    for v in value:
+                        yield from walk_proto(v)
+                else:
+                    yield from walk_proto(value)
+
+        yield streamingproxy_pb2.DetectionChunk(detection=det)
+
+
+        for fname in walk_proto(resp):
             try:
-                os.mkdir(tmp_dir)
-            except FileExistsError:
-                pass
-
-            det = recv_into(stream, tmp_dir)
-            det = svc.detect(det, ctx)
-
-            # send_from(det)
-            # Get all output files
-            if det.HasField("img_manip"):
-                resp = det.img_manip
-            elif det.HasField("vid_manip"):
-                resp = det.vid_manip
-            elif det.HasField("img_splice"):
-                resp = det.img_splice
-            elif det.HasField("img_cam_match"):
-                resp = det.img_cam_match
-            else:
-                raise ValueError("No valid response in detection")
-
-            def recur_proto(proto):
-                filenames = []
-                for descriptor in proto.descriptor.fields:
-                    value = getattr(proto, descriptor.name)
-                    name = descriptor.name
-                    if descriptor.type == descriptor.TYPE_MESSAGE:
-                        if descriptor.label == descriptor.LABEL_REPEATED:
-                            filenames.extend(recur_proto(v) for v in value)
-                        else:
-                            recur_proto(value)
-                    else:
-                        if name == "uri" and value != "":
-                            filenames.append(proto.uri)
-
-                return filenames
-            outputs = recur_proto(resp)
-
-
-            yield streamingproxy_pb2.DetectionChunk(detection=det)
-
-
-            for fname in outputs:
                 s = os.stat(fname)
                 f = open(fname, 'rb')
-                buf = []
-                while offset < s.st_size:
-                    offset += len(buf)
-                    buf = f.read(1024*1024)
-                    yield streamingproxy_pb2.DetectionChunk(file_chunk=streamingproxy_pb2.FileChunk(
-                        name=fname,
-                        value=buf,
-                        total_bytes=s.st_size
-                    ))
-                    if not buf:
-                        break
+            except OSError as e:
+                logging.warning("Error opening file, skipping: %s", e)
+                continue
+
+            chunk_size = 1024*1024
+            for offset in range(0, s.st_size, chunk_size):
+                buf = f.read(1024*1024)
+                yield streamingproxy_pb2.DetectionChunk(file_chunk=streamingproxy_pb2.FileChunk(
+                    name=fname,
+                    value=buf,
+                    total_bytes=s.st_size
+                ))
+
 
 class AnalyticService:
     """Actual implementation of the service, with function registration."""

@@ -29,12 +29,16 @@ setup(name=pkg_name,
           'grpcio-tools==1.15.0',
           'grpcio_health_checking==1.15.0',
           'protobuf==3.6.1',
-          'googleapis-common-protos==1.6.0'
+          'googleapis-common-protos==1.6.0',
+          'Click==7.0',
+          'pillow==6.1.0'
       ],
       data_files=list(iter_protos(pkg_name)),
       py_modules=[
           'medifor.v1.analytic_pb2',
           'medifor.v1.analytic_pb2_grpc',
+          'medifor.v1.streamingproxy_pb2',
+          'medifor.v1.streamingproxy_pb2_grpc',
           'medifor.v1.fifoconn',
           'medifor.v1.fusion_pb2',
           'medifor.v1.fusion_pb2_grpc',

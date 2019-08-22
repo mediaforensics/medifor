@@ -13,7 +13,7 @@ from grpc_health.v1 import health_pb2
 from grpc_health.v1 import health_pb2_grpc
 from google.protobuf import json_format
 
-from medifor.v1 import analytic_pb2, analytic_pb2_grpc
+from medifor.v1 import analytic_pb2, analytic_pb2_grpc, streamingproxy_pb2, streamingproxy_pb2_grpc
 
 
 """
@@ -62,6 +62,55 @@ additional_video_types = frozenset([
     "application/mxf"
 ])
 
+def walk_proto(proto):
+# Refactor
+    if not proto:
+        return
+
+    desc = getattr(proto, 'DESCRIPTOR', None)
+    if not desc:
+        return
+
+    if proto.DESCRIPTOR.full_name == 'mediforproto.Resource' and proto.uri != "":
+        yield proto.uri
+        return
+
+    for fd in proto.DESCRIPTOR.fields:
+        value  = getattr(proto, fd.name, None)
+        if fd.label == descriptor.LABEL_REPEATED:
+            for v in value:
+                yield from walk_proto(v)
+        else:
+            yield from walk_proto(value)
+
+def rewrite_uris(det, name_map):
+    def walk_proto(proto):
+        if not proto:
+            return
+
+        if isinstance(value, (list, tuple)):
+            for v in value:
+                walk_proto(v)
+
+        desc = getattr(proto, 'DESCRIPTOR', None)
+        if not desc:
+            return
+
+        if proto.DESCRIPTOR.full_name == 'mediforproto.Resource' and proto.uri != "":
+            proto.uri = name_map.get(proto.uri, proto.uri)
+            return
+
+        for fd in proto.DESCRIPTOR.fields:
+            value  = getattr(proto, fd.name, None)
+            if fd.label == descriptor.LABEL_REPEATED:
+                for v in value:
+                    walk_proto(v)
+            else:
+                walk_proto(value)
+
+    walk_proto(det)
+
+
 def get_media_type(uri):
     """
     'get_media_type' takes a filepath and returns the typestring and media type.
@@ -93,6 +142,70 @@ def _map_src_targ(src, targ, fname):
     suffix = fname[len(src):].lstrip('/')
     return os.path.join(targ, suffix)
 
+def gen_detection_strem(det):
+
+    yield det
+
+    for fname in walk_proto(det):
+        try:
+            s = os.stat(fname)
+            f = open(fname, 'rb')
+        except OSError as e:
+            logging.warning("Error opening file, skipping: %s", e)
+            continue
+
+        chunk_size = 1024*1024
+        for offset in range(0, s.st_size, chunk_size):
+            buf = f.read(1024*1024)
+            yield streamingproxy_pb2.DetectionChunk(file_chunk=streamingproxy_pb2.FileChunk(
+                name=fname,
+                value=buf,
+                total_bytes=s.st_size
+            ))
+
+def get_local_name(name, tmp_dir):
+    url_safe_bytes = base64.urlsafe_b64encode(name.encode("utf-8"))
+    url_safe_name = str(url_safe_bytes, "utf-8")
+
+    return os.path.join(tmp_dir, url_safe_name)
+
+class StreamingClient(streamingproxy_pb2_grpc.StreamingProxyStub):
+    def __init__(self, host="localhost", port="50051"):
+        port = str(port)
+        self.addr = "{!s}:{!s}".format(host, port)
+
+        channel = grpc.insecure_channel(self.addr)
+        super(StreamingClient, self).__init__(channel)
+        self.health_stub = health_pb2_grpc.HealthStub(channel)
+        print("StreamingClient listening on %s", self.addr)
+
+    def detect(self, detection, local_dir):
+        det = None
+        chunks = self.DetectStream(gen_detection_strem(detection))
+        for c in chunks:
+            if c.HasField('detection'):
+                det = c.detection
+                continue
+
+            if c.file_chunk.name != curr_name:
+                if curr_file: curr_file.close()
+
+                curr_name = c.file_chunk.name
+                if not curr_name:
+                    raise ValueError("file chunk has no name.")
+                local_name = get_local_name(curr_name, local_dir) # What should we do here
+                name_map[curr_name] = local_name
+                curr_file = open(local_name, "wb")
+
+            curr_file.write(c.file_chunk.value)
+
+        if curr_file: curr_file.close()
+
+        if not det: raise ValueError("no detection in stream")
+        rewrite_uris(det, name_map)                                   # and here
+
+        return det
+
 class MediforClient(analytic_pb2_grpc.AnalyticStub):
     """
     MediforClient provides a client for communicating with media forensic analytics.
@@ -120,6 +233,7 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
         self.targ = targ
         self.osrc = osrc
         self.otarg = otarg
+        self.stream = StreamingClient(host=host, port=port)
 
         if bool(src) != bool(targ):
             raise ValueError('src->targ mapping specified, but one end is None: {}->{}'.format(src, targ))
@@ -262,8 +376,8 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
         output_dir = self.o_map(output_dir)
         results = {}
         for f in files:
-            f = self.map(f)
             mime, type = get_media_type(f)
+            f = self.map(f)
             logging.info("Processing {!s} of type {!s}".format(f, type))
             if type == "image":
                 task = "imgManip"
@@ -282,3 +396,37 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
             results[req.request_id] = self.detect_one(req, task)
 
         return results
+
+    def stream_detection(self, probe, donor, output_dir, client_output_path):
+        det = analytic_pb2.Detection()
+        stream_data = []
+        if donor is not None:
+            req = analytic_pb2.img_splice_req()
+            req.probe.uri = self.map(probe)
+            req.donor.uri = self.map(donor)
+            req.request_id = str(uuid.uuid4())
+            req.out_dir = out
+            det.img_splice_req.MergeFrom(req)
+            # stream_data.append(det)
+        else:
+            mime, type = get_media_type(probe)
+            if type == "image":
+                task = "imgManip"
+                req = analytic_pb2.ImageManipulationRequest()
+                req.image.uri = self.map(probe)
+                req.image.type = mime
+                req.request_id = str(uuid.uuid4())
+                req.out_dir = output_dir
+                det.img_manip_req.MergeFrom(req)
+                # stream_data.append(det)
+
+            elif type == "video":
+                task = "vidManip"
+                req = analytic_pb2.VideoManipulationRequest()
+                req.video.uri = self.map(probe)
+                req.video.type = mime
+                req.request_id = str(uuid.uuid4())
+                req.out_dir = output_dir
+                det.vid_manip_req.MergeFrom(req)
+                # stream_data.append(det)
+        return self.stream.detect(det, client_output_path)
