@@ -1,5 +1,6 @@
 #!/bin/python
 
+import base64
 import click
 import grpc
 import mimetypes
@@ -71,13 +72,14 @@ def walk_proto(proto):
     if not desc:
         return
 
-    if proto.DESCRIPTOR.full_name == 'mediforproto.Resource' and proto.uri != "":
+    if proto.DESCRIPTOR.full_name == 'mediforproto.Resource' and proto.uri:
+        print("{!s} : {!s}".format(proto.DESCRIPTOR.full_name, proto.uri))
         yield proto.uri
         return
 
     for fd in proto.DESCRIPTOR.fields:
         value  = getattr(proto, fd.name, None)
-        if fd.label == descriptor.LABEL_REPEATED:
+        if fd.label == fd.LABEL_REPEATED:
             for v in value:
                 yield from walk_proto(v)
         else:
@@ -88,9 +90,9 @@ def rewrite_uris(det, name_map):
         if not proto:
             return
 
-        if isinstance(value, (list, tuple)):
-            for v in value:
-                walk_proto(v)
+        if isinstance(proto, (list, tuple)):
+            for val in proto:
+                walk_proto(val)
 
         desc = getattr(proto, 'DESCRIPTOR', None)
         if not desc:
@@ -102,7 +104,7 @@ def rewrite_uris(det, name_map):
 
         for fd in proto.DESCRIPTOR.fields:
             value  = getattr(proto, fd.name, None)
-            if fd.label == descriptor.LABEL_REPEATED:
+            if fd.label == fd.LABEL_REPEATED:
                 for v in value:
                     walk_proto(v)
             else:
@@ -142,19 +144,22 @@ def _map_src_targ(src, targ, fname):
     suffix = fname[len(src):].lstrip('/')
     return os.path.join(targ, suffix)
 
-def gen_detection_strem(det):
-
-    yield det
+def gen_detection_stream(det):
+    print("Detection to chunk",det)
+    yield streamingproxy_pb2.DetectionChunk(detection=det)
+    print("I yield!")
 
     for fname in walk_proto(det):
+        print("Filename to chunk: ",fname)
         try:
             s = os.stat(fname)
             f = open(fname, 'rb')
         except OSError as e:
-            logging.warning("Error opening file, skipping: %s", e)
+            print("Error opening file, skipping: %s", e)
             continue
 
         chunk_size = 1024*1024
+        print("File size: ", s.st_size)
         for offset in range(0, s.st_size, chunk_size):
             buf = f.read(1024*1024)
             yield streamingproxy_pb2.DetectionChunk(file_chunk=streamingproxy_pb2.FileChunk(
@@ -181,7 +186,10 @@ class StreamingClient(streamingproxy_pb2_grpc.StreamingProxyStub):
 
     def detect(self, detection, local_dir):
         det = None
-        chunks = self.DetectStream(gen_detection_strem(detection))
+        curr_name = None
+        curr_file = None
+        name_map = {}
+        chunks = self.DetectStream(gen_detection_stream(detection))
         for c in chunks:
             if c.HasField('detection'):
                 det = c.detection

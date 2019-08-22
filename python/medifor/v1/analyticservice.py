@@ -42,6 +42,7 @@ def recv_into(stream, tmp_dir):
     det = None
     name_map = {}
     for c in stream:
+
         if c.HasField('detection'):
             det = c.detection
             continue
@@ -77,9 +78,9 @@ def rewrite_uris(det, name_map):
         if not proto:
             return
 
-        if isinstance(value, (list, tuple)):
-            for v in value:
-                walk_proto(v)
+        if isinstance(proto, (list, tuple)):
+            for val in proto:
+                walk_proto(val)
 
         desc = getattr(proto, 'DESCRIPTOR', None)
         if not desc:
@@ -91,7 +92,7 @@ def rewrite_uris(det, name_map):
 
         for fd in proto.DESCRIPTOR.fields:
             value  = getattr(proto, fd.name, None)
-            if fd.label == descriptor.LABEL_REPEATED:
+            if fd.label == fd.LABEL_REPEATED:
                 for v in value:
                     walk_proto(v)
             else:
@@ -132,6 +133,7 @@ class _StreamingProxyServicer(streamingproxy_pb2_grpc.StreamingProxyServicer):
         # Get response and package in detection
         # Stream detection back
         # Clean up
+        # TODO use python temp directory library
         tmp_dir = os.path.join(self.svc.tmp_dir, "medifor-streamingproxy")
         try:
             os.mkdir(tmp_dir)
@@ -169,7 +171,7 @@ class _StreamingProxyServicer(streamingproxy_pb2_grpc.StreamingProxyServicer):
 
             for fd in proto.DESCRIPTOR.fields:
                 value  = getattr(proto, fd.name, None)
-                if fd.label == descriptor.LABEL_REPEATED:
+                if fd.label == fd.LABEL_REPEATED:
                     for v in value:
                         yield from walk_proto(v)
                 else:
@@ -241,10 +243,10 @@ class AnalyticService:
             logging.error("Caught exception: %s", e)
             return -1
 
-    def detect(self, det, fnames, ctx):
+    def detect(self, det, ctx):
         """Detect determines which endpoint to used based on the request type"""
 
-        type = det.WhichOneOf("request")
+        type = det.WhichOneof("request")
         if type == "img_manip_req":
             req = det.img_manip_req
             resp = self._CallEndpoint(self.IMAGE_MANIPULATION, req, analytic_pb2.ImageManipulation(), ctx)
