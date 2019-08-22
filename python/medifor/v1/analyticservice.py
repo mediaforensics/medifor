@@ -73,77 +73,20 @@ def get_actual_local_name(name, tmp_dir):
 
 
 def rewrite_uris(det, name_map):
-    def recurse_proto(proto):
+    def recur_proto(proto):
         for descriptor in proto.DESCRIPTOR.fields:
-            value  = getattr(proto, descriptor.name)
             name  = descriptor.name
+            value  = getattr(proto, name)
             if descriptor.type == descriptor.TYPE_MESSAGE:
                 if descriptor.label == descriptor.LABEL_REPEATED:
-                    map(recurse_proto, value)
+                    recur_proto(v) for v in value
                 else:
-                    recurse_proto(value)
-            else:
+                    recur_proto(value)
+            else:   # Need check for Resource here
                 if name == "uri" and value != "":
                     # print("Name is {!s}, uri is {!s}".format(name, proto.uri))
                     proto.uri = name_map.get(proto.uri, proto.uri)
-    recurse_proto(det)
-
-# def send_from(det):
-
-    # # Get all output files
-    # if det.HasField("img_manip"):
-    #     resp = det.img_manip
-    # elif det.HasField("vid_manip"):
-    #     resp = det.vid_manip
-    # elif det.HasField("img_splice"):
-    #     resp = det.img_splice
-    # elif det.HasField("img_cam_match"):
-    #     resp = det.img_cam_match
-    # else:
-    #     raise ValueError("No valid response in detection")
-    #
-    # def recurse_proto(proto):
-    #     filenames = []
-    #     for descriptor in proto.descriptor.fields:
-    #         value = getattr(proto, descriptor.name)
-    #         name = descriptor.name
-    #         if descriptor.type == descriptor.TYPE_MESSAGE:
-    #             if descriptor.label == descriptor.LABEL_REPEATED:
-    #                 filenames.extend(map(recurse_proto, value))
-    #             else:
-    #                 recurse_proto(value)
-    #         else:
-    #             if name == "uri" and value != "":
-    #                 filenames.append(proto.uri)
-    #
-    #     return filenames
-    # outputs = recurse_proto(resp)
-    #
-    #
-    # response_list = [streamingproxy_pb2.DetectionChunk(detection=det)]
-    #
-    #
-    # for fname in outputs:
-    #     s = os.stat(fname)
-    #     f = open(fname, 'rb')
-    #     buf = []
-    #     while offset < s.st_size:
-    #         offset += len(buf)
-    #         buf = f.read(1024*1024)
-    #         response_list.append(streamingproxy_pb2.DetectionChunk(file_chunk=streamingproxy_pb2.FileChunk(
-    #             name=fname,
-    #             value=buf,
-    #             total_bytes=s.st_size
-    #         )))
-    #         if not buf:
-    #             break
-    #
-    #
-    #     for r in response_list:
-    #         yield r
-
-
-
+    recur_proto(det)
 
 class _AnalyticServicer(analytic_pb2_grpc.AnalyticServicer):
     """The class registered with gRPC, handles endpoints."""
@@ -200,25 +143,25 @@ class _StreamingProxyServicer(streamingproxy_pb2_grpc.StreamingProxyServicer):
             else:
                 raise ValueError("No valid response in detection")
 
-            def recurse_proto(proto):
+            def recur_proto(proto):
                 filenames = []
                 for descriptor in proto.descriptor.fields:
                     value = getattr(proto, descriptor.name)
                     name = descriptor.name
                     if descriptor.type == descriptor.TYPE_MESSAGE:
                         if descriptor.label == descriptor.LABEL_REPEATED:
-                            filenames.extend(map(recurse_proto, value))
+                            filenames.extend(recur_proto(v) for v in value)
                         else:
-                            recurse_proto(value)
+                            recur_proto(value)
                     else:
                         if name == "uri" and value != "":
                             filenames.append(proto.uri)
 
                 return filenames
-            outputs = recurse_proto(resp)
+            outputs = recur_proto(resp)
 
 
-            response_list = [streamingproxy_pb2.DetectionChunk(detection=det)]
+            yield streamingproxy_pb2.DetectionChunk(detection=det)
 
 
             for fname in outputs:
@@ -228,21 +171,13 @@ class _StreamingProxyServicer(streamingproxy_pb2_grpc.StreamingProxyServicer):
                 while offset < s.st_size:
                     offset += len(buf)
                     buf = f.read(1024*1024)
-                    response_list.append(streamingproxy_pb2.DetectionChunk(file_chunk=streamingproxy_pb2.FileChunk(
+                    yield streamingproxy_pb2.DetectionChunk(file_chunk=streamingproxy_pb2.FileChunk(
                         name=fname,
                         value=buf,
                         total_bytes=s.st_size
-                    )))
+                    ))
                     if not buf:
                         break
-
-
-                for r in response_list:
-                    yield r
-
-            # Need to properly loop over filechunks to get both files for splice
-            # Need to do actual checks
-            # Need to loop over output files and properly stream
 
 class AnalyticService:
     """Actual implementation of the service, with function registration."""
