@@ -73,32 +73,46 @@ def get_local_name(name, tmp_dir):
     return os.path.join(tmp_dir, url_safe_name)
 
 
-def rewrite_uris(det, name_map):
-    def walk_proto(proto):
-        if not proto:
-            return
+def walk_proto(proto, func, args=[]):
+    """Walks through a proto and applies a specified function with args."""
+    if not proto:
+        return
 
-        if isinstance(proto, (list, tuple)):
-            for val in proto:
-                walk_proto(val)
+    desc = getattr(proto, 'DESCRIPTOR', None)
+    if not desc:
+        return
 
-        desc = getattr(proto, 'DESCRIPTOR', None)
-        if not desc:
-            return
+    result = func(proto, *args)
 
+    for fd in proto.DESCRIPTOR.fields:
+        value = getattr(proto, fd.name, None)
+        if fd.label == fd.LABEL_REPEATED:
+            for v in value:
+                yield from walk_proto(v, func, args)
+        else:
+            yield from walk_proto(value, func, args)
+
+
+def rewrite_uris(proto, name_map):
+    """Walks through the proto to rewrite uris using the name_map"""
+    def rewrite(proto, name_map):
         if proto.DESCRIPTOR.full_name == 'mediforproto.Resource' and proto.uri != "":
             proto.uri = name_map.get(proto.uri, proto.uri)
             return
 
-        for fd in proto.DESCRIPTOR.fields:
-            value  = getattr(proto, fd.name, None)
-            if fd.label == fd.LABEL_REPEATED:
-                for v in value:
-                    walk_proto(v)
-            else:
-                walk_proto(value)
+    walk_proto(proto, rewrite, name_map)
 
-    walk_proto(det)
+def get_uris(proto):
+    print(proto)
+    def gen_uri(p):
+        print("Called for {!s}".format(p))
+        if p.DESCRIPTOR.full_name == 'mediforproto.Resource' and p.uri != "":
+            print("Yielding the following: {!s}".format(p.uri))
+            yield p.uri
+            return
+
+    yield from walk_proto(proto, gen_uri)
+
 
 class _AnalyticServicer(analytic_pb2_grpc.AnalyticServicer):
     """The class registered with gRPC, handles endpoints."""
@@ -126,13 +140,7 @@ class _StreamingProxyServicer(streamingproxy_pb2_grpc.StreamingProxyServicer):
         self.svc = svc
 
     def DetectStream(self, stream, ctx):
-        # Create temp directory
-        # Determine the reqest type
-        # Write file to temporary location
-        # Send request to analytic (correct endpoint)
-        # Get response and package in detection
-        # Stream detection back
-        # Clean up
+        """Takes a detection stream and runs the appropraite function on it"""
         # TODO use python temp directory library
         tmp_dir = os.path.join(self.svc.tmp_dir, "medifor-streamingproxy")
         try:
@@ -156,31 +164,12 @@ class _StreamingProxyServicer(streamingproxy_pb2_grpc.StreamingProxyServicer):
         else:
             raise ValueError("No valid response in detection")
 
-        def walk_proto(proto):
-        # Refactor
-            if not proto:
-                return
 
-            desc = getattr(proto, 'DESCRIPTOR', None)
-            if not desc:
-                return
-
-            if proto.DESCRIPTOR.full_name == 'mediforproto.Resource' and proto.uri != "":
-                yield proto.uri
-                return
-
-            for fd in proto.DESCRIPTOR.fields:
-                value  = getattr(proto, fd.name, None)
-                if fd.label == fd.LABEL_REPEATED:
-                    for v in value:
-                        yield from walk_proto(v)
-                else:
-                    yield from walk_proto(value)
 
         yield streamingproxy_pb2.DetectionChunk(detection=det)
 
 
-        for fname in walk_proto(resp):
+        for fname in get_uris(resp):
             try:
                 s = os.stat(fname)
                 f = open(fname, 'rb')

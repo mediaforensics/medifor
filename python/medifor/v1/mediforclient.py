@@ -15,7 +15,7 @@ from grpc_health.v1 import health_pb2_grpc
 from google.protobuf import json_format
 
 from medifor.v1 import analytic_pb2, analytic_pb2_grpc, streamingproxy_pb2, streamingproxy_pb2_grpc
-
+from medifor.v1.analyticservice import rewrite_uris, get_uris
 
 """
 Initialize mimetypes library and add additional mimetypes not currently recognized.
@@ -63,56 +63,6 @@ additional_video_types = frozenset([
     "application/mxf"
 ])
 
-def walk_proto(proto):
-# Refactor
-    if not proto:
-        return
-
-    desc = getattr(proto, 'DESCRIPTOR', None)
-    if not desc:
-        return
-
-    if proto.DESCRIPTOR.full_name == 'mediforproto.Resource' and proto.uri:
-        print("{!s} : {!s}".format(proto.DESCRIPTOR.full_name, proto.uri))
-        yield proto.uri
-        return
-
-    for fd in proto.DESCRIPTOR.fields:
-        value  = getattr(proto, fd.name, None)
-        if fd.label == fd.LABEL_REPEATED:
-            for v in value:
-                yield from walk_proto(v)
-        else:
-            yield from walk_proto(value)
-
-def rewrite_uris(det, name_map):
-    def walk_proto(proto):
-        if not proto:
-            return
-
-        if isinstance(proto, (list, tuple)):
-            for val in proto:
-                walk_proto(val)
-
-        desc = getattr(proto, 'DESCRIPTOR', None)
-        if not desc:
-            return
-
-        if proto.DESCRIPTOR.full_name == 'mediforproto.Resource' and proto.uri != "":
-            proto.uri = name_map.get(proto.uri, proto.uri)
-            return
-
-        for fd in proto.DESCRIPTOR.fields:
-            value  = getattr(proto, fd.name, None)
-            if fd.label == fd.LABEL_REPEATED:
-                for v in value:
-                    walk_proto(v)
-            else:
-                walk_proto(value)
-
-    walk_proto(det)
-
-
 def get_media_type(uri):
     """
     'get_media_type' takes a filepath and returns the typestring and media type.
@@ -149,7 +99,8 @@ def gen_detection_stream(det):
     yield streamingproxy_pb2.DetectionChunk(detection=det)
     print("I yield!")
 
-    for fname in walk_proto(det):
+    for fname in get_uris(det):
+    # for fname in walk_proto(det):
         print("Filename to chunk: ",fname)
         try:
             s = os.stat(fname)
