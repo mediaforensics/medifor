@@ -122,7 +122,7 @@ step-by-step guide for developing an analytic using the medifor library.
 Clone the medifor repository and run the install script.
 
 ```
-$ git clone https://github.com/mediaforensics/medifor.git`
+$ git clone https://github.com/mediaforensics/medifor.git
 $ cd medifor
 $ pip install .
 ```
@@ -353,7 +353,7 @@ The library can be used to incorporate client calls into your own code.  To use
 the client library import the `mediforclient` class:
 
 ```
-from medifor.v1.client import mediforclient
+from medifor.v1 import mediforclient
 ```
 
 The medifor class takes as arguments the host and port of the analytic (defaulted to
