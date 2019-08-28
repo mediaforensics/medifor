@@ -9,6 +9,88 @@ Currently provided are the python libraries and proto files required to develop
 and wrap analytics in python.  Future commits will include client code for testing
 analytics and support for additional languages.
 
+## Changelog
+
+ - v0.1.0:
+    * Setup medifor.v1 package
+    * Refactored mediforclient and cli to be included in the medifor.v1 package
+    * Added streaming service to analyticservice and `streamdetect` command to
+    the cli.    
+
+## Quickstart
+  1) Install the medifor library using `pip install git+https://github.com/mediaforensics/medifor.git`
+
+
+  2) Wrap your analytic using the `analyticservice` library.  The two easiest ways
+ to do this are:
+
+    * Create a new python script and import the required modules:
+      `from medifor.v1 import analytic_pb2, analyticservice`
+    as well as your current analytic functions. Create a new function that takes
+    as input a request and response object.  E.g.,
+    ```
+    def process_image_manip(req, resp):
+      # Call your analytic function(s) here
+
+      # Fill out the resp object with the results
+
+      # No return necessary
+    ```
+    * Modify your existing analytic by adding a function which takes as input a
+    request and response as shown above to act as the entrypoint of your function.
+
+  3) In the main section of the script (in either case) create the analytic service,
+  register your function(s), and start the service.
+
+  ```
+  if __name__ == '__main__':
+    # You can do one-time start up and initialization tasks here
+    svc = AnalyticService()
+    svc.RegisterImageManipulation(process_image_manip)
+
+    sys.exit(svc.Run())
+  ```
+
+  4) Test the analytic using the medifor cli:
+    ```
+    python -m [args] <command> [file] -o <path to output directory>
+    ```
+    Where the command is `imgmanip` for image manipulation detection or `vidmanip`
+    for video manipulation detection.
+
+
+  5) Build an analytic container.
+
+      - Create the Dockerfile in your analytic directory.  An example is provided below.
+
+      ```
+      FROM datamachines/grpc-python:1.15.0
+
+      # Install the medifor library
+      RUN pip install git+https://github.com/mediaforensics/medifor.git
+
+      # Additional installation for your analytic
+      COPY . /app
+
+      WORKDIR /app
+
+      EXPOSE 50051
+
+      CMD ["python", "example_analytic.py"]
+      ```
+      - Build the container (here we are calling our container image `example_analytic`)
+      ```
+      docker build -t example_analytic .
+      ```
+      - Run the docker container with the port exposed and any file locations mounted.
+      In this example we have mount `/tmp/input` as `/input` and `/tmp/output` as
+      `/output` in the container.
+      ```
+      docker run -p 50051:50051 -v /tmp/input:/input -v /tmp/output:/output example_analytic
+      ```
+
+  6) Use the medifor cli to run media through the analytic as shown above.
+
 ## Developing an Analytic in Python
 
 #### Overview
@@ -266,18 +348,57 @@ but hopefully this illustrates how quickly and easily an analytic can be wrapped
 using the medifor library.
 
 #### Using the MediFor Client
-Once an analytic has been wrapped using the medifor library, it can be tested
-using the [medifor client](python/medifor/medifor-client).  The medifor client
-can be used in two primary ways:
- 1) To run the analytic over a single image/video
- 2) To run the analytic over every image/video in a specified directory.
+A client library and CLI have been provided for communicating with media forensic analytics.
 
-Usage fo the client:
+
+
+The library can be used to incorporate client calls into your own code.  To use
+the client library import the `mediforclient` class:
+
+```
+from medifor.v1.client import mediforclient
+```
+
+The medifor class takes as arguments the host and port of the analytic (defaulted to
+  localhost:50051) as well as source and target paths for mapping the paths of input
+  and output locations between the client file system and the container.  For example,
+  if the folder `/tmp/input/media` is mounted in the container as `/input`, and
+  `/tmp/output/` as `/output`, then you would instantiate the class as
+
+  ```
+  client = MediforClient(host=host, port=port, src="/tmp/input/media", targ="/input", osrc="/tmp/output", otarg="/output")
+  ```
+
+  where `host` and `port` are the host and port of the analytic container to communicate with.
+
+The client can be used to send requests for image and video manipulation detection,
+as well as batch detection, which creates requests for all media files in a directory.
+Each of these functions provide media uri to the analytic and require that the analytic
+have access to the media location.  There is also a `stream_detection` function which can
+be used to stream the contents of a media file to the analytic.  Both the stream detection
+and batch detection functions use the mimetype library to identify the media type from the
+file extension.  The MediforClient class can also be used as a superclass to your own
+client class if you with to add additional capabilities.
+
+
+
+The medifor client cli can be used to run or test media forensic analytics.  It
+currently has four commands:
+ 1) `imgmanip` - Used to run the analytic over a single image
+ 2) `vidmanip` - Used to run the analytic over a single video
+ 3) `detectbatch` - Used to run the analytic over every image/video in a specified directory.
+ 4) `streamdetect` - Used to run the analytic over a single image or video which
+ is streamed to the analytic.  NOTE: The `analyticservice` library handles the streaming
+ of input and output files and input/output files are written to temporary directories
+ in the analytic container.  As a result analytics wrapped using the `analyticservice`
+ library (v1.0.0 or higher) can be run using the `streamdetet` command.
+
+Usage for the client:
 ```
 $ python mediforclient [flags] <command> [options]
 ```
-The client as three different commands, `imgmanip`, `vidmanip`, and `detectbatch`.
-Each of command has it's own set of flags and arguments in addition to the global
+
+Each of command has its own set of flags and arguments in addition to the global
 flags provided to the client.  The global flags include the host and port of the
 analytic as well as flags for path translation for mapping image/video uri and
 output  directories from the client perspective to the analytic container
@@ -305,3 +426,53 @@ usage:
 ```
 $ pyton mediforeclient detectbatch -d /path/to/image_folder/ -o /output
 ```
+
+The `streamdetect`command has 3 required flags:
+ `--probe`: The image or video to be streamed to the analytic.
+ `--container_out`: The output directory path for writing files in the container.
+ `--local_out`:  The output directory path on the client machine.  Used to write
+ mask and other output files that are streamed back to the client from the analytic
+ conteiner.
+
+#### Building an Analytic Container
+To create a docker container for your analytic you will need to create a Dockerfile
+and install the medifor library.  For convenience, Data Machines has provided a
+base image, but it is not required.  Using a different image may require additional
+modifications to the Dockerfile.  An example Dockerfile is provided below.
+
+    ```
+    FROM datamachines/grpc-python:1.15.0
+
+    # Install the medifor library
+    RUN pip install git+https://github.com/mediaforensics/medifor.git
+
+    # Additional installation for your analytic
+    COPY . /app
+
+    WORKDIR /app
+
+    EXPOSE 50051
+
+    CMD ["python", "example_analytic.py"]
+    ```
+
+Build and tag the container (In the below example we are calling our container image `example_analytic`
+  and tagging it `v1`)
+    ```
+    docker build -t example_analytic:v1 .
+    ```
+Run the docker container with the port exposed and any file locations mounted.
+To expose the port add the `-p` followed by the port mapping
+`<port in the container>:<port exposed as on local system>`.  In order for the
+analytic to read files from the host filesystem the relevant directories need to
+be mounted inside the container.  This can be done by passing the `-v` flag with
+the path mapping with the format `-v host_path:container_path`. If you are not
+able to mount the media files inside the container, the streaming option may
+still be used to to communicate with the analytic.  To run out previous example,
+use the command
+    ```
+    docker run -p 50051:50051 -v /tmp/input:/input -v /tmp/output:/output example_analytic
+    ```
+
+This is meant to provide instruction and a simple example for those unfamiliar with docker
+and how to incorporate the medifor library. 
