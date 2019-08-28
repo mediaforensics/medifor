@@ -5,8 +5,8 @@ import os
 import os.path
 import sys
 
-import analytic_pb2
-from analyticservice import AnalyticServiceFIFO
+from medifor.v1 import analytic_pb2
+from medifor.v1.analyticservice import AnalyticServiceFIFO
 
 logging.basicConfig(level=logging.INFO)
 
