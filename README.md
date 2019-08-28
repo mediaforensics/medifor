@@ -29,14 +29,13 @@ analytics and support for additional languages.
     as well as your current analytic functions. Create a new function that takes
     as input a request and response object.  E.g.,
     
-    ```
     def process_image_manip(req, resp):
       # Call your analytic function(s) here
 
       # Fill out the resp object with the results
 
       # No return necessary
-    ```
+    
     
    - Modify your existing analytic by adding a function which takes as input a
     request and response as shown above to act as the entrypoint of your function.
@@ -55,9 +54,9 @@ analytics and support for additional languages.
 
   4) Test the analytic using the medifor cli:
     
-    ```
+    
     python -m [args] <command> [file] -o <path to output directory>
-    ```
+   
     
    Where the command is `imgmanip` for image manipulation detection or `vidmanip`
    for video manipulation detection.
@@ -160,7 +159,7 @@ function need not actually return anything.  This is covered further below].
 The request and response objects are also defined in the proto file.  For example
 here is the definition of the `ImageManipulationRequest` object:
 ```
-/ ImageManipulationRequest is used to ask an analytic indicator whether
+// ImageManipulationRequest is used to ask an analytic indicator whether
 // a particular image is likely to have been manipulated after capture.
 // NextID: 5
 message ImageManipulationRequest {
@@ -439,7 +438,7 @@ you will need to create a Dockerfile and install the medifor library.  For conve
 Data Machines has provided abase image, but it is not required.  Using a different image 
 may require additional modifications to the Dockerfile.  An example Dockerfile is provided below.
 
-    ```
+    
     FROM datamachines/grpc-python:1.15.0
 
     # Install the medifor library
@@ -453,14 +452,14 @@ may require additional modifications to the Dockerfile.  An example Dockerfile i
     EXPOSE 50051
 
     CMD ["python", "example_analytic.py"]
-    ```
+    
 
 Build and tag the container (In the below example we are calling our container image `example_analytic`
 and tagging it `v1`):
   
-    ```
+    
     docker build -t example_analytic:v1 .
-    ```
+   
 
 Run the docker container with the port exposed and any file locations mounted.
 To expose the port add the `-p` followed by the port mapping
@@ -472,6 +471,6 @@ able to mount the media files inside the container, the streaming option may
 still be used to to communicate with the analytic.  To run out previous example,
 use the command:
 
-    ```
+    
     docker run -p 50051:50051 -v /tmp/input:/input -v /tmp/output:/output example_analytic
-    ```
+    
