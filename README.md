@@ -24,10 +24,11 @@ analytics and support for additional languages.
   2) Wrap your analytic using the `analyticservice` library.  The two easiest ways
  to do this are:
 
-    * Create a new python script and import the required modules:
+   - Create a new python script and import the required modules:
       `from medifor.v1 import analytic_pb2, analyticservice`
     as well as your current analytic functions. Create a new function that takes
     as input a request and response object.  E.g.,
+    
     ```
     def process_image_manip(req, resp):
       # Call your analytic function(s) here
@@ -36,7 +37,8 @@ analytics and support for additional languages.
 
       # No return necessary
     ```
-    * Modify your existing analytic by adding a function which takes as input a
+    
+   - Modify your existing analytic by adding a function which takes as input a
     request and response as shown above to act as the entrypoint of your function.
 
   3) In the main section of the script (in either case) create the analytic service,
@@ -52,11 +54,13 @@ analytics and support for additional languages.
   ```
 
   4) Test the analytic using the medifor cli:
+    
     ```
     python -m [args] <command> [file] -o <path to output directory>
     ```
-    Where the command is `imgmanip` for image manipulation detection or `vidmanip`
-    for video manipulation detection.
+    
+   Where the command is `imgmanip` for image manipulation detection or `vidmanip`
+   for video manipulation detection.
 
 
   5) Build an analytic container.
@@ -85,6 +89,7 @@ analytics and support for additional languages.
       - Run the docker container with the port exposed and any file locations mounted.
       In this example we have mount `/tmp/input` as `/input` and `/tmp/output` as
       `/output` in the container.
+      
       ```
       docker run -p 50051:50051 -v /tmp/input:/input -v /tmp/output:/output example_analytic
       ```
@@ -94,29 +99,21 @@ analytics and support for additional languages.
 ## Developing an Analytic in Python
 
 #### Overview
-For the v1 medifor library (used for the DARPA MediFor program), four media forensic
-tasks are supported. These tasks are:
- * Image Manipulation Detection and Localization: The analytic receives an
+For the v1 medifor library (used for the DARPA MediFor program), the primary media forensic
+tasks supported are:
+ - Image Manipulation Detection and Localization: The analytic receives an
  image and provides an indicator score on the interval [0,1], with higher scores
  indicating that the image is more likely top have been manipulated.  Analytics
  may also provide a grayscale mask of the image where pixel values closer to 0
  represent regions that were more likely to have been manipulated, and pixel
  values closer to 255 represent regions which were less likely to have been manipulated.
- * Image Splice Detection and Localization: The Analytic receives a probe image
- and a donor image and provides an indicator score on the interval [0,1] which
- indicates how likely it is that the donor image was spliced into the probe image,
- and may provide a mask (as in the image manipulation detection task) indicating
- which regions of the probe image are likely to have come from the donor. [Note:
- This task will likely be removed for v2]
- * Video Detection and Localization: The analytic receives a video and provides
+ 
+ - Video Detection and Localization: The analytic receives a video and provides
  an indicator score (same as in the image manipulation detection task).  The analytic
  may also attempt to localize detected manipulations either temporally (which frames
  were manipulated), spatially (where in the frames do the manipulations take place),
  or both.
- * Image Camera Verification: Where an analytic receives an image and an HP camera
- device ID and must provide a score indicating how likely the probe image is to have
- come from that camera. [Note: This task will likely be removed for v2]
-
+ 
 The medifor library provides a gRPC wrapper which provides an endpoint for each of
 these media forensic tasks, and allows analytic developers to register a function
 to one or more of these endpoints.  The following sections will provide a
@@ -124,6 +121,7 @@ step-by-step guide for developing an analytic using the medifor library.
 
 #### Installation
 Clone the medifor repository and run the install script.
+
 ```
 $ git clone https://github.com/mediaforensics/medifor.git`
 $ cd medifor
@@ -424,7 +422,7 @@ output folder (which is a subdirectory for the output directory provided.  The
 UUID is also used as the key for the results which are output as JSON.  Example
 usage:
 ```
-$ pyton mediforeclient detectbatch -d /path/to/image_folder/ -o /output
+$ python mediforeclient detectbatch -d /path/to/image_folder/ -o /output
 ```
 
 The `streamdetect`command has 3 required flags:
@@ -435,10 +433,11 @@ The `streamdetect`command has 3 required flags:
  conteiner.
 
 #### Building an Analytic Container
-To create a docker container for your analytic you will need to create a Dockerfile
-and install the medifor library.  For convenience, Data Machines has provided a
-base image, but it is not required.  Using a different image may require additional
-modifications to the Dockerfile.  An example Dockerfile is provided below.
+This is meant to provide instruction and a simple example for those unfamiliar with docker
+and how to incorporate the medifor library. To create a docker container for your analytic 
+you will need to create a Dockerfile and install the medifor library.  For convenience, 
+Data Machines has provided abase image, but it is not required.  Using a different image 
+may require additional modifications to the Dockerfile.  An example Dockerfile is provided below.
 
     ```
     FROM datamachines/grpc-python:1.15.0
@@ -457,22 +456,22 @@ modifications to the Dockerfile.  An example Dockerfile is provided below.
     ```
 
 Build and tag the container (In the below example we are calling our container image `example_analytic`
-  and tagging it `v1`)
+and tagging it `v1`):
+  
     ```
     docker build -t example_analytic:v1 .
     ```
+
 Run the docker container with the port exposed and any file locations mounted.
 To expose the port add the `-p` followed by the port mapping
-`<port in the container>:<port exposed as on local system>`.  In order for the
+`<container-port>:<host-port>`.  In order for the
 analytic to read files from the host filesystem the relevant directories need to
 be mounted inside the container.  This can be done by passing the `-v` flag with
 the path mapping with the format `-v host_path:container_path`. If you are not
 able to mount the media files inside the container, the streaming option may
 still be used to to communicate with the analytic.  To run out previous example,
-use the command
+use the command:
+
     ```
     docker run -p 50051:50051 -v /tmp/input:/input -v /tmp/output:/output example_analytic
     ```
-
-This is meant to provide instruction and a simple example for those unfamiliar with docker
-and how to incorporate the medifor library. 
