@@ -4,9 +4,6 @@ package mediforproto;
 
 import "google/rpc/status.proto";
 
-option java_package = "com.mediforprogram.proto";
-option java_outer_classname = "AnalyticProto";
-option go_package = "gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforproto";
 
 enum ManipulationType {
   MANIP_UNKNOWN = 0;

@@ -1,22 +1,22 @@
 syntax = "proto3";
 
-package mediforproto;
+package workflowproto;
 
 import "medifor/v1/analytic.proto"; 
 import "medifor/v1/fusion.proto"; 
 
-// enum DetectionStage {
-//   DETECTION_STAGE_NONE = 0;
-//   DETECTION_STAGE_QUEUED = 1;
-//   DETECTION_STAGE_CLAIMED = 2;
-//   DETECTION_STAGE_FINISHED = 3;
-// }
+enum DetectionStage {
+  DETECTION_STAGE_NONE = 0;
+  DETECTION_STAGE_QUEUED = 1;
+  DETECTION_STAGE_CLAIMED = 2;
+  DETECTION_STAGE_FINISHED = 3;
+}
 
-// enum DetectionStatus {
-//   DETECTION_STATUS_NONE = 0;
-//   DETECTION_STATUS_SUCCESS = 1;
-//   DETECTION_STATUS_FAILURE = 2;
-// }
+enum DetectionStatus {
+  DETECTION_STATUS_NONE = 0;
+  DETECTION_STATUS_SUCCESS = 1;
+  DETECTION_STATUS_FAILURE = 2;
+}
 
 enum SortKey {
   SCORE = 0;
@@ -286,6 +286,7 @@ message DeleteDetectionRequest {
   string detection_id = 1;
 }
 
+message Empty {}
 
 service Pipeline {
   rpc Detect(DetectionRequest) returns (DetectionInfo);

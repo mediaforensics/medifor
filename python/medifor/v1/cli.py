@@ -9,7 +9,7 @@ from grpc_health.v1 import health_pb2
 from grpc_health.v1 import health_pb2_grpc
 from google.protobuf import json_format
 
-from medifor.v1 import mediforclient, pipeclient, medifortools
+from medifor.v1 import mediforclient, pipeclient, medifortools, pipeline_pb2
 
 class Context:
     pass
@@ -79,8 +79,8 @@ def streamdetect(ctx, probe, donor, container_out, local_out):
 @click.pass_context
 def pipeline(ctx, host, port, src, targ, osrc, otarg):
     ctx.ensure_object(Context)
-    ctx.obj.pipeclient = pipeclient.MediforPipeline(addr="{!s}:{!s}".format(
-        host, port), src=src, targ=targ, osrc=osrc, otarg=otarg)
+    addr = "{!s}:{!s}".format(host, port)
+    ctx.obj.pipeclient = pipeclient.MediForPipeline(addr=addr, src=src, targ=targ, osrc=osrc, otarg=otarg)
     
 
 
@@ -136,8 +136,8 @@ def detectlist(ctx, tag, limit, page_token, col_sort, fuser_id, want_fused, thre
     else:
         threshold_type = pipeline_pb2.FUSION_NO_THRESHOLD
 
-    print(json_format.MessageToJson(ctx.obj.client.detect_list(
-        tags=parse_tags(tag),
+    print(json_format.MessageToJson(ctx.obj.pipeclient.detect_list(
+        tags=pipeclient.parse_tags(tag),
         page_size=limit,
         page_token=page_token,
         col_sort=col_sort,
@@ -172,7 +172,7 @@ def deletedetection(ctx, id):
 def updatetags(ctx, id, tag, delete, delete_all):
     print(json_format.MessageToJson(ctx.obj.client.update_detection_tags(
         detection_id=id,
-        tags=parse_tags(tag),
+        tags=pipeclient.parse_tags(tag),
         delete_tags=delete,
         delete_all=delete_all,
     )))

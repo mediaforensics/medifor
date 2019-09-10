@@ -51,8 +51,6 @@ setup(name=pkg_name,
           'medifor.v1.pipeclient',
           'medifor.v1.pipeline_pb2',
           'medifor.v1.pipeline_pb2_grpc',
-          'medifor.v1.task_pb2',
-          'medifor.v1.task_pb2_grpc',
           'medifor.v1.medifortools'
       ]
       )

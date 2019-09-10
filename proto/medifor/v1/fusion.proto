@@ -4,10 +4,6 @@ package mediforproto;
 
 import "google/rpc/status.proto";
 
-option java_package = "com.mediforprogram.proto";
-option java_outer_classname = "FusionProto";
-option go_package = "gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforproto";
-
 import "medifor/v1/analytic.proto";
 
 // Fusion holds round-trip information for any of the "FuseFoo" request/response endpoints.

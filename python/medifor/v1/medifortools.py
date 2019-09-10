@@ -1,6 +1,6 @@
 import mimetypes
 
-from medifor.v1 import analytic_pb2, pipeline_pb2, task_pb2
+from medifor.v1 import analytic_pb2, pipeline_pb2
 
 mimetypes.init()
 
