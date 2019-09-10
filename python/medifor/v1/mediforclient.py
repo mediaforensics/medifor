@@ -117,7 +117,6 @@ class StreamingClient(streamingproxy_pb2_grpc.StreamingProxyStub):
         channel = grpc.insecure_channel(self.addr)
         super(StreamingClient, self).__init__(channel)
         self.health_stub = health_pb2_grpc.HealthStub(channel)
-        print("StreamingClient listening on %s", self.addr)
 
     def detect(self, detection, local_dir):
         det = None
