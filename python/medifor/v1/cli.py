@@ -1,11 +1,7 @@
 #!/bin/python
 
 import click
-# import grpc
-# import mimetypes
-# import os.path
-# import sys
-# import uuid
+import uuid
 
 import logging
 
@@ -92,10 +88,20 @@ def pipeline(ctx, host, port, src, targ, osrc, otarg):
 @click.pass_context
 @click.argument('infile')
 @click.argument('ids', nargs=-1)
-@click.option('--detection_id', default='', help='Allows a specific detection ID to be used.')
-@click.option('--fuser_id', default=None, help="Fuser IDs for fusion algorithms to be used to fuse results")
-def detect(ctx, infile, ids, detection_id, fuser_ids):
-    # TODO
+@click.option('--detection_id', default=None, help='Allows a specific detection ID to be used.')
+@click.option('--fuser_id', multiple=True, help="Fuser IDs for fusion algorithms to be used to fuse results")
+@click.option("--out", required=True, help="Output Directory for results.")
+@click.option("--tag", "-t", multiple=True, help="Tag maps to apply of the form `tag=value` or 'tag'.")
+@click.option("--analytic_id", "-i", multiple=True, help="Analytic IDs to use to process media files")
+def detect(ctx, infile, analytic_id, detection_id, fuser_id, out, tag):
+    if not detection_id:
+        detection_id = str(uuid.uuid4())
+    f = ctx.obj.pipeclient.map(infile)
+    out = ctx.obj.pipeclient.o_map(out)
+    tags = parse_tags(tags)
+    req = medifortools(f, detection_id=detection_id, analytic_ids=analytic_id, out_dir=out, fuser_id=fuser_id, tags=tags)
+    print(json_format(ctx.obj.pipeclient.Detect(req)))
+    
 
 
 @pipeline.command()
@@ -104,14 +110,14 @@ def detect(ctx, infile, ids, detection_id, fuser_ids):
 @click.option("--out", required=True, help="Output Directory for results.")
 @click.option("--analytic_id", "-i", multiple=True, help="Analytic IDs to use to process media files")
 @click.option("--fuser_id", "-f", multiple=True, help="Fuser IDs to use to fuse results.")
-@click.option("--tag", "-t", multiple=True, help"Tag maps to apply of the form `tag=value` or 'tag'.")
-def systembatch(ctx, dir, analytic_id=[], fuser_id=[], out="", tag):
+@click.option("--tag", "-t", multiple=True, help="Tag maps to apply of the form `tag=value` or 'tag'.")
+def systembatch(ctx, dir, analytic_id, fuser_id, out, tag):
     print(json_format(ctx.obj.pipeclient.detect_batch(dir=dir, analytic_id=analytic_id, fuser_id=fuser_id, output_dir=out, tags=tag)))
 
 
 
 
-@main.command()
+@pipeline.command()
 @click.pass_context
 @click.option('--tag', '-l', multiple=True, help="Search for entries containing all given tags.")
 @click.option('--limit', '-n', default=100, help="Limit page size")
@@ -142,7 +148,7 @@ def detectlist(ctx, tag, limit, page_token, col_sort, fuser_id, want_fused, thre
         threshold_value=threshold_value)))
 
 
-@main.command()
+@pipeline.command()
 @click.pass_context
 @click.argument('id')
 @click.option('--want_fused/--no-fused', default=False, help="Flag to request fusion scores")
@@ -150,14 +156,14 @@ def detectinfo(ctx, id, want_fused):
     print(json_format.MessageToJson(ctx.obj.client.detect_info(id, want_fused)))
 
 
-@main.command()
+@pipeline.command()
 @click.pass_context
 @click.option('--id', '-i', required=True, default='', help='Detection ID to delete.')
 def deletedetection(ctx, id):
     print(json_format.MessageToJson(ctx.obj.client.delete_detection(id)))
 
 
-@main.command()
+@pipeline.command()
 @click.pass_context
 @click.argument('id', nargs=1)
 @click.option('--tag', '-l', multiple=True, help="Tags to merge into existing user tags")
@@ -172,7 +178,7 @@ def updatetags(ctx, id, tag, delete, delete_all):
     )))
 
 
-@main.command()
+@pipeline.command()
 @click.pass_context
 def taginfo(ctx):
     print(json_format.MessageToJson(ctx.obj.client.detection_tag_info()))

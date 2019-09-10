@@ -68,7 +68,7 @@ def get_detection_req(media):
     mime, mtype = get_media_type(media)
     return analytic_req_map[mtype]
 
-def get_pipeline_req(media, detection_id="", analytic_ids=[], out_dir="", fuser_id="", tags=tags):
+def get_pipeline_req(media, detection_id="", analytic_ids=[], out_dir="", fuser_id=[], tags=[]):
     req = pipeline_pb2.DetectionRequest()
     req.request = analytic_pb2.Detection()
     mime, mtype = get_media_type(media)
@@ -88,6 +88,7 @@ def get_pipeline_req(media, detection_id="", analytic_ids=[], out_dir="", fuser_
     req.analytic_id.extend(analytic_ids)
     req.out_dir = out_dir
     req.tags.update(tags)
+    req.fuser_id.extend(fuser_id)
     return req
 
         

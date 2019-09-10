@@ -5,7 +5,7 @@ import grpc
 import mimetypes
 import os.path
 import sys
-import yaml
+# import yaml
 import uuid
 
 import logging
