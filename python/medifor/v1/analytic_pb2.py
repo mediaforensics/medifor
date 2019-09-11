@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='mediforproto',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x19medifor/v1/analytic.proto\x12\x0cmediforproto\x1a\x17google/rpc/status.proto\"\xd2\x04\n\tDetection\x12\"\n\x06status\x18\x01 \x01(\x0b\x32\x12.google.rpc.Status\x12\x19\n\x11start_time_millis\x18\x02 \x01(\x03\x12\x17\n\x0f\x65nd_time_millis\x18\x03 \x01(\x03\x12?\n\rimg_manip_req\x18\x0b \x01(\x0b\x32&.mediforproto.ImageManipulationRequestH\x00\x12?\n\rvid_manip_req\x18\x0c \x01(\x0b\x32&.mediforproto.VideoManipulationRequestH\x00\x12:\n\x0eimg_splice_req\x18\r \x01(\x0b\x32 .mediforproto.ImageSpliceRequestH\x00\x12\x42\n\x11img_cam_match_req\x18\x0e \x01(\x0b\x32%.mediforproto.ImageCameraMatchRequestH\x00\x12\x34\n\timg_manip\x18\x15 \x01(\x0b\x32\x1f.mediforproto.ImageManipulationH\x01\x12\x34\n\tvid_manip\x18\x16 \x01(\x0b\x32\x1f.mediforproto.VideoManipulationH\x01\x12/\n\nimg_splice\x18\x17 \x01(\x0b\x32\x19.mediforproto.ImageSpliceH\x01\x12\x37\n\rimg_cam_match\x18\x18 \x01(\x0b\x32\x1e.mediforproto.ImageCameraMatchH\x01\x42\t\n\x07requestB\n\n\x08response\"r\n\x12\x41nnotatedDetection\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12*\n\tdetection\x18\x03 \x01(\x0b\x32\x17.mediforproto.Detection\x12\x13\n\x0b\x61nalytic_id\x18\x04 \x01(\t\"4\n\x08Resource\x12\x0b\n\x03uri\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\t\x12\r\n\x05notes\x18\x03 \x01(\t\"&\n\x08IntRange\x12\r\n\x05start\x18\x01 \x01(\x05\x12\x0b\n\x03\x65nd\x18\x02 \x01(\x05\"F\n\x0eScoredIntRange\x12%\n\x05range\x18\x01 \x01(\x0b\x32\x16.mediforproto.IntRange\x12\r\n\x05score\x18\x02 \x01(\x01\"[\n\x0cMaskIntRange\x12%\n\x05range\x18\x01 \x01(\x0b\x32\x16.mediforproto.IntRange\x12$\n\x04mask\x18\x02 \x01(\x0b\x32\x16.mediforproto.Resource\"(\n\nFloatRange\x12\r\n\x05start\x18\x01 \x01(\x01\x12\x0b\n\x03\x65nd\x18\x02 \x01(\x01\"J\n\x10ScoredFloatRange\x12\'\n\x05range\x18\x01 \x01(\x0b\x32\x18.mediforproto.FloatRange\x12\r\n\x05score\x18\x02 \x01(\x01\"~\n\x11ImageLocalization\x12$\n\x04mask\x18\x01 \x01(\x0b\x32\x16.mediforproto.Resource\x12+\n\x0bmask_optout\x18\x02 \x01(\x0b\x32\x16.mediforproto.Resource\x12\x16\n\x0emask_threshold\x18\x03 \x01(\x01\"\xe0\x02\n\x11ImageManipulation\x12\r\n\x05score\x18\x01 \x01(\x01\x12\x12\n\nconfidence\x18\x02 \x01(\x01\x12\x16\n\x0ehas_confidence\x18\t \x01(\x08\x12)\n\x07opt_out\x18\x03 \x01(\x0e\x32\x18.mediforproto.OptOutType\x12\x13\n\x0b\x65xplanation\x18\x04 \x01(\t\x12\x35\n\x0clocalization\x18\x05 \x01(\x0b\x32\x1f.mediforproto.ImageLocalization\x12\x32\n\x0bspecificity\x18\x06 \x01(\x0e\x32\x1d.mediforproto.SpecificityType\x12\x39\n\x11manipulation_type\x18\x07 \x03(\x0e\x32\x1e.mediforproto.ManipulationType\x12*\n\nsupplement\x18\x08 \x03(\x0b\x32\x16.mediforproto.Resource\"|\n\x18ImageManipulationRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12%\n\x05image\x18\x02 \x01(\x0b\x32\x16.mediforproto.Resource\x12\x0f\n\x07out_dir\x18\x03 \x01(\t\x12\x14\n\x0chp_device_id\x18\x04 \x01(\t\"\xe6\x02\n\x11VideoLocalization\x12\x35\n\x0f\x66rame_detection\x18\x01 \x03(\x0b\x32\x1c.mediforproto.ScoredIntRange\x12,\n\x0c\x66rame_optout\x18\x02 \x03(\x0b\x32\x16.mediforproto.IntRange\x12\x37\n\x0f\x61udio_detection\x18\x03 \x03(\x0b\x32\x1e.mediforproto.ScoredFloatRange\x12.\n\x0c\x61udio_optout\x18\x04 \x03(\x0b\x32\x18.mediforproto.FloatRange\x12.\n\nvideo_mask\x18\x05 \x03(\x0b\x32\x1a.mediforproto.MaskIntRange\x12\x35\n\x11video_mask_optout\x18\x06 \x03(\x0b\x32\x1a.mediforproto.MaskIntRange\x12\x1c\n\x14video_mask_threshold\x18\x07 \x01(\x01\"\xe5\x02\n\x11VideoManipulation\x12\r\n\x05score\x18\x01 \x01(\x01\x12\x12\n\nconfidence\x18\x02 \x01(\x01\x12\x16\n\x0ehas_confidence\x18\t \x01(\x08\x12.\n\x07opt_out\x18\x03 \x03(\x0e\x32\x1d.mediforproto.VideoOptOutType\x12\x13\n\x0b\x65xplanation\x18\x04 \x01(\t\x12\x35\n\x0clocalization\x18\x05 \x01(\x0b\x32\x1f.mediforproto.VideoLocalization\x12\x32\n\x0bspecificity\x18\x06 \x01(\x0e\x32\x1d.mediforproto.SpecificityType\x12\x39\n\x11manipulation_type\x18\x07 \x03(\x0e\x32\x1e.mediforproto.ManipulationType\x12*\n\nsupplement\x18\x08 \x03(\x0b\x32\x16.mediforproto.Resource\"\xe7\x01\n\x18VideoManipulationRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12%\n\x05video\x18\x02 \x01(\x0b\x32\x16.mediforproto.Resource\x12\x0f\n\x07out_dir\x18\x03 \x01(\t\x12\x14\n\x0chp_device_id\x18\t \x01(\t\x12\x16\n\x0ekeep_workspace\x18\x04 \x01(\x08\x12\x12\n\nskip_audio\x18\x05 \x01(\x08\x12\x13\n\x0bskip_visual\x18\x06 \x01(\x08\x12\x17\n\x0f\x64\x65\x62ug_resources\x18\x07 \x01(\x08\x12\x0f\n\x07gpu_ord\x18\x08 \x01(\x05\"\x99\x02\n\x04Link\x12\x10\n\x08\x66rom_uri\x18\x01 \x01(\t\x12\x0e\n\x06to_uri\x18\x02 \x01(\t\x12\r\n\x05score\x18\x03 \x01(\x01\x12\x12\n\nconfidence\x18\x04 \x01(\x01\x12\x16\n\x0ehas_confidence\x18\t \x01(\x08\x12\x32\n\tfrom_mask\x18\x05 \x01(\x0b\x32\x1f.mediforproto.ImageLocalization\x12\x30\n\x07to_mask\x18\x06 \x01(\x0b\x32\x1f.mediforproto.ImageLocalization\x12\x13\n\x0b\x65xplanation\x18\x07 \x01(\t\x12\x39\n\x11manipulation_type\x18\x08 \x03(\x0e\x32\x1e.mediforproto.ManipulationType\"Z\n\x0bImageSplice\x12)\n\x07opt_out\x18\x01 \x01(\x0e\x32\x18.mediforproto.OptOutType\x12 \n\x04link\x18\x02 \x01(\x0b\x32\x12.mediforproto.Link\"\x93\x01\n\x12ImageSpliceRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12+\n\x0bprobe_image\x18\x02 \x01(\x0b\x32\x16.mediforproto.Resource\x12+\n\x0b\x64onor_image\x18\x03 \x01(\x0b\x32\x16.mediforproto.Resource\x12\x0f\n\x07out_dir\x18\x04 \x01(\t\"\xc6\x01\n\x10ImageCameraMatch\x12\r\n\x05score\x18\x01 \x01(\x01\x12\x11\n\thas_score\x18\x02 \x01(\x08\x12\x13\n\x0b\x65xplanation\x18\x03 \x01(\t\x12\x35\n\x0clocalization\x18\x04 \x01(\x0b\x32\x1f.mediforproto.ImageLocalization\x12\x18\n\x10has_localization\x18\x05 \x01(\x08\x12*\n\nsupplement\x18\x06 \x03(\x0b\x32\x16.mediforproto.Resource\"x\n\x17ImageCameraMatchRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12\x0f\n\x07out_dir\x18\x02 \x01(\t\x12%\n\x05image\x18\x03 \x01(\x0b\x32\x16.mediforproto.Resource\x12\x11\n\tcamera_id\x18\x04 \x01(\t\"\x07\n\x05\x45mpty*\x9f\x04\n\x10ManipulationType\x12\x11\n\rMANIP_UNKNOWN\x10\x00\x12\x10\n\x0cMANIP_FILTER\x10\x01\x12\x16\n\x12MANIP_ADJUST_COLOR\x10\x02\x12\x10\n\x0cMANIP_REMOVE\x10\x03\x12\x1c\n\x18MANIP_CONTENT_AWARE_FILL\x10\x04\x12\x19\n\x15MANIP_PAINTBRUSH_TOOL\x10\x05\x12\x14\n\x10MANIP_PATCH_TOOL\x10\x06\x12\x0e\n\nMANIP_BLUR\x10\x07\x12\x10\n\x0cMANIP_SPLICE\x10\x08\x12\x0f\n\x0bMANIP_CLONE\x10\t\x12\x0e\n\nMANIP_CROP\x10\n\x12\x0e\n\nMANIP_FLIP\x10\x0b\x12\x10\n\x0cMANIP_RESIZE\x10\x0c\x12\x16\n\x12MANIP_SEAM_CARVING\x10\r\x12\x10\n\x0cMANIP_ROTATE\x10\x0e\x12\x0e\n\nMANIP_SKEW\x10\x0f\x12\x0e\n\nMANIP_WARP\x10\x10\x12\x12\n\x0eMANIP_METADATA\x10\x11\x12\x17\n\x13MANIP_ANTIFORENSICS\x10\x12\x12\x19\n\x15MANIP_IMAGE_RECAPTURE\x10\x13\x12\r\n\tMANIP_CGI\x10\x14\x12\x19\n\x15MANIP_FRAME_INSERTION\x10\x15\x12\x14\n\x10MANIP_FRAME_DROP\x10\x16\x12\x0f\n\x0bMANIP_AUDIO\x10\x17\x12\x14\n\x10MANIP_DOUBLE_JPG\x10\x18\x12\x0f\n\x0bMANIP_OTHER\x10\x19*U\n\x0fSpecificityType\x12\x0f\n\x0bSPEC_GLOBAL\x10\x00\x12\x0e\n\nSPEC_FRAME\x10\x01\x12\x0e\n\nSPEC_PIXEL\x10\x02\x12\x11\n\rSPEC_METADATA\x10\x03*\x81\x01\n\x0e\x44\x65tectionStage\x12\x18\n\x14\x44\x45TECTION_STAGE_NONE\x10\x00\x12\x1a\n\x16\x44\x45TECTION_STAGE_QUEUED\x10\x01\x12\x1b\n\x17\x44\x45TECTION_STAGE_CLAIMED\x10\x02\x12\x1c\n\x18\x44\x45TECTION_STAGE_FINISHED\x10\x03*h\n\x0f\x44\x65tectionStatus\x12\x19\n\x15\x44\x45TECTION_STATUS_NONE\x10\x00\x12\x1c\n\x18\x44\x45TECTION_STATUS_SUCCESS\x10\x01\x12\x1c\n\x18\x44\x45TECTION_STATUS_FAILURE\x10\x02*`\n\nOptOutType\x12\x10\n\x0cOPT_OUT_NONE\x10\x00\x12\x0f\n\x0bOPT_OUT_ALL\x10\x01\x12\x15\n\x11OPT_OUT_DETECTION\x10\x02\x12\x18\n\x14OPT_OUT_LOCALIZATION\x10\x03*e\n\x0fVideoOptOutType\x12\x1b\n\x17VIDEO_OPT_OUT_DETECTION\x10\x00\x12\x1a\n\x16VIDEO_OPT_OUT_TEMPORAL\x10\x01\x12\x19\n\x15VIDEO_OPT_OUT_SPATIAL\x10\x02\x32\xb7\x03\n\x08\x41nalytic\x12\x62\n\x17\x44\x65tectImageManipulation\x12&.mediforproto.ImageManipulationRequest\x1a\x1f.mediforproto.ImageManipulation\x12P\n\x11\x44\x65tectImageSplice\x12 .mediforproto.ImageSpliceRequest\x1a\x19.mediforproto.ImageSplice\x12\x62\n\x17\x44\x65tectVideoManipulation\x12&.mediforproto.VideoManipulationRequest\x1a\x1f.mediforproto.VideoManipulation\x12_\n\x16\x44\x65tectImageCameraMatch\x12%.mediforproto.ImageCameraMatchRequest\x1a\x1e.mediforproto.ImageCameraMatch\x12\x30\n\x04Kill\x12\x13.mediforproto.Empty\x1a\x13.mediforproto.Emptyb\x06proto3')
+  serialized_pb=_b('\n\x19medifor/v1/analytic.proto\x12\x0cmediforproto\x1a\x17google/rpc/status.proto\"\xd2\x04\n\tDetection\x12\"\n\x06status\x18\x01 \x01(\x0b\x32\x12.google.rpc.Status\x12\x19\n\x11start_time_millis\x18\x02 \x01(\x03\x12\x17\n\x0f\x65nd_time_millis\x18\x03 \x01(\x03\x12?\n\rimg_manip_req\x18\x0b \x01(\x0b\x32&.mediforproto.ImageManipulationRequestH\x00\x12?\n\rvid_manip_req\x18\x0c \x01(\x0b\x32&.mediforproto.VideoManipulationRequestH\x00\x12:\n\x0eimg_splice_req\x18\r \x01(\x0b\x32 .mediforproto.ImageSpliceRequestH\x00\x12\x42\n\x11img_cam_match_req\x18\x0e \x01(\x0b\x32%.mediforproto.ImageCameraMatchRequestH\x00\x12\x34\n\timg_manip\x18\x15 \x01(\x0b\x32\x1f.mediforproto.ImageManipulationH\x01\x12\x34\n\tvid_manip\x18\x16 \x01(\x0b\x32\x1f.mediforproto.VideoManipulationH\x01\x12/\n\nimg_splice\x18\x17 \x01(\x0b\x32\x19.mediforproto.ImageSpliceH\x01\x12\x37\n\rimg_cam_match\x18\x18 \x01(\x0b\x32\x1e.mediforproto.ImageCameraMatchH\x01\x42\t\n\x07requestB\n\n\x08response\"r\n\x12\x41nnotatedDetection\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12*\n\tdetection\x18\x03 \x01(\x0b\x32\x17.mediforproto.Detection\x12\x13\n\x0b\x61nalytic_id\x18\x04 \x01(\t\"4\n\x08Resource\x12\x0b\n\x03uri\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\t\x12\r\n\x05notes\x18\x03 \x01(\t\"&\n\x08IntRange\x12\r\n\x05start\x18\x01 \x01(\x05\x12\x0b\n\x03\x65nd\x18\x02 \x01(\x05\"F\n\x0eScoredIntRange\x12%\n\x05range\x18\x01 \x01(\x0b\x32\x16.mediforproto.IntRange\x12\r\n\x05score\x18\x02 \x01(\x01\"[\n\x0cMaskIntRange\x12%\n\x05range\x18\x01 \x01(\x0b\x32\x16.mediforproto.IntRange\x12$\n\x04mask\x18\x02 \x01(\x0b\x32\x16.mediforproto.Resource\"(\n\nFloatRange\x12\r\n\x05start\x18\x01 \x01(\x01\x12\x0b\n\x03\x65nd\x18\x02 \x01(\x01\"J\n\x10ScoredFloatRange\x12\'\n\x05range\x18\x01 \x01(\x0b\x32\x18.mediforproto.FloatRange\x12\r\n\x05score\x18\x02 \x01(\x01\"~\n\x11ImageLocalization\x12$\n\x04mask\x18\x01 \x01(\x0b\x32\x16.mediforproto.Resource\x12+\n\x0bmask_optout\x18\x02 \x01(\x0b\x32\x16.mediforproto.Resource\x12\x16\n\x0emask_threshold\x18\x03 \x01(\x01\"\xcc\x03\n\x11ImageManipulation\x12\r\n\x05score\x18\x01 \x01(\x01\x12;\n\x06\x66\x61\x63\x65ts\x18\n \x03(\x0b\x32+.mediforproto.ImageManipulation.FacetsEntry\x12\x12\n\nconfidence\x18\x02 \x01(\x01\x12\x16\n\x0ehas_confidence\x18\t \x01(\x08\x12)\n\x07opt_out\x18\x03 \x01(\x0e\x32\x18.mediforproto.OptOutType\x12\x13\n\x0b\x65xplanation\x18\x04 \x01(\t\x12\x35\n\x0clocalization\x18\x05 \x01(\x0b\x32\x1f.mediforproto.ImageLocalization\x12\x32\n\x0bspecificity\x18\x06 \x01(\x0e\x32\x1d.mediforproto.SpecificityType\x12\x39\n\x11manipulation_type\x18\x07 \x03(\x0e\x32\x1e.mediforproto.ManipulationType\x12*\n\nsupplement\x18\x08 \x03(\x0b\x32\x16.mediforproto.Resource\x1a-\n\x0b\x46\x61\x63\x65tsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\"|\n\x18ImageManipulationRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12%\n\x05image\x18\x02 \x01(\x0b\x32\x16.mediforproto.Resource\x12\x0f\n\x07out_dir\x18\x03 \x01(\t\x12\x14\n\x0chp_device_id\x18\x04 \x01(\t\"\xe6\x02\n\x11VideoLocalization\x12\x35\n\x0f\x66rame_detection\x18\x01 \x03(\x0b\x32\x1c.mediforproto.ScoredIntRange\x12,\n\x0c\x66rame_optout\x18\x02 \x03(\x0b\x32\x16.mediforproto.IntRange\x12\x37\n\x0f\x61udio_detection\x18\x03 \x03(\x0b\x32\x1e.mediforproto.ScoredFloatRange\x12.\n\x0c\x61udio_optout\x18\x04 \x03(\x0b\x32\x18.mediforproto.FloatRange\x12.\n\nvideo_mask\x18\x05 \x03(\x0b\x32\x1a.mediforproto.MaskIntRange\x12\x35\n\x11video_mask_optout\x18\x06 \x03(\x0b\x32\x1a.mediforproto.MaskIntRange\x12\x1c\n\x14video_mask_threshold\x18\x07 \x01(\x01\"\xd1\x03\n\x11VideoManipulation\x12\r\n\x05score\x18\x01 \x01(\x01\x12;\n\x06\x66\x61\x63\x65ts\x18\n \x03(\x0b\x32+.mediforproto.VideoManipulation.FacetsEntry\x12\x12\n\nconfidence\x18\x02 \x01(\x01\x12\x16\n\x0ehas_confidence\x18\t \x01(\x08\x12.\n\x07opt_out\x18\x03 \x03(\x0e\x32\x1d.mediforproto.VideoOptOutType\x12\x13\n\x0b\x65xplanation\x18\x04 \x01(\t\x12\x35\n\x0clocalization\x18\x05 \x01(\x0b\x32\x1f.mediforproto.VideoLocalization\x12\x32\n\x0bspecificity\x18\x06 \x01(\x0e\x32\x1d.mediforproto.SpecificityType\x12\x39\n\x11manipulation_type\x18\x07 \x03(\x0e\x32\x1e.mediforproto.ManipulationType\x12*\n\nsupplement\x18\x08 \x03(\x0b\x32\x16.mediforproto.Resource\x1a-\n\x0b\x46\x61\x63\x65tsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\"\xe7\x01\n\x18VideoManipulationRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12%\n\x05video\x18\x02 \x01(\x0b\x32\x16.mediforproto.Resource\x12\x0f\n\x07out_dir\x18\x03 \x01(\t\x12\x14\n\x0chp_device_id\x18\t \x01(\t\x12\x16\n\x0ekeep_workspace\x18\x04 \x01(\x08\x12\x12\n\nskip_audio\x18\x05 \x01(\x08\x12\x13\n\x0bskip_visual\x18\x06 \x01(\x08\x12\x17\n\x0f\x64\x65\x62ug_resources\x18\x07 \x01(\x08\x12\x0f\n\x07gpu_ord\x18\x08 \x01(\x05\"\x99\x02\n\x04Link\x12\x10\n\x08\x66rom_uri\x18\x01 \x01(\t\x12\x0e\n\x06to_uri\x18\x02 \x01(\t\x12\r\n\x05score\x18\x03 \x01(\x01\x12\x12\n\nconfidence\x18\x04 \x01(\x01\x12\x16\n\x0ehas_confidence\x18\t \x01(\x08\x12\x32\n\tfrom_mask\x18\x05 \x01(\x0b\x32\x1f.mediforproto.ImageLocalization\x12\x30\n\x07to_mask\x18\x06 \x01(\x0b\x32\x1f.mediforproto.ImageLocalization\x12\x13\n\x0b\x65xplanation\x18\x07 \x01(\t\x12\x39\n\x11manipulation_type\x18\x08 \x03(\x0e\x32\x1e.mediforproto.ManipulationType\"Z\n\x0bImageSplice\x12)\n\x07opt_out\x18\x01 \x01(\x0e\x32\x18.mediforproto.OptOutType\x12 \n\x04link\x18\x02 \x01(\x0b\x32\x12.mediforproto.Link\"\x93\x01\n\x12ImageSpliceRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12+\n\x0bprobe_image\x18\x02 \x01(\x0b\x32\x16.mediforproto.Resource\x12+\n\x0b\x64onor_image\x18\x03 \x01(\x0b\x32\x16.mediforproto.Resource\x12\x0f\n\x07out_dir\x18\x04 \x01(\t\"\xc6\x01\n\x10ImageCameraMatch\x12\r\n\x05score\x18\x01 \x01(\x01\x12\x11\n\thas_score\x18\x02 \x01(\x08\x12\x13\n\x0b\x65xplanation\x18\x03 \x01(\t\x12\x35\n\x0clocalization\x18\x04 \x01(\x0b\x32\x1f.mediforproto.ImageLocalization\x12\x18\n\x10has_localization\x18\x05 \x01(\x08\x12*\n\nsupplement\x18\x06 \x03(\x0b\x32\x16.mediforproto.Resource\"x\n\x17ImageCameraMatchRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12\x0f\n\x07out_dir\x18\x02 \x01(\t\x12%\n\x05image\x18\x03 \x01(\x0b\x32\x16.mediforproto.Resource\x12\x11\n\tcamera_id\x18\x04 \x01(\t\"\x07\n\x05\x45mpty*\x9f\x04\n\x10ManipulationType\x12\x11\n\rMANIP_UNKNOWN\x10\x00\x12\x10\n\x0cMANIP_FILTER\x10\x01\x12\x16\n\x12MANIP_ADJUST_COLOR\x10\x02\x12\x10\n\x0cMANIP_REMOVE\x10\x03\x12\x1c\n\x18MANIP_CONTENT_AWARE_FILL\x10\x04\x12\x19\n\x15MANIP_PAINTBRUSH_TOOL\x10\x05\x12\x14\n\x10MANIP_PATCH_TOOL\x10\x06\x12\x0e\n\nMANIP_BLUR\x10\x07\x12\x10\n\x0cMANIP_SPLICE\x10\x08\x12\x0f\n\x0bMANIP_CLONE\x10\t\x12\x0e\n\nMANIP_CROP\x10\n\x12\x0e\n\nMANIP_FLIP\x10\x0b\x12\x10\n\x0cMANIP_RESIZE\x10\x0c\x12\x16\n\x12MANIP_SEAM_CARVING\x10\r\x12\x10\n\x0cMANIP_ROTATE\x10\x0e\x12\x0e\n\nMANIP_SKEW\x10\x0f\x12\x0e\n\nMANIP_WARP\x10\x10\x12\x12\n\x0eMANIP_METADATA\x10\x11\x12\x17\n\x13MANIP_ANTIFORENSICS\x10\x12\x12\x19\n\x15MANIP_IMAGE_RECAPTURE\x10\x13\x12\r\n\tMANIP_CGI\x10\x14\x12\x19\n\x15MANIP_FRAME_INSERTION\x10\x15\x12\x14\n\x10MANIP_FRAME_DROP\x10\x16\x12\x0f\n\x0bMANIP_AUDIO\x10\x17\x12\x14\n\x10MANIP_DOUBLE_JPG\x10\x18\x12\x0f\n\x0bMANIP_OTHER\x10\x19*U\n\x0fSpecificityType\x12\x0f\n\x0bSPEC_GLOBAL\x10\x00\x12\x0e\n\nSPEC_FRAME\x10\x01\x12\x0e\n\nSPEC_PIXEL\x10\x02\x12\x11\n\rSPEC_METADATA\x10\x03*\x81\x01\n\x0e\x44\x65tectionStage\x12\x18\n\x14\x44\x45TECTION_STAGE_NONE\x10\x00\x12\x1a\n\x16\x44\x45TECTION_STAGE_QUEUED\x10\x01\x12\x1b\n\x17\x44\x45TECTION_STAGE_CLAIMED\x10\x02\x12\x1c\n\x18\x44\x45TECTION_STAGE_FINISHED\x10\x03*h\n\x0f\x44\x65tectionStatus\x12\x19\n\x15\x44\x45TECTION_STATUS_NONE\x10\x00\x12\x1c\n\x18\x44\x45TECTION_STATUS_SUCCESS\x10\x01\x12\x1c\n\x18\x44\x45TECTION_STATUS_FAILURE\x10\x02*`\n\nOptOutType\x12\x10\n\x0cOPT_OUT_NONE\x10\x00\x12\x0f\n\x0bOPT_OUT_ALL\x10\x01\x12\x15\n\x11OPT_OUT_DETECTION\x10\x02\x12\x18\n\x14OPT_OUT_LOCALIZATION\x10\x03*e\n\x0fVideoOptOutType\x12\x1b\n\x17VIDEO_OPT_OUT_DETECTION\x10\x00\x12\x1a\n\x16VIDEO_OPT_OUT_TEMPORAL\x10\x01\x12\x19\n\x15VIDEO_OPT_OUT_SPATIAL\x10\x02\x32\xb7\x03\n\x08\x41nalytic\x12\x62\n\x17\x44\x65tectImageManipulation\x12&.mediforproto.ImageManipulationRequest\x1a\x1f.mediforproto.ImageManipulation\x12P\n\x11\x44\x65tectImageSplice\x12 .mediforproto.ImageSpliceRequest\x1a\x19.mediforproto.ImageSplice\x12\x62\n\x17\x44\x65tectVideoManipulation\x12&.mediforproto.VideoManipulationRequest\x1a\x1f.mediforproto.VideoManipulation\x12_\n\x16\x44\x65tectImageCameraMatch\x12%.mediforproto.ImageCameraMatchRequest\x1a\x1e.mediforproto.ImageCameraMatch\x12\x30\n\x04Kill\x12\x13.mediforproto.Empty\x1a\x13.mediforproto.Emptyb\x06proto3')
   ,
   dependencies=[google_dot_rpc_dot_status__pb2.DESCRIPTOR,])
 
@@ -138,8 +138,8 @@ _MANIPULATIONTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=3581,
-  serialized_end=4124,
+  serialized_start=3797,
+  serialized_end=4340,
 )
 _sym_db.RegisterEnumDescriptor(_MANIPULATIONTYPE)
 
@@ -169,8 +169,8 @@ _SPECIFICITYTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=4126,
-  serialized_end=4211,
+  serialized_start=4342,
+  serialized_end=4427,
 )
 _sym_db.RegisterEnumDescriptor(_SPECIFICITYTYPE)
 
@@ -200,8 +200,8 @@ _DETECTIONSTAGE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=4214,
-  serialized_end=4343,
+  serialized_start=4430,
+  serialized_end=4559,
 )
 _sym_db.RegisterEnumDescriptor(_DETECTIONSTAGE)
 
@@ -227,8 +227,8 @@ _DETECTIONSTATUS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=4345,
-  serialized_end=4449,
+  serialized_start=4561,
+  serialized_end=4665,
 )
 _sym_db.RegisterEnumDescriptor(_DETECTIONSTATUS)
 
@@ -258,8 +258,8 @@ _OPTOUTTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=4451,
-  serialized_end=4547,
+  serialized_start=4667,
+  serialized_end=4763,
 )
 _sym_db.RegisterEnumDescriptor(_OPTOUTTYPE)
 
@@ -285,8 +285,8 @@ _VIDEOOPTOUTTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=4549,
-  serialized_end=4650,
+  serialized_start=4765,
+  serialized_end=4866,
 )
 _sym_db.RegisterEnumDescriptor(_VIDEOOPTOUTTYPE)
 
@@ -777,6 +777,43 @@ _IMAGELOCALIZATION = _descriptor.Descriptor(
 )
 
 
+_IMAGEMANIPULATION_FACETSENTRY = _descriptor.Descriptor(
+  name='FacetsEntry',
+  full_name='mediforproto.ImageManipulation.FacetsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='mediforproto.ImageManipulation.FacetsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='mediforproto.ImageManipulation.FacetsEntry.value', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1702,
+  serialized_end=1747,
+)
+
 _IMAGEMANIPULATION = _descriptor.Descriptor(
   name='ImageManipulation',
   full_name='mediforproto.ImageManipulation',
@@ -792,56 +829,63 @@ _IMAGEMANIPULATION = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='confidence', full_name='mediforproto.ImageManipulation.confidence', index=1,
+      name='facets', full_name='mediforproto.ImageManipulation.facets', index=1,
+      number=10, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='confidence', full_name='mediforproto.ImageManipulation.confidence', index=2,
       number=2, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='has_confidence', full_name='mediforproto.ImageManipulation.has_confidence', index=2,
+      name='has_confidence', full_name='mediforproto.ImageManipulation.has_confidence', index=3,
       number=9, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='opt_out', full_name='mediforproto.ImageManipulation.opt_out', index=3,
+      name='opt_out', full_name='mediforproto.ImageManipulation.opt_out', index=4,
       number=3, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='explanation', full_name='mediforproto.ImageManipulation.explanation', index=4,
+      name='explanation', full_name='mediforproto.ImageManipulation.explanation', index=5,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='localization', full_name='mediforproto.ImageManipulation.localization', index=5,
+      name='localization', full_name='mediforproto.ImageManipulation.localization', index=6,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='specificity', full_name='mediforproto.ImageManipulation.specificity', index=6,
+      name='specificity', full_name='mediforproto.ImageManipulation.specificity', index=7,
       number=6, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='manipulation_type', full_name='mediforproto.ImageManipulation.manipulation_type', index=7,
+      name='manipulation_type', full_name='mediforproto.ImageManipulation.manipulation_type', index=8,
       number=7, type=14, cpp_type=8, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='supplement', full_name='mediforproto.ImageManipulation.supplement', index=8,
+      name='supplement', full_name='mediforproto.ImageManipulation.supplement', index=9,
       number=8, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -850,7 +894,7 @@ _IMAGEMANIPULATION = _descriptor.Descriptor(
   ],
   extensions=[
   ],
-  nested_types=[],
+  nested_types=[_IMAGEMANIPULATION_FACETSENTRY, ],
   enum_types=[
   ],
   serialized_options=None,
@@ -860,7 +904,7 @@ _IMAGEMANIPULATION = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=1287,
-  serialized_end=1639,
+  serialized_end=1747,
 )
 
 
@@ -911,8 +955,8 @@ _IMAGEMANIPULATIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1641,
-  serialized_end=1765,
+  serialized_start=1749,
+  serialized_end=1873,
 )
 
 
@@ -984,10 +1028,47 @@ _VIDEOLOCALIZATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1768,
-  serialized_end=2126,
+  serialized_start=1876,
+  serialized_end=2234,
 )
 
+
+_VIDEOMANIPULATION_FACETSENTRY = _descriptor.Descriptor(
+  name='FacetsEntry',
+  full_name='mediforproto.VideoManipulation.FacetsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='mediforproto.VideoManipulation.FacetsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='mediforproto.VideoManipulation.FacetsEntry.value', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1702,
+  serialized_end=1747,
+)
 
 _VIDEOMANIPULATION = _descriptor.Descriptor(
   name='VideoManipulation',
@@ -1004,56 +1085,63 @@ _VIDEOMANIPULATION = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='confidence', full_name='mediforproto.VideoManipulation.confidence', index=1,
+      name='facets', full_name='mediforproto.VideoManipulation.facets', index=1,
+      number=10, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='confidence', full_name='mediforproto.VideoManipulation.confidence', index=2,
       number=2, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='has_confidence', full_name='mediforproto.VideoManipulation.has_confidence', index=2,
+      name='has_confidence', full_name='mediforproto.VideoManipulation.has_confidence', index=3,
       number=9, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='opt_out', full_name='mediforproto.VideoManipulation.opt_out', index=3,
+      name='opt_out', full_name='mediforproto.VideoManipulation.opt_out', index=4,
       number=3, type=14, cpp_type=8, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='explanation', full_name='mediforproto.VideoManipulation.explanation', index=4,
+      name='explanation', full_name='mediforproto.VideoManipulation.explanation', index=5,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='localization', full_name='mediforproto.VideoManipulation.localization', index=5,
+      name='localization', full_name='mediforproto.VideoManipulation.localization', index=6,
       number=5, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='specificity', full_name='mediforproto.VideoManipulation.specificity', index=6,
+      name='specificity', full_name='mediforproto.VideoManipulation.specificity', index=7,
       number=6, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='manipulation_type', full_name='mediforproto.VideoManipulation.manipulation_type', index=7,
+      name='manipulation_type', full_name='mediforproto.VideoManipulation.manipulation_type', index=8,
       number=7, type=14, cpp_type=8, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='supplement', full_name='mediforproto.VideoManipulation.supplement', index=8,
+      name='supplement', full_name='mediforproto.VideoManipulation.supplement', index=9,
       number=8, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -1062,7 +1150,7 @@ _VIDEOMANIPULATION = _descriptor.Descriptor(
   ],
   extensions=[
   ],
-  nested_types=[],
+  nested_types=[_VIDEOMANIPULATION_FACETSENTRY, ],
   enum_types=[
   ],
   serialized_options=None,
@@ -1071,8 +1159,8 @@ _VIDEOMANIPULATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2129,
-  serialized_end=2486,
+  serialized_start=2237,
+  serialized_end=2702,
 )
 
 
@@ -1158,8 +1246,8 @@ _VIDEOMANIPULATIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2489,
-  serialized_end=2720,
+  serialized_start=2705,
+  serialized_end=2936,
 )
 
 
@@ -1245,8 +1333,8 @@ _LINK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2723,
-  serialized_end=3004,
+  serialized_start=2939,
+  serialized_end=3220,
 )
 
 
@@ -1283,8 +1371,8 @@ _IMAGESPLICE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3006,
-  serialized_end=3096,
+  serialized_start=3222,
+  serialized_end=3312,
 )
 
 
@@ -1335,8 +1423,8 @@ _IMAGESPLICEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3099,
-  serialized_end=3246,
+  serialized_start=3315,
+  serialized_end=3462,
 )
 
 
@@ -1401,8 +1489,8 @@ _IMAGECAMERAMATCH = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3249,
-  serialized_end=3447,
+  serialized_start=3465,
+  serialized_end=3663,
 )
 
 
@@ -1453,8 +1541,8 @@ _IMAGECAMERAMATCHREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3449,
-  serialized_end=3569,
+  serialized_start=3665,
+  serialized_end=3785,
 )
 
 
@@ -1477,8 +1565,8 @@ _EMPTY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3571,
-  serialized_end=3578,
+  serialized_start=3787,
+  serialized_end=3794,
 )
 
 _DETECTION.fields_by_name['status'].message_type = google_dot_rpc_dot_status__pb2._STATUS
@@ -1521,6 +1609,8 @@ _MASKINTRANGE.fields_by_name['mask'].message_type = _RESOURCE
 _SCOREDFLOATRANGE.fields_by_name['range'].message_type = _FLOATRANGE
 _IMAGELOCALIZATION.fields_by_name['mask'].message_type = _RESOURCE
 _IMAGELOCALIZATION.fields_by_name['mask_optout'].message_type = _RESOURCE
+_IMAGEMANIPULATION_FACETSENTRY.containing_type = _IMAGEMANIPULATION
+_IMAGEMANIPULATION.fields_by_name['facets'].message_type = _IMAGEMANIPULATION_FACETSENTRY
 _IMAGEMANIPULATION.fields_by_name['opt_out'].enum_type = _OPTOUTTYPE
 _IMAGEMANIPULATION.fields_by_name['localization'].message_type = _IMAGELOCALIZATION
 _IMAGEMANIPULATION.fields_by_name['specificity'].enum_type = _SPECIFICITYTYPE
@@ -1533,6 +1623,8 @@ _VIDEOLOCALIZATION.fields_by_name['audio_detection'].message_type = _SCOREDFLOAT
 _VIDEOLOCALIZATION.fields_by_name['audio_optout'].message_type = _FLOATRANGE
 _VIDEOLOCALIZATION.fields_by_name['video_mask'].message_type = _MASKINTRANGE
 _VIDEOLOCALIZATION.fields_by_name['video_mask_optout'].message_type = _MASKINTRANGE
+_VIDEOMANIPULATION_FACETSENTRY.containing_type = _VIDEOMANIPULATION
+_VIDEOMANIPULATION.fields_by_name['facets'].message_type = _VIDEOMANIPULATION_FACETSENTRY
 _VIDEOMANIPULATION.fields_by_name['opt_out'].enum_type = _VIDEOOPTOUTTYPE
 _VIDEOMANIPULATION.fields_by_name['localization'].message_type = _VIDEOLOCALIZATION
 _VIDEOMANIPULATION.fields_by_name['specificity'].enum_type = _SPECIFICITYTYPE
@@ -1641,11 +1733,19 @@ ImageLocalization = _reflection.GeneratedProtocolMessageType('ImageLocalization'
 _sym_db.RegisterMessage(ImageLocalization)
 
 ImageManipulation = _reflection.GeneratedProtocolMessageType('ImageManipulation', (_message.Message,), dict(
+
+  FacetsEntry = _reflection.GeneratedProtocolMessageType('FacetsEntry', (_message.Message,), dict(
+    DESCRIPTOR = _IMAGEMANIPULATION_FACETSENTRY,
+    __module__ = 'medifor.v1.analytic_pb2'
+    # @@protoc_insertion_point(class_scope:mediforproto.ImageManipulation.FacetsEntry)
+    ))
+  ,
   DESCRIPTOR = _IMAGEMANIPULATION,
   __module__ = 'medifor.v1.analytic_pb2'
   # @@protoc_insertion_point(class_scope:mediforproto.ImageManipulation)
   ))
 _sym_db.RegisterMessage(ImageManipulation)
+_sym_db.RegisterMessage(ImageManipulation.FacetsEntry)
 
 ImageManipulationRequest = _reflection.GeneratedProtocolMessageType('ImageManipulationRequest', (_message.Message,), dict(
   DESCRIPTOR = _IMAGEMANIPULATIONREQUEST,
@@ -1662,11 +1762,19 @@ VideoLocalization = _reflection.GeneratedProtocolMessageType('VideoLocalization'
 _sym_db.RegisterMessage(VideoLocalization)
 
 VideoManipulation = _reflection.GeneratedProtocolMessageType('VideoManipulation', (_message.Message,), dict(
+
+  FacetsEntry = _reflection.GeneratedProtocolMessageType('FacetsEntry', (_message.Message,), dict(
+    DESCRIPTOR = _VIDEOMANIPULATION_FACETSENTRY,
+    __module__ = 'medifor.v1.analytic_pb2'
+    # @@protoc_insertion_point(class_scope:mediforproto.VideoManipulation.FacetsEntry)
+    ))
+  ,
   DESCRIPTOR = _VIDEOMANIPULATION,
   __module__ = 'medifor.v1.analytic_pb2'
   # @@protoc_insertion_point(class_scope:mediforproto.VideoManipulation)
   ))
 _sym_db.RegisterMessage(VideoManipulation)
+_sym_db.RegisterMessage(VideoManipulation.FacetsEntry)
 
 VideoManipulationRequest = _reflection.GeneratedProtocolMessageType('VideoManipulationRequest', (_message.Message,), dict(
   DESCRIPTOR = _VIDEOMANIPULATIONREQUEST,
@@ -1718,6 +1826,8 @@ Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), d
 _sym_db.RegisterMessage(Empty)
 
 
+_IMAGEMANIPULATION_FACETSENTRY._options = None
+_VIDEOMANIPULATION_FACETSENTRY._options = None
 
 _ANALYTIC = _descriptor.ServiceDescriptor(
   name='Analytic',
@@ -1725,8 +1835,8 @@ _ANALYTIC = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=4653,
-  serialized_end=5092,
+  serialized_start=4869,
+  serialized_end=5308,
   methods=[
   _descriptor.MethodDescriptor(
     name='DetectImageManipulation',
