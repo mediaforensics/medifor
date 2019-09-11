@@ -186,12 +186,15 @@ message ImageLocalization {
   double mask_threshold = 3;
 }
 
-// Next ID: 10
+// Next ID: 11
 message ImageManipulation {
   // A value in [0, 1], where 1 indicates "definitely manipulated" and 0 means
   // "definitely not". Leave unset (default value) if not used, and indicate that
   // with an appropriate opt_out value.
   double score = 1;
+
+  // A map of manipulation type names to confidence that they apply.
+  map<string, double> facets = 10;
 
   // Set has_confidence to true and set a confidence value between 0 and 1 if
   // you know how confident you are about your score. 0 is "not at all confident"
@@ -275,11 +278,14 @@ message VideoLocalization {
   double video_mask_threshold = 7;
 }
 
-// Next ID: 10
+// Next ID: 11
 message VideoManipulation {
   // A value in [0, 1] where 1 indicates "definitely manipulated".
   // Leave as the default if detection is opted out.
   double score = 1;
+
+  // A map of manipulation type names to confidence that they apply.
+  map<string, double> facets = 10;
 
   // Set has_confidence to true and set a confidence value between 0 and 1 if
   // you know how confident you are about your score. 0 is "not at all confident"
