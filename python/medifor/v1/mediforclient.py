@@ -63,22 +63,6 @@ additional_video_types = frozenset([
     "application/mxf"
 ])
 
-def get_media_type(uri):
-    """
-    'get_media_type' takes a filepath and returns the typestring and media type.
-    If the mimetype is not discernable, the typestring returned will be
-    "application/octet-stream", and the media type "application".
-    """
-    filename, ext = os.path.splitext(uri)
-    typestring = mimetypes.types_map.get(ext, 'application/octet-stream')
-
-    if typestring in additional_video_types:
-        return typestring, 'video'
-
-    if typestring in additional_image_types:
-        return typestring, 'image'
-
-    return typestring, typestring.split("/")[0]
 
 def _map_src_targ(src, targ, fname):
     src = os.path.normpath(os.path.abspath(os.path.expanduser(src))).rstrip('/')
@@ -133,7 +117,6 @@ class StreamingClient(streamingproxy_pb2_grpc.StreamingProxyStub):
         channel = grpc.insecure_channel(self.addr)
         super(StreamingClient, self).__init__(channel)
         self.health_stub = health_pb2_grpc.HealthStub(channel)
-        print("StreamingClient listening on %s", self.addr)
 
     def detect(self, detection, local_dir):
         det = None
@@ -317,7 +300,7 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
     def detect_batch(self, dir, output_dir):
         """
         Traverses an input directory building and sending the appropriate request
-        proto based on the media type of the files.
+        proto based on the media mtype of the files.
 
         Args:
             dir: The input directoy containing media files.  Should contain only
@@ -335,16 +318,16 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
         output_dir = self.o_map(output_dir)
         results = {}
         for f in files:
-            mime, type = get_media_type(f)
+            mime, mtype = get_media_type(f)
             f = self.map(f)
-            logging.info("Processing {!s} of type {!s}".format(f, type))
-            if type == "image":
+            logging.info("Processing {!s} of type {!s}".format(f,mtype))
+            if mtype == "image":
                 task = "imgManip"
                 req = analytic_pb2.ImageManipulationRequest()
                 req.image.uri = f
                 req.image.type = mime
 
-            elif type == "video":
+            elif mtype == "video":
                 task = "vidManip"
                 req = analytic_pb2.VideoManipulationRequest()
                 req.video.uri = f
@@ -368,8 +351,8 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
             det.img_splice_req.MergeFrom(req)
             # stream_data.append(det)
         else:
-            mime, type = get_media_type(probe)
-            if type == "image":
+            mime, mtype = get_media_type(probe)
+            if mtype == "image":
                 task = "imgManip"
                 req = analytic_pb2.ImageManipulationRequest()
                 req.image.uri = self.map(probe)
@@ -379,7 +362,7 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
                 det.img_manip_req.MergeFrom(req)
                 # stream_data.append(det)
 
-            elif type == "video":
+            elif mtype == "video":
                 task = "vidManip"
                 req = analytic_pb2.VideoManipulationRequest()
                 req.video.uri = self.map(probe)

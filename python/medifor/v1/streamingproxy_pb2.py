@@ -20,8 +20,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='medifor/v1/streamingproxy.proto',
   package='mediforproto',
   syntax='proto3',
-  serialized_options=_b('\n\030com.mediforprogram.protoB\023StreamingProxyProtoZ@gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforproto'),
-  serialized_pb=_b('\n\x1fmedifor/v1/streamingproxy.proto\x12\x0cmediforproto\x1a\x17google/rpc/status.proto\x1a\x19medifor/v1/analytic.proto\"`\n\tFileChunk\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x11\n\tmime_type\x18\x02 \x01(\t\x12\x0e\n\x06offset\x18\x03 \x01(\x03\x12\x13\n\x0btotal_bytes\x18\x04 \x01(\x03\x12\r\n\x05value\x18\x05 \x01(\x0c\"v\n\x0e\x44\x65tectionChunk\x12,\n\tdetection\x18\x01 \x01(\x0b\x32\x17.mediforproto.DetectionH\x00\x12-\n\nfile_chunk\x18\x02 \x01(\x0b\x32\x17.mediforproto.FileChunkH\x00\x42\x07\n\x05value2`\n\x0eStreamingProxy\x12N\n\x0c\x44\x65tectStream\x12\x1c.mediforproto.DetectionChunk\x1a\x1c.mediforproto.DetectionChunk(\x01\x30\x01\x42q\n\x18\x63om.mediforprogram.protoB\x13StreamingProxyProtoZ@gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforprotob\x06proto3')
+  serialized_options=None,
+  serialized_pb=_b('\n\x1fmedifor/v1/streamingproxy.proto\x12\x0cmediforproto\x1a\x17google/rpc/status.proto\x1a\x19medifor/v1/analytic.proto\"`\n\tFileChunk\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x11\n\tmime_type\x18\x02 \x01(\t\x12\x0e\n\x06offset\x18\x03 \x01(\x03\x12\x13\n\x0btotal_bytes\x18\x04 \x01(\x03\x12\r\n\x05value\x18\x05 \x01(\x0c\"v\n\x0e\x44\x65tectionChunk\x12,\n\tdetection\x18\x01 \x01(\x0b\x32\x17.mediforproto.DetectionH\x00\x12-\n\nfile_chunk\x18\x02 \x01(\x0b\x32\x17.mediforproto.FileChunkH\x00\x42\x07\n\x05value2`\n\x0eStreamingProxy\x12N\n\x0c\x44\x65tectStream\x12\x1c.mediforproto.DetectionChunk\x1a\x1c.mediforproto.DetectionChunk(\x01\x30\x01\x62\x06proto3')
   ,
   dependencies=[google_dot_rpc_dot_status__pb2.DESCRIPTOR,medifor_dot_v1_dot_analytic__pb2.DESCRIPTOR,])
 
@@ -154,7 +154,6 @@ DetectionChunk = _reflection.GeneratedProtocolMessageType('DetectionChunk', (_me
 _sym_db.RegisterMessage(DetectionChunk)
 
 
-DESCRIPTOR._options = None
 
 _STREAMINGPROXY = _descriptor.ServiceDescriptor(
   name='StreamingProxy',
