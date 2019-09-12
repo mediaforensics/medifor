@@ -1,0 +1,301 @@
+syntax = "proto3";
+
+package workflowproto;
+
+import "medifor/v1/analytic.proto"; 
+import "medifor/v1/fusion.proto"; 
+
+enum DetectionStage {
+  DETECTION_STAGE_NONE = 0;
+  DETECTION_STAGE_QUEUED = 1;
+  DETECTION_STAGE_CLAIMED = 2;
+  DETECTION_STAGE_FINISHED = 3;
+}
+
+enum DetectionStatus {
+  DETECTION_STATUS_NONE = 0;
+  DETECTION_STATUS_SUCCESS = 1;
+  DETECTION_STATUS_FAILURE = 2;
+}
+
+enum SortKey {
+  SCORE = 0;
+  META = 1;
+}
+
+enum FusionThresholdType {
+  FUSION_NO_THRESHOLD = 0;
+  FUSION_LT_THRESHOLD = 1;
+  FUSION_GT_THRESHOLD = 2;
+}
+
+// SortCol identifies the column to sort by and whether to sort in ascending order
+// Next tag: 6
+message SortCol {
+  // Column to sort on
+  SortKey key = 1;
+
+  // Bool for sorting in ascending order (if false sorts in descending order)
+  bool is_asc = 2;
+
+  // What type to cast the key into if necessary
+  string type_cast = 3;
+
+  // Metadata key to sort by if using metadata
+  string meta_key = 4;
+
+  // // Fuser ID on which to sort by score
+  // string fuser_id = 5;
+}
+
+// DetectionRequest contains a MediFor detection object as well as a list of
+// analytic ids and fusion ids. TODO: if none specified, default to all?
+// Next Tag: 9
+message DetectionRequest {
+  // An optional ID for this detection. If not provided, one will be assigned.
+  // Must be unique from any other provided ID: a collision will prevent
+  // this request from being fulfilled.
+  string id = 3;
+
+  // A Detection proto with just the important request parts filled out.
+  mediforproto.Detection request = 1;
+
+  // The analytics to run.
+  repeated string analytic_id = 2;
+
+  // Fusers to run automatically when all analytics are done.
+  repeated string fuser_id = 8;
+
+  // Tags to apply to this detection. When in doubt, use user_tags instead.
+  map<string, string> tags = 4;
+
+  // User tags to apply to this detection. When in doubt, use this one.
+  map<string, string> user_tags = 6;
+
+  // Metadata table as needed. Pass-through.
+  map<string, string> meta = 7;
+
+  // Timeout in seconds after which an analytic worker will die waiting for the
+  // analytic to respond. Default is "no timeout" (0 seconds).
+  int64 analytic_timeout_sec = 5;
+}
+
+// AnalyticDetectionInfo provides details on the status of a detection being
+// performed by a given analytic.
+// Next ID: 5
+message AnalyticDetectionInfo {
+  // The analytic that produced this result.
+  string analytic_id = 1;
+
+  // Current processing stage for the entire detection event (all analytics) if
+  // in progress, or PT_STAGE_FINISHED if completed. When complete, the status
+  // field will have a non-default value.
+  DetectionStage stage = 2;
+
+  // Final status when we are in PT_STAGE_FINISHED.
+  DetectionStatus status = 3;
+
+  // The Detection with the result and status filled out (and the request).
+  // If the response and status are empty (default), then it is not finished.
+  mediforproto.Detection detection = 4;
+}
+
+// DetectionInfo provides details on a given detection event specified by the id.
+// Next Tag: 11
+message DetectionInfo {
+  // The detection event ID.
+  string id = 1;
+
+  // Results for individual analytics.
+  repeated AnalyticDetectionInfo analytic_info = 2;
+
+  // Results for fusion analytics
+  repeated FuserFusionInfo fusion_info = 8;
+
+  // Tags for the requested detection.
+  map<string, string> tags = 3;
+  map<string, string> user_tags = 6;
+  map<string, string> meta = 7;
+
+  // A fused score, if requested.
+  bool has_fused = 4;
+  double fused_score = 5;
+
+  // Progress indicator across all analytics.
+  int32 analytics_total = 9;
+  int32 analytics_finished = 10;
+}
+
+// DetectionInfoRequest contains the ID of an individual detection event.
+message DetectionInfoRequest {
+  // The ID of the detection, as returned by Detect or GetDetectionList.
+  string id = 1;
+
+  // If specified, fused scores will be returned as well.
+  bool want_fused = 2;
+}
+
+// Next Tag: 10
+message DetectionListRequest {
+  // If specified (can be empty), all listed tags (both key and value) must be
+  // simultaneously present for a detection ID to be returned.
+  map<string, string> tags = 1;
+
+  // If specified, only returns results from the given list of detection IDs.
+  // Good for returning a single detection or one of a few. Not great for very
+  // long lists (thousands).
+  repeated string detection_ids = 7;
+
+  // Specify that detection info objects should have fusion scores.
+  bool want_fused = 4;
+
+  // A series of keys to sort on, with the first key being the primary sort key
+  // and following ones being seconday, tertiary, etc...
+  repeated SortCol order_by = 5;
+
+  // Fusion ID on which to sort by fusion score.
+  string fuser_id = 6;
+
+  // Fusion score threshold, if needed. Only used if the threshold type is not the default value (no threshold).
+  FusionThresholdType fusion_threshold_type = 8;
+  float fusion_threshold_value = 9;
+
+  // Maximum number of items in the response. Optional.
+  int32 page_size = 2;
+
+  // If a token was returned in the response, this can be used to continue
+  // where the previous response left off.
+  string page_token = 3;
+}
+
+// DetectionList provides a list of DetectionInfo objects.
+// Next Tag: 4
+message DetectionList {
+  repeated DetectionInfo detections = 1;
+
+  // Total detections in the filtered list.
+  int32 total = 3;
+
+  // If this is non-empty, there are more results to be returned. Pass it into
+  // a DetectionListRequest to obtain remaining results.
+  string page_token = 2;
+}
+
+// FusionRequest contains a fusion object or a list of detectionIDs to be fused.
+// Next ID: 7
+message FusionRequest{
+  // An optional ID for this fusion. If not provided, one will be assigned.
+  // Must be unique from any other provided ID: a collision will prevent
+  // this request from being fulfilled.
+  string id = 1;
+
+  // A Fusion Proto containing the original probe as well as the detection objects from
+  // each analytic that ran over that probe.
+  mediforproto.Fusion request = 2;
+
+  // IDs for the fusion analytics
+  repeated string fuser_id = 4;
+
+  // Tags to apply to this fusion.  To be inserted into the database as json.
+  map<string, string> tags = 3;
+
+  // DetectionID for the probes on which to perform fusion if no request is specified
+  string detection_id = 5;
+
+  // Output directory to use ONLY if building request from a detection ID
+  string detection_id_out_dir = 6;
+}
+
+// AnalyticDetectionInfo provides details on the status of a detection being
+// performed by a given analytic.
+// Next ID: 5
+message FuserFusionInfo {
+  // The fusion algorithmc that produced this result.
+  string fuser_id = 1;
+
+  // Current processing stage for the entire detection event (all analytics) if
+  // in progress, or PT_STAGE_FINISHED if completed. When complete, the status
+  // field will have a non-default value.
+  DetectionStage stage = 2;
+
+  // Final status when we are in PT_STAGE_FINISHED.
+  DetectionStatus status = 3;
+
+  // The Fusion with the result and status filled out (and the request).
+  // If the response and status are empty (default), then it is not finished.
+  mediforproto.Fusion fusion = 4;
+}
+
+// FusionInfo provides details on a given fusion event specified by the ID.
+message FusionInfo {
+  // Fusion event ID.
+  string id = 1;
+
+  // Results for individual fusion analytics.
+  repeated FuserFusionInfo fusion_infos = 2;
+
+  // Tags for the requested fusion.
+  map<string, string> tags = 3;
+
+  // A fused score, if requested.
+  bool has_fused = 4;
+  double fused_score = 5;
+}
+
+message FuseAllIDsRequest {
+  repeated string fuser_id = 1;
+  string out_dir = 2;
+}
+
+message FuseAllIDsResponse {
+}
+
+// UpdateDetectionTagsRequest contains new tags to replace or merge with existing tags.
+// Next Tag: 5
+message UpdateDetectionTagsRequest {
+  // The detection ID to update.
+  string detection_id = 1;
+
+  // If true, replaces all user tags with the given tag set. Default is to
+  // merge (replacing any duplicates, but leaving unmentioned tag keys alone).
+  // Ignores delete_tags if set.
+  bool replace = 2;
+
+  // Tags to use in the request. Only updates user tags, not bare system tags.
+  map<string, string> tags = 3;
+
+  // Tag keys to delete. Only used if replace is false.
+  repeated string delete_tags = 4;
+}
+
+// DetectionTagInfoRequest asks for high-level information about detection tags.
+message DetectionTagInfoRequest {
+}
+
+// DetectionTagInfo contains high-level information about detection tags.
+message DetectionTagInfo {
+  // Contains mapping from "key=value" to number of times that specific key/value pair is found.
+  map<string, int32> tag_counts = 1;
+
+  // Contains mapping from "key=value" in *user tags* to number of times they appear.
+  // Note that this can have overlap with system tags, and it will report these separately.
+  map<string, int32> user_tag_counts = 2;
+}
+
+message DeleteDetectionRequest {
+  string detection_id = 1;
+}
+
+message Empty {}
+
+service Pipeline {
+  rpc Detect(DetectionRequest) returns (DetectionInfo);
+  rpc GetDetectionInfo(DetectionInfoRequest) returns (DetectionInfo);
+  rpc GetDetectionList(DetectionListRequest) returns (DetectionList);
+  rpc DeleteDetection(DeleteDetectionRequest) returns (Empty);
+  rpc Fuse(FusionRequest) returns (FusionInfo);
+  rpc FuseByID(FusionRequest) returns (FusionInfo);
+  rpc FuseAllIDs(FuseAllIDsRequest) returns (FuseAllIDsResponse);
+  rpc UpdateDetectionTags(UpdateDetectionTagsRequest) returns (DetectionInfo);
+  rpc GetDetectionTagInfo(DetectionTagInfoRequest) returns (DetectionTagInfo);
+}

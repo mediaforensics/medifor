@@ -31,7 +31,9 @@ setup(name=pkg_name,
           'protobuf==3.6.1',
           'googleapis-common-protos==1.6.0',
           'Click==7.0',
-          'pillow==6.1.0'
+          'pillow==6.1.0',
+          'dataclasses==0.6',
+          'six==1.12.0'
       ],
       data_files=list(iter_protos(pkg_name)),
       py_modules=[
@@ -45,6 +47,10 @@ setup(name=pkg_name,
           'medifor.v1.analyticservice',
           'medifor.v1.fusionservice',
           'medifor.v1.mediforclient',
-          'medifor.v1.cli'
+          'medifor.v1.cli',
+          'medifor.v1.pipeclient',
+          'medifor.v1.pipeline_pb2',
+          'medifor.v1.pipeline_pb2_grpc',
+          'medifor.v1.medifortools'
       ]
       )
