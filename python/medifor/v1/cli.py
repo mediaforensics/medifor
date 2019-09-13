@@ -46,9 +46,10 @@ def vidmanip(ctx, vid, out):
 @click.pass_context
 @click.option('--dir', '-d', required=True, help="Input directory containing images or videos.")
 @click.option('--out', '-o', required=True, help="Output directory for analytic to use.")
-def detectbatch(ctx, dir, out):
+@click.option('--make_dirs/--no-make_dirs', '-m', default=False, help="If true, will make subdirectories using the request_id from the client (only works if client has access to the container's output directory)")
+def detectbatch(ctx, dir, out, make_dirs):
     client = ctx.obj.client
-    results = client.detect_batch(dir, out)
+    results = client.detect_batch(dir, out, make_dirs)
     output_dict = {}
     for id, resp in results.items():
         json_resp = json_format.MessageToJson(resp)

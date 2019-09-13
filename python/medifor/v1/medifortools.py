@@ -1,4 +1,5 @@
 import mimetypes
+import os
 
 from medifor.v1 import analytic_pb2, pipeline_pb2
 
@@ -64,6 +65,30 @@ def get_media_type(uri):
 
     return typestring, typestring.split("/")[0]
 
+def get_detection(media, output_dir, request_id=None):
+    mime, mtype = get_media_type(media)
+    det = analytic_pb2.Detection()
+    if not request_id:
+        request_id = str(uuid.uuid4())
+    if mtype == "image":
+        req = analytic_pb2.ImageManipulationRequest()
+        req.image.uri = self.map(media)
+        req.image.type = mime
+        req.request_id = request_id
+        req.out_dir = output_dir
+        det.img_manip_req.MergeFrom(req)
+    elif mtype == "video":    
+        req = analytic_pb2.VideoManipulationRequest()
+        req.video.uri = self.map(media)
+        req.video.type = mime
+        req.request_id = str(uuid.uuid4())
+        req.out_dir = output_dir
+        det.vid_manip_req.MergeFrom(req)
+    else:
+        raise ValueError("Invalid media type. {!s} is not currently supported".format(mtype))
+
+    return det
+
 def get_detection_req(media):
     mime, mtype = get_media_type(media)
     return analytic_req_map[mtype]
@@ -84,6 +109,7 @@ def get_pipeline_req(media, detection_id="", analytic_ids=[], out_dir="", fuser_
         req.img_manip_req.copyFrom(vid_req)
     else:
         raise ValueError("Unsupported media format.  Could not regocnize the mimetype for {!s}".format(media))
+    
     req.detection_id = detection_id
     req.analytic_id.extend(analytic_ids)
     req.out_dir = out_dir
