@@ -16,6 +16,7 @@ from google.protobuf import json_format
 
 from medifor.v1 import analytic_pb2, analytic_pb2_grpc, streamingproxy_pb2, streamingproxy_pb2_grpc
 from medifor.v1.analyticservice import rewrite_uris, get_uris
+from medifor.v1.medifortools import get_detection, get_detection_req, get_media_type
 
 """
 Initialize mimetypes library and add additional mimetypes not currently recognized.
@@ -228,7 +229,7 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
     def health(self):
         return self.health_stub.Check(health_pb2.HealthCheckRequest())
 
-    def detect_one(self, req, task):
+    def detect_one(self, req):
         """
         Calls the specified analytic service and returns result.
 
@@ -244,9 +245,9 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
             The response protobuf returned by the analytic.
         """
 
-        if task == "imgManip":
+        if req.DESCRIPTOR.name == "ImageManipulationRequest":
             return self.DetectImageManipulation(req)
-        elif task == "vidManip":
+        elif req.DESCRIPTOR.name == "VideoManipulationRequest":
             return self.DetectVideoManipulation(req)
         else:
             logging.error("Invalid Task")
@@ -272,7 +273,7 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
         req.request_id = str(uuid.uuid4())
         req.out_dir = output_dir
 
-        return self.detect_one(req, "imgManip")
+        return self.detect_one(req)
 
     def vid_manip(self, vid, output_dir):
         """
@@ -294,10 +295,10 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
         req.request_id = str(uuid.uuid4())
         req.out_dir = output_dir
 
-        return self.detect_one(req, "vidManip")
+        return self.detect_one(req)
 
 
-    def detect_batch(self, dir, output_dir):
+    def detect_batch(self, dir, out, make_dirs=False):
         """
         Traverses an input directory building and sending the appropriate request
         proto based on the media mtype of the files.
@@ -315,9 +316,10 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
         """
         # Simple directory parsing, assume one level and only image/video files
         for _, _, files in os.walk(dir): break
-        output_dir = self.o_map(output_dir)
+        output_dir = self.o_map(out)
         results = {}
         for f in files:
+            f = os.path.join(dir, f)
             mime, mtype = get_media_type(f)
             f = self.map(f)
             logging.info("Processing {!s} of type {!s}".format(f,mtype))
@@ -335,8 +337,10 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
 
             req.request_id = str(uuid.uuid4())
             req.out_dir = os.path.join(output_dir, req.request_id)
-            results[req.request_id] = self.detect_one(req, task)
-
+            if make_dirs and not os.path.exists(os.path.join(out, req.request_id)):
+                print("Making directory -- {!s}".format(os.path.join(output_dir, req.request_id)))
+                os.mkdir(os.path.join(out, req.request_id))
+            results[req.request_id] = self.detect_one(req)
         return results
 
     def stream_detection(self, probe, donor, output_dir, client_output_path):
@@ -349,26 +353,6 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
             req.request_id = str(uuid.uuid4())
             req.out_dir = out
             det.img_splice_req.MergeFrom(req)
-            # stream_data.append(det)
         else:
-            mime, mtype = get_media_type(probe)
-            if mtype == "image":
-                task = "imgManip"
-                req = analytic_pb2.ImageManipulationRequest()
-                req.image.uri = self.map(probe)
-                req.image.type = mime
-                req.request_id = str(uuid.uuid4())
-                req.out_dir = output_dir
-                det.img_manip_req.MergeFrom(req)
-                # stream_data.append(det)
-
-            elif mtype == "video":
-                task = "vidManip"
-                req = analytic_pb2.VideoManipulationRequest()
-                req.video.uri = self.map(probe)
-                req.video.type = mime
-                req.request_id = str(uuid.uuid4())
-                req.out_dir = output_dir
-                det.vid_manip_req.MergeFrom(req)
-                # stream_data.append(det)
+            det = get_detection(probe)
         return self.stream.detect(det, client_output_path)
