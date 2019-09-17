@@ -28,6 +28,11 @@ def main(ctx, host, port, src, targ, osrc, otarg):
 
 @main.command()
 @click.pass_context
+def health(ctx):
+    print(json_format.MessageToJson(ctx.obj.client.health()))
+
+@main.command()
+@click.pass_context
 @click.argument('img')
 @click.option('--out', '-o', required=True, help="Output directory for analytic to use.")
 def imgmanip(ctx, img, out):
@@ -82,7 +87,12 @@ def pipeline(ctx, host, port, src, targ, osrc, otarg):
     ctx.ensure_object(Context)
     addr = "{!s}:{!s}".format(host, port)
     ctx.obj.pipeclient = pipeclient.MediForPipeline(addr=addr, src=src, targ=targ, osrc=osrc, otarg=otarg)
-    
+
+
+@pipeline.command()
+@click.pass_context
+def health(ctx):
+    print(json_format.MessageToJson(ctx.obj.pipeclient.health()))
 
 
 @pipeline.command()
@@ -102,7 +112,6 @@ def detect(ctx, infile, analytic_id, detection_id, fuser_id, out, tag):
     tags = parse_tags(tags)
     req = medifortools(f, detection_id=detection_id, analytic_ids=analytic_id, out_dir=out, fuser_id=fuser_id, tags=tags)
     print(json_format(ctx.obj.pipeclient.Detect(req)))
-    
 
 
 @pipeline.command()
@@ -114,8 +123,6 @@ def detect(ctx, infile, analytic_id, detection_id, fuser_id, out, tag):
 @click.option("--tag", "-t", multiple=True, help="Tag maps to apply of the form `tag=value` or 'tag'.")
 def systembatch(ctx, dir, analytic_id, fuser_id, out, tag):
     print(json_format(ctx.obj.pipeclient.detect_batch(dir=dir, analytic_id=analytic_id, fuser_id=fuser_id, output_dir=out, tags=tag)))
-
-
 
 
 @pipeline.command()
