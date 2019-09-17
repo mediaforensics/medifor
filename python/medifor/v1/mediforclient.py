@@ -244,7 +244,6 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
         Returns:
             The response protobuf returned by the analytic.
         """
-
         if req.DESCRIPTOR.name == "ImageManipulationRequest":
             return self.DetectImageManipulation(req)
         elif req.DESCRIPTOR.name == "VideoManipulationRequest":
