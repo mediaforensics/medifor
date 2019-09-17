@@ -1,7 +1,9 @@
 #!/bin/python
 
 import click
+import functools
 import grpc
+import json
 import uuid
 import sys
 
@@ -15,6 +17,31 @@ from medifor.v1 import mediforclient, pipeclient, medifortools, pipeline_pb2
 
 class Context:
     pass
+
+def _rpc_error_leaf_nodes(rpc_error):
+    def _find_leaves(debug_info):
+        errs = debug_info.get('referenced_errors')
+        if debug_info is None or errs is None:
+            yield debug_info
+            return
+
+        for e in errs:
+            yield from _find_leaves(e)
+
+    debug_info = json.loads(rpc_error.debug_error_string())
+    yield from _find_leaves(debug_info)
+
+def friendly_rpc_errors(f):
+    @functools.wraps(f)
+    def wrapper(*args, **kargs):
+        try:
+            f(*args, **kargs)
+        except grpc.RpcError as e:
+            print("RPC_ERROR ({code}) {detail}:".format(code=e.code(), detail=e.details()), file=sys.stderr)
+            for root_cause in _rpc_error_leaf_nodes(e):
+                print(json.dumps(root_cause, sort_keys=True, indent=2), file=sys.stderr)
+            return
+    return wrapper
 
 @click.group()
 @click.option('--host', default='localhost', show_default=True, help='Send requests to the API service on this host.')
@@ -30,15 +57,10 @@ def main(ctx, host, port, src, targ, osrc, otarg):
 
 @main.command()
 @click.pass_context
+@friendly_rpc_errors
 def health(ctx):
     client = ctx.obj.client
-    try:
-        print(json_format.MessageToJson(client.health()))
-    except grpc.RpcError as e:
-        if e.code() == grpc.StatusCode.UNAVAILABLE:
-            print("ERROR: cannot connect to analytic service at {}".format(client.addr), file=sys.stderr)
-            return
-        raise
+    print(json_format.MessageToJson(client.health()))
 
 @main.command()
 @click.pass_context
@@ -100,15 +122,10 @@ def pipeline(ctx, host, port, src, targ, osrc, otarg):
 
 @pipeline.command()
 @click.pass_context
+@friendly_rpc_errors
 def health(ctx):
     client = ctx.obj.pipeclient
-    try:
-        print(json_format.MessageToJson(client.health()))
-    except grpc.RpcError as e:
-        if e.code() == grpc.StatusCode.UNAVAILABLE:
-            print("ERROR: cannot connect to pipeline service at {}".format(client.addr), file=sys.stderr)
-            return
-        raise
+    print(json_format.MessageToJson(client.health()))
 
 
 @pipeline.command()
