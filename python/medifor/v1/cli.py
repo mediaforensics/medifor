@@ -1,7 +1,9 @@
 #!/bin/python
 
 import click
+import grpc
 import uuid
+import sys
 
 import logging
 
@@ -29,7 +31,14 @@ def main(ctx, host, port, src, targ, osrc, otarg):
 @main.command()
 @click.pass_context
 def health(ctx):
-    print(json_format.MessageToJson(ctx.obj.client.health()))
+    client = ctx.obj.client
+    try:
+        print(json_format.MessageToJson(client.health()))
+    except grpc.RpcError as e:
+        if e.code() == grpc.StatusCode.UNAVAILABLE:
+            print("ERROR: cannot connect to analytic service at {}".format(client.addr), file=sys.stderr)
+            return
+        raise
 
 @main.command()
 @click.pass_context
@@ -92,7 +101,14 @@ def pipeline(ctx, host, port, src, targ, osrc, otarg):
 @pipeline.command()
 @click.pass_context
 def health(ctx):
-    print(json_format.MessageToJson(ctx.obj.pipeclient.health()))
+    client = ctx.obj.pipeclient
+    try:
+        print(json_format.MessageToJson(client.health()))
+    except grpc.RpcError as e:
+        if e.code() == grpc.StatusCode.UNAVAILABLE:
+            print("ERROR: cannot connect to pipeline service at {}".format(client.addr), file=sys.stderr)
+            return
+        raise
 
 
 @pipeline.command()
