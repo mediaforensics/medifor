@@ -1,7 +1,11 @@
 #!/bin/python
 
 import click
+import functools
+import grpc
+import json
 import uuid
+import sys
 
 import logging
 
@@ -14,6 +18,31 @@ from medifor.v1 import mediforclient, pipeclient, medifortools, pipeline_pb2
 class Context:
     pass
 
+def _rpc_error_leaf_nodes(rpc_error):
+    def _find_leaves(debug_info):
+        errs = debug_info.get('referenced_errors')
+        if debug_info is None or errs is None:
+            yield debug_info
+            return
+
+        for e in errs:
+            yield from _find_leaves(e)
+
+    debug_info = json.loads(rpc_error.debug_error_string())
+    yield from _find_leaves(debug_info)
+
+def friendly_rpc_errors(f):
+    @functools.wraps(f)
+    def wrapper(*args, **kargs):
+        try:
+            f(*args, **kargs)
+        except grpc.RpcError as e:
+            print("RPC_ERROR ({code}) {detail}:".format(code=e.code(), detail=e.details()), file=sys.stderr)
+            for root_cause in _rpc_error_leaf_nodes(e):
+                print(json.dumps(root_cause, sort_keys=True, indent=2), file=sys.stderr)
+            return
+    return wrapper
+
 @click.group()
 @click.option('--host', default='localhost', show_default=True, help='Send requests to the API service on this host.')
 @click.option('--port', default='50051', show_default=True, help='Send requests to the API service on this port.')
@@ -25,6 +54,13 @@ class Context:
 def main(ctx, host, port, src, targ, osrc, otarg):
     ctx.ensure_object(Context)
     ctx.obj.client = mediforclient.MediforClient(host=host, port=port,  src=src, targ=targ, osrc=osrc, otarg=otarg)
+
+@main.command()
+@click.pass_context
+@friendly_rpc_errors
+def health(ctx):
+    client = ctx.obj.client
+    print(json_format.MessageToJson(client.health()))
 
 @main.command()
 @click.pass_context
@@ -82,7 +118,14 @@ def pipeline(ctx, host, port, src, targ, osrc, otarg):
     ctx.ensure_object(Context)
     addr = "{!s}:{!s}".format(host, port)
     ctx.obj.pipeclient = pipeclient.MediForPipeline(addr=addr, src=src, targ=targ, osrc=osrc, otarg=otarg)
-    
+
+
+@pipeline.command()
+@click.pass_context
+@friendly_rpc_errors
+def health(ctx):
+    client = ctx.obj.pipeclient
+    print(json_format.MessageToJson(client.health()))
 
 
 @pipeline.command()
@@ -102,7 +145,6 @@ def detect(ctx, infile, analytic_id, detection_id, fuser_id, out, tag):
     tags = parse_tags(tags)
     req = medifortools(f, detection_id=detection_id, analytic_ids=analytic_id, out_dir=out, fuser_id=fuser_id, tags=tags)
     print(json_format(ctx.obj.pipeclient.Detect(req)))
-    
 
 
 @pipeline.command()
@@ -114,8 +156,6 @@ def detect(ctx, infile, analytic_id, detection_id, fuser_id, out, tag):
 @click.option("--tag", "-t", multiple=True, help="Tag maps to apply of the form `tag=value` or 'tag'.")
 def systembatch(ctx, dir, analytic_id, fuser_id, out, tag):
     print(json_format(ctx.obj.pipeclient.detect_batch(dir=dir, analytic_id=analytic_id, fuser_id=fuser_id, output_dir=out, tags=tag)))
-
-
 
 
 @pipeline.command()

@@ -244,7 +244,6 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
         Returns:
             The response protobuf returned by the analytic.
         """
-
         if req.DESCRIPTOR.name == "ImageManipulationRequest":
             return self.DetectImageManipulation(req)
         elif req.DESCRIPTOR.name == "VideoManipulationRequest":
@@ -312,10 +311,14 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
 
         Returns:
             A dictionary that maps the request_id (automatically generated UUID)
-            to the response proto.
+            to the response proto, or an empty dict if no files are found.
         """
         # Simple directory parsing, assume one level and only image/video files
         for _, _, files in os.walk(dir): break
+        if not files:
+            print("No files found in directory {!r}".format(dir), file=sys.stderr)
+            return {}
+
         output_dir = self.o_map(out)
         results = {}
         for f in files:
