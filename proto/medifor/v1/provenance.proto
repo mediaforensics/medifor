@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package mediforproto;
+
+import "medifor/v1/analytic.proto";
+
+// FilterRequest is used to ask a provenance analytic to return the 
+// top N matches for a given image.
+message ImageFilterRequest{
+    // Unique identifier for the request.
+    string request_id = 1;
+
+    // The image to be sent to the provenance analytic.
+    Resource image = 2;
+
+    // The number of results to return
+    int32 result_limit = 3;
+}
+
+// ImageMatch contains the image identifier and score denoting how
+// closely it matches the probe image.
+message ImageMatch {
+    // Unique identifier for the image.
+    string image_id = 1;
+
+    // The image resource.
+    Resource matching_image = 2;
+
+    // The score for the matching image.
+    float score = 3;
+}
+
+// ImageFilter contains the top N results that match the probe image
+// along with the corresponding scores.
+message ImageFilter {
+    // List of matching images with scores.  The length of the list
+    // is determined by the result_limit provided in the request.
+    repeated ImageMatch matches = 1;
+
+    // Probe image sent for the filter request, reference (Optional)/
+    Resource probe = 2;
+}
+
+message
+
+service Provenance {
+    rpc ProvenanceFiltering(ImageFilterRequest) returns (ImageFilter);
+}
