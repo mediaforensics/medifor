@@ -41,7 +41,6 @@ message ImageFilter {
     Resource probe = 2;
 }
 
-message
 
 service Provenance {
     rpc ProvenanceFiltering(ImageFilterRequest) returns (ImageFilter);
