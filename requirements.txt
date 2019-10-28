@@ -5,3 +5,5 @@ grpcio-health-checking==1.15.0
 protobuf>=3.6.1
 pillow==6.1.0
 googleapis-common-protos==1.6.0
+requests==2.22.0
+Flask==1.1.1
