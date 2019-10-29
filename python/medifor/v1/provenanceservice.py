@@ -24,11 +24,6 @@ from google.protobuf import json_format
 
 from flask import Flask, jsonify, request, Response
 
-# class ProvIndex:
-# """Class to handle calls to and the Providence Index shards"""
-#     def __init__(uri=[]):
-#         raise NotImplementedError
-
 class EndpointAction(object):
     
     def __init__(self, action):
@@ -36,20 +31,23 @@ class EndpointAction(object):
 
     def __call__(self, *args):
         answer = self.action()
-        print("Answer", answer)
-        # self.response = Response(answer, status=200, headers={})
         return answer
 
 
 class IndexSvc:
     app = None
 
-    def __init__(self, name):
+    def __init__(self, name, host="::", port=8080, debug=False):
         self.app = Flask(name)
         self.add_endpoint("/search", "search", self.search, methods=["POST"])
+        self.host = host
+        self.port = port
     
     def run(self):
-        self.app.run()
+        self.app.run(host=self.host, port=self.port)
+
+    def set_map(self, map):
+        self.id_map = map
 
     def search(self):
         print("Calling search function")
@@ -59,7 +57,19 @@ class IndexSvc:
             limit = 30
         img = data['image']
 
-        return self.query_func(img, limit)
+        D,I = self.query_func(img, limit)
+
+        result = {
+            'status': 'ok',
+            'results': [{
+                'fids': [int(x) for x in ids],
+                'ids': [self.id_map.get(int(x)) for x in ids],
+                'dists': [float(x) for x in dists],
+            } for ids, dists in zip(I,D)],
+        }
+
+        return jsonify(result)
+
 
     def add_endpoint(self, endpoint=None, endpoint_name=None, handler=None, methods=None):
         self.app.add_url_rule(endpoint, endpoint_name, EndpointAction(handler), methods=methods)
