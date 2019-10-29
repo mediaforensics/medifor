@@ -42,6 +42,7 @@ class IndexSvc:
         self.add_endpoint("/search", "search", self.search, methods=["POST"])
         self.host = host
         self.port = port
+        self.id_map = None
     
     def run(self):
         self.app.run(host=self.host, port=self.port)
