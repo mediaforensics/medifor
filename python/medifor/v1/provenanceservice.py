@@ -45,6 +45,7 @@ class IndexSvc:
         self.id_map = None
     
     def run(self):
+        print("Running on {!s}::{!s}".format(self.host, self.port))
         self.app.run(host=self.host, port=self.port)
 
     def set_map(self, map):
@@ -58,15 +59,11 @@ class IndexSvc:
             limit = 30
         img = data['image']
 
-        D,I = self.query_func(img, limit)
+        res = self.query_func(img, limit)
 
         result = {
             'status': 'ok',
-            'results': [{
-                'fids': [int(x) for x in ids],
-                'ids': [self.id_map.get(int(x)) for x in ids],
-                'dists': [float(x) for x in dists],
-            } for ids, dists in zip(I,D)],
+            'results': res
         }
 
         return jsonify(result)
@@ -88,6 +85,7 @@ def query_index(data, endpoints, limit=10):
     compiled_results = []
     for index in endpoints:
         index_results = requests.post(index, json=json_query).json()
+        print(index_results)
         for img_matches in index_results["results"]:
             for i, img_id in enumerate(img_matches['ids']):
                 new_match = provenance_pb2.ImageMatch()
@@ -98,6 +96,8 @@ def query_index(data, endpoints, limit=10):
 
                 new_match.score = img_matches["dists"][i]
                 compiled_results.append(new_match)
+
+    
 
     return compiled_results
 

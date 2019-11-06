@@ -1,0 +1,44 @@
+version: "3"
+
+networks:
+  mfnet: 
+
+services:
+  faiss_svc1:
+    image: faiss-example-2:v2
+    restart: always
+    ports: 
+      - 8080:8080
+    volumes:
+      - "./:/data"
+    command:
+      - "--index=/data/index.faiss"
+      - "--port=8080"
+    networks:
+      - mfnet
+  
+  fiass_svc2:
+    image: faiss-example-2:v2
+    restart: always
+    ports: 
+      - 8081:8081
+    volumes:
+      - "./:/data"
+    command:
+      - "--index=/data/index2.faiss"
+      - "--port=8081"
+    networks:
+      - mfnet
+
+  faiss_svc3:
+    image: faiss-example-2:v2
+    restart: always
+    ports: 
+      - 8082:8082
+    volumes:
+      - "./:/data"
+    command:
+      - "--index=/data/index3.faiss"
+      - "--port=8082"
+    networks:
+      - mfnet
