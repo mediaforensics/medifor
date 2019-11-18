@@ -6,13 +6,14 @@ from flask import  jsonify
 import faiss
 import numpy as np
 
+id_map = {}
 
 def index(img, limit):
     """ Function for to retrieve matching images from index shard """
     D, I = idx.search(np.array(img).astype('float32'), limit)
     results = [{
                 'fids': [int(x) for x in ids],
-                'ids': [self.id_map.get(int(x)) for x in ids],
+                'ids': [id_map.get(int(x)) for x in ids],
                 'dists': [float(x) for x in dists],
                 } for ids, dists in zip(I,D)]
     return results
@@ -27,7 +28,7 @@ if __name__ == '__main__':
     args = p.parse_args()
 
     idx = faiss.read_index(args.index)
-    id_map = {}
+    
     if args.map:
         with open(args.map, 'rb') as f:
             for line in f:
