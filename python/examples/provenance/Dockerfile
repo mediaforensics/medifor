@@ -9,7 +9,7 @@ WORKDIR /app
 COPY *.py *.txt ./
 
 RUN pip3 install -r requirements.txt
-RUN pip3 install --no-cache-dir git+https://github.com/mediaforensics/medifor.git@develop
+RUN pip3 install --no-cache-dir git+https://github.com/mediaforensics/medifor.git@feature/provenance
 
 # Bail if it isn't importable.
 RUN python3 -c 'import faiss'
