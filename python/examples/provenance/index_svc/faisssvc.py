@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
 
 from medifor.v1.provenanceservice import IndexSvc
-
-from flask import  jsonify
 import faiss
 import numpy as np
-
-id_map = {}
 
 def index(img, limit):
     """ 
@@ -30,8 +26,6 @@ def index(img, limit):
     return results
 
 if __name__ == '__main__':
-    # The main function starts
-
     import argparse
     p = argparse.ArgumentParser()
     # Arguments for the faiss index service.
@@ -47,6 +41,7 @@ if __name__ == '__main__':
     idx = faiss.read_index(args.index)
     
     # Create the ID map
+    id_map = {}
     if args.map:
         with open(args.map, 'rb') as f:
             for line in f:
@@ -58,5 +53,4 @@ if __name__ == '__main__':
     idxsvc = IndexSvc(__name__, host="::", port=args.port)
     idxsvc.RegisterQuery(index)
     idxsvc.set_map(id_map)
-    # idxsvc.app.run(host='::', port=args.port, debug=True)
     idxsvc.run()

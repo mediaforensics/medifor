@@ -1,0 +1,5 @@
+pillow==6.2.0
+numpy==1.17.3
+
+
+# Also need libomp (brew install libomp on Mac)

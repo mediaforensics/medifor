@@ -24,7 +24,7 @@ def filter(req, resp, query_func):
     with PIL.Image.open(req.image.uri) as img:
         img = np.array(img.getdata()).reshape(img.size[0], img.size[1], 3)
     
-    # index_results is a list of results across all index shards
+    # index_results is a list of results across all index shards. Results contained in index_results["value"]
     index_results = query_func(encode(img), index_url, req.result_limit)
 
     matches = []
