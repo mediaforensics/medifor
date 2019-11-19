@@ -194,14 +194,14 @@ def detectlist(ctx, tag, limit, page_token, col_sort, fuser_id, want_fused, thre
 @click.argument('id')
 @click.option('--want_fused/--no-fused', default=False, help="Flag to request fusion scores")
 def detectinfo(ctx, id, want_fused):
-    print(json_format.MessageToJson(ctx.obj.client.detect_info(id, want_fused)))
+    print(json_format.MessageToJson(ctx.obj.pipeclient.detect_info(id, want_fused)))
 
 
 @pipeline.command()
 @click.pass_context
 @click.option('--id', '-i', required=True, default='', help='Detection ID to delete.')
 def deletedetection(ctx, id):
-    print(json_format.MessageToJson(ctx.obj.client.delete_detection(id)))
+    print(json_format.MessageToJson(ctx.obj.pipeclient.delete_detection(id)))
 
 
 @pipeline.command()
@@ -211,7 +211,7 @@ def deletedetection(ctx, id):
 @click.option('--delete', '-d', multiple=True, help="Tag keys to delete")
 @click.option('--delete_all', is_flag=True, help="Delete all user tags")
 def updatetags(ctx, id, tag, delete, delete_all):
-    print(json_format.MessageToJson(ctx.obj.client.update_detection_tags(
+    print(json_format.MessageToJson(ctx.obj.pipeclient.update_detection_tags(
         detection_id=id,
         tags=pipeclient.parse_tags(tag),
         delete_tags=delete,
@@ -222,7 +222,7 @@ def updatetags(ctx, id, tag, delete, delete_all):
 @pipeline.command()
 @click.pass_context
 def taginfo(ctx):
-    print(json_format.MessageToJson(ctx.obj.client.detection_tag_info()))
+    print(json_format.MessageToJson(ctx.obj.pipeclient.detection_tag_info()))
 
 
 if __name__ == '__main__':
