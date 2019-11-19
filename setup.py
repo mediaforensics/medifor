@@ -16,7 +16,7 @@ setup(name=pkg_name,
       package_dir={
           '': 'python',
       },
-      version='0.2.1',
+      version='0.2.2',
       description='Protocol wrapper for MediFor Analytics',
       author='Data Machines Corp.',
       author_email='help@mediforprogram.com',
