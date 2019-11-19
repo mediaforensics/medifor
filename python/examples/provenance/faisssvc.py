@@ -30,17 +30,23 @@ def index(img, limit):
     return results
 
 if __name__ == '__main__':
-    import argparse
+    # The main function starts
 
+    import argparse
     p = argparse.ArgumentParser()
+    # Arguments for the faiss index service.
+    # Port: The port that the service will run on.
+    # Index: The location of the faiss index file
+    # Map: Used to map index IDs (integers) to actual image IDs (NIST provided MD5 hashes)
     p.add_argument('--port', type=int, default=8080, help='Port to listen on')
     p.add_argument('--index', type=str, default='', required=True, help="Location of FAISS index file.")
     p.add_argument('--map', type=str, default='', help='Location of file mapping index IDs to other IDs as needed.')
-
     args = p.parse_args()
 
+    # Import the index
     idx = faiss.read_index(args.index)
     
+    # Create the ID map
     if args.map:
         with open(args.map, 'rb') as f:
             for line in f:
