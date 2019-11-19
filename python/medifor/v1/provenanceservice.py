@@ -52,7 +52,6 @@ class IndexSvc:
         self.id_map = map
 
     def search(self):
-        print("Calling search function")
         data = request.json
         limit = data.get('limit', 0) 
         if limit <= 0:
@@ -84,20 +83,17 @@ def query_index(data, endpoints, limit=10):
     
     compiled_results = []
     for index in endpoints:
-        index_results = requests.post(index, json=json_query).json()
-        print(index_results)
-        for img_matches in index_results["results"]:
-            for i, img_id in enumerate(img_matches['ids']):
-                new_match = provenance_pb2.ImageMatch()
-                if not img_id:
-                    new_match.image_id = str(img_matches["fids"][i])
-                else:
-                    new_match.image_id = str(img_id)
-
-                new_match.score = img_matches["dists"][i]
-                compiled_results.append(new_match)
-
-    
+        try:
+            index_results = requests.post(index, json=json_query).json()
+        except Exception as e:
+            index_results = {
+                "status":{
+                     "code": str(e.code),
+                     "value": e.details,
+                },
+                "results": None                
+            }
+        compiled_results.append(index_results)       
 
     return compiled_results
 
