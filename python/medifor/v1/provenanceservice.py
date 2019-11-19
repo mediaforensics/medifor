@@ -58,12 +58,12 @@ class IndexSvc:
             limit = 30
         img = data['image']
 
-        res = self.query_func(img, limit)
+        result = self.query_func(img, limit)
 
-        result = {
-            'status': 'ok',
-            'results': res
-        }
+        # result = {
+        #     'status': 'ok',
+        #     'results': res
+        # }
 
         return jsonify(result)
 
@@ -83,17 +83,16 @@ def query_index(data, endpoints, limit=10):
     }
     
     compiled_results = []
-    for index in endpoints:
-        try:
-            index_results = requests.post(index, json=json_query).json()
-        except Exception as e:
-            index_results = {
+    for index in endpoints:    
+        r = requests.post(index, json=json_query)
+        index_results = {
                 "status":{
-                     "code": str(e.code),
-                     "value": e.details,
+                     "code": r.status_code,
                 },
-                "results": None                
-            }
+                "value": _index_results.json()   
+        if r.status_code == requests.codes.ok:
+            index_results["status"]["msg"] = r.reason
+
         compiled_results.append(index_results)       
 
     return compiled_results

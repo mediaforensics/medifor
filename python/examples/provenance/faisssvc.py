@@ -20,7 +20,7 @@ def index(img, limit):
     D, I = idx.search(np.array(img).astype('float32'), limit)
 
     # TODO process and package the results as needed. The statement below is just meant to be illustrative.
-    # Whatever is returned (e.g., results in this case) will be sent via REST to your filtering analytic.
+    # Whatever is returned (e.g., results in this case) will be sent via REST to your filtering analytic as long as it is JSON serializable.
     results = [{
                 'fids': [int(x) for x in ids],
                 'ids': [id_map.get(int(x)) for x in ids],
