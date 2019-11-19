@@ -76,6 +76,7 @@ class IndexSvc:
 
 def query_index(data, endpoints, limit=10):
     """Function to be passed into Provenance Filtering function to query the index shards"""
+    logging.debug("Running Query function")
     json_query = {
         'limit': limit,
         'image': data

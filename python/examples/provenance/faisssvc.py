@@ -9,8 +9,14 @@ import numpy as np
 id_map = {}
 
 def index(img, limit):
-    """ Function for to retrieve matching images from index shard """
+    """ 
+    Function for to retrieve matching images from index shard. This function can essentially be
+    whatever you want as long as the returned value is json serializable. The provenanceservice
+    library will take care of the REST calls. In your analytic function you will receive a list of
+    whatever is returned by this function (because it assumes multiple shards).
+    """
 
+    # Standard faiss index search function
     D, I = idx.search(np.array(img).astype('float32'), limit)
 
     # TODO process and package the results as needed. The statement below is just meant to be illustrative.
@@ -19,13 +25,13 @@ def index(img, limit):
                 'fids': [int(x) for x in ids],
                 'ids': [id_map.get(int(x)) for x in ids],
                 'dists': [float(x) for x in dists],
-                } for ids, dists in zip(I,D)]
+                } for ids, dists in zip(I,D)][0]
 
     return results
 
 if __name__ == '__main__':
     import argparse
-    
+
     p = argparse.ArgumentParser()
     p.add_argument('--port', type=int, default=8080, help='Port to listen on')
     p.add_argument('--index', type=str, default='', required=True, help="Location of FAISS index file.")
