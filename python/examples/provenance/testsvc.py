@@ -22,29 +22,26 @@ def filter(req, resp, query_func):
     a stand in for the feature vector.  You can encode this as you see fit since you control the 
     decoding in the index."""
 
-    print(index_url)
-
     with PIL.Image.open(req.image.uri) as img:
         img = np.array(img.getdata()).reshape(img.size[0], img.size[1], 3)
     
     # index_results is a list of results across all index shards
     index_results = query_func(encode(img), index_url, req.result_limit)
-    
-    pprint(index_results)
+
     matches = []
-    for img_matches in index_results["results"]:
-        # 
-        for i, img_id in enumerate(img_matches['ids']):
+
+    # This section unpacks the results from the index service. Your implementation will likely be different.
+    for img_matches in index_results:
+        for i, img_id in enumerate(img_matches["results"]['ids']):
             new_match = provenance_pb2.ImageMatch()
             if not img_id:
-                new_match.image_id = str(img_matches["fids"][i])
+                new_match.image_id = str(img_matches["results"]["fids"][i])
             else:
                 new_match.image_id = str(img_id)
-
-            new_match.score = img_matches["dists"][i]
+            new_match.score = img_matches["results"]["dists"][i]
             matches.append(new_match)
 
-
+    
     resp.matches.extend(matches)
 
 
