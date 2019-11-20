@@ -11,4 +11,4 @@ COPY *.py *.txt ./
 RUN pip3 install -r requirements.txt
 RUN pip3 install --no-cache-dir git+https://github.com/mediaforensics/medifor.git@feature/provenance
 
-ENTRYPOINT ["python3", "./testsvc.py"]
+ENTRYPOINT ["python3", "./filtersvc.py"]

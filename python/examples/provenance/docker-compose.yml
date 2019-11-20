@@ -11,12 +11,18 @@ services:
       - 50051:50051
     volumes:
       - "./:/input"
+    command:
+      - "--url=http://faiss_svc1:8080/search"
+      - "--url=http://faiss_svc2:8080/search"
+      - "--url=http://faiss_svc3:8080/search"
+    networks:
+      - mfnet
 
   faiss_svc1:
     image: mediaforensics/samples:prov-index-svc
     restart: always
-    ports: 
-      - 8080:8080
+    # ports: 
+    #   - 8080:8080
     volumes:
       - "./index_svc:/data"
     command:
@@ -28,25 +34,25 @@ services:
   fiass_svc2:
     image: mediaforensics/samples:prov-index-svc
     restart: always
-    ports: 
-      - 8081:8081
+    # ports: 
+    #   - 8081:8081
     volumes:
       - "./index_svc:/data"
     command:
       - "--index=/data/index2.faiss"
-      - "--port=8081"
+      - "--port=8080"
     networks:
       - mfnet
 
   faiss_svc3:
     image: mediaforensics/samples:prov-index-svc
     restart: always
-    ports: 
-      - 8082:8082
+    # ports: 
+    #   - 8082:8082
     volumes:
       - "./index_svc:/data"
     command:
       - "--index=/data/index3.faiss"
-      - "--port=8082"
+      - "--port=8080"
     networks:
       - mfnet
