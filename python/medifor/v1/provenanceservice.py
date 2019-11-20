@@ -90,6 +90,7 @@ def query_index(data, endpoints, limit=10):
                      "code": r.status_code,
                 },
                 "value": _index_results.json()   
+        }
         if r.status_code == requests.codes.ok:
             index_results["status"]["msg"] = r.reason
 
