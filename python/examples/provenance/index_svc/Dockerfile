@@ -14,7 +14,7 @@ RUN pip3 install --no-cache-dir git+https://github.com/mediaforensics/medifor.gi
 # Bail if it isn't importable.
 RUN python3 -c 'import faiss'
 
-# EXPOSE 8081
+EXPOSE 8080
 
 ENTRYPOINT ["python3", "./faisssvc.py"]
 CMD ["--index", "/data/index.faiss"]
