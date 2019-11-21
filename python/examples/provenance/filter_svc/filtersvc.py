@@ -9,10 +9,10 @@ import PIL.Image
 index_url = ""
 
 def filter(req, resp, query_func):
-    """This is the function that does the filtering.  It makes calls to the index(s) through 
+    """This is the function that does the filtering.  It makes calls to the index(s) through
     a REST API using the requests library.  You can modify this to your own needs, or use the
-    function call provided here.  The image is 'encoded' into a 100 dimensional numpy vector as 
-    a stand in for the feature vector.  You can encode this as you see fit since you control the 
+    function call provided here.  The image is 'encoded' into a 100 dimensional numpy vector as
+    a stand in for the feature vector.  You can encode this as you see fit since you control the
     decoding in the index."""
 
     def encode(img):
@@ -23,7 +23,7 @@ def filter(req, resp, query_func):
 
     with PIL.Image.open(req.image.uri) as img:
         img = np.array(img.getdata()).reshape(img.size[0], img.size[1], 3)
-    
+
     # index_results is a list of results across all index shards. Results contained in index_results["value"]
     index_results = query_func(encode(img), index_url, req.result_limit)
 
@@ -55,4 +55,4 @@ if __name__ == '__main__':
     svc = ProvenanceService()
     svc.RegisterProvenanceFiltering(filter)
     svc.Run()
-    
+

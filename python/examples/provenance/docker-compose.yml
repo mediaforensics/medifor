@@ -1,7 +1,7 @@
 version: "3"
 
 networks:
-  mfnet: 
+  mfnet:
 
 services:
   filter_svc:
@@ -12,13 +12,13 @@ services:
     volumes:
       - "./:/input"
     command:
-      - "--url=http://faiss_svc1:8080/search"
-      - "--url=http://faiss_svc2:8080/search"
-      - "--url=http://faiss_svc3:8080/search"
+      - "--url=http://faiss1:8080/search"
+      - "--url=http://faiss2:8080/search"
+      - "--url=http://faiss3:8080/search"
     networks:
       - mfnet
 
-  faiss_svc1:
+  faiss1:
     image: mediaforensics/samples:prov-index-svc
     restart: always
     volumes:
@@ -28,8 +28,8 @@ services:
       - "--port=8080"
     networks:
       - mfnet
-  
-  fiass_svc2:
+
+  faiss2:
     image: mediaforensics/samples:prov-index-svc
     restart: always
     volumes:
@@ -40,7 +40,7 @@ services:
     networks:
       - mfnet
 
-  faiss_svc3:
+  faiss3:
     image: mediaforensics/samples:prov-index-svc
     restart: always
     volumes:

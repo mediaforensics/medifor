@@ -25,7 +25,7 @@ from google.protobuf import json_format
 from flask import Flask, jsonify, request, Response
 
 class EndpointAction(object):
-    
+
     def __init__(self, action):
         self.action = action
 
@@ -43,7 +43,7 @@ class IndexSvc:
         self.host = host
         self.port = port
         self.id_map = None
-    
+
     def run(self):
         print("Running on {!s}::{!s}".format(self.host, self.port))
         self.app.run(host=self.host, port=self.port)
@@ -53,7 +53,7 @@ class IndexSvc:
 
     def search(self):
         data = request.json
-        limit = data.get('limit', 0) 
+        limit = data.get('limit', 0)
         if limit <= 0:
             limit = 30
         img = data['image']
@@ -81,20 +81,20 @@ def query_index(data, endpoints, limit=10):
         'limit': limit,
         'image': data
     }
-    
+
     compiled_results = []
-    for index in endpoints:    
+    for index in endpoints:
         r = requests.post(index, json=json_query)
         index_results = {
                 "status":{
                      "code": r.status_code,
                 },
-                "value": r.json()   
+                "value": r.json()
         }
         if r.status_code == requests.codes.ok:
             index_results["status"]["msg"] = r.reason
 
-        compiled_results.append(index_results)       
+        compiled_results.append(index_results)
 
     return compiled_results
 
