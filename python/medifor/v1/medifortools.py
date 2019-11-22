@@ -1,5 +1,6 @@
 import mimetypes
 import os
+import uuid
 
 from medifor.v1 import analytic_pb2, pipeline_pb2
 
