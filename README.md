@@ -18,7 +18,7 @@ analytics and support for additional languages.
     the cli.    
 
 ## Quickstart
-  1) Install the medifor library using `pip install git+https://github.com/mediaforensics/medifor.git`
+  1) Install the medifor library using `python3 -m pip install git+https://github.com/mediaforensics/medifor.git`
 
 
   2) Wrap your analytic using the `analyticservice` library.  The two easiest ways
