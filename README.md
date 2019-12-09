@@ -18,6 +18,8 @@ analytics and support for additional languages.
     the cli.    
 
 ## Quickstart
+  (Note: Before starting you may wish to create a python virtual environment (e.g., `python venv env`) and then activate that environment (`source env/bin/activate`)
+  
   1) Install the medifor library using `python3 -m pip install git+https://github.com/mediaforensics/medifor.git`
 
 
