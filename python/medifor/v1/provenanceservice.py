@@ -183,7 +183,10 @@ class ProvenanceService:
             ctx.abort(grpc.StatusCode.UNIMPLEMENTED, "Endpoint {!r} not implemented".format(ep_type))
 
         try:
-            ep_func(req, resp, query_index)
+            if ep_type == 'ProvenanceFiltering':
+                ep_func(req, resp, query_index)
+            else:
+                ep_func(req, resp)
         except ValueError as e:
             logging.exception('invalid input')
             ctx.abort(grpc.StatusCode.INVALID_ARGUMENT, "Endpoint {!r} invalid input: {}".format(ep_type, e))
