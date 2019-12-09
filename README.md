@@ -27,7 +27,8 @@ analytics and support for additional languages.
  to do this are:
 
    - Create a new python script and import the required modules:
-      `from medifor.v1 import analytic_pb2, analyticservice`
+      `from medifor.v1 import analytic_pb2` and 
+      `from medifor.v1.analyticservice import AnalyticService`
     as well as your current analytic functions. Create a new function that takes
     as input a request and response object.  E.g.,
 
@@ -241,7 +242,8 @@ import os.path
 import sys
 import time
 
-from medifor.v1 import analytic_pb2, analyticservice
+from medifor.v1 import analytic_pb2
+from medifor.v1.analyticservice import AnalyticService
 
 # additional modules which required to run your algorithm should be imported as well.
 # It may be preferable to do all of your actual analysis in library functions and import those
@@ -314,7 +316,8 @@ import os.path
 import sys
 import time
 
-from medifor.v1 import analytic_pb2, analyticservice
+from medifor.v1 import analytic_pb2
+from medifor.v1.analyticservice import AnalyticService
 
 # additional modules which required to run your algorithm should be imported as well.
 # It may be preferable to do all of your actual analysis in library functions and import those
