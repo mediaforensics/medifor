@@ -25,7 +25,7 @@ from google.protobuf import json_format
 from flask import Flask, jsonify, request, Response
 
 class EndpointAction(object):
-    
+
     def __init__(self, action):
         self.action = action
 
@@ -43,7 +43,7 @@ class IndexSvc:
         self.host = host
         self.port = port
         self.id_map = None
-    
+
     def run(self):
         print("Running on {!s}::{!s}".format(self.host, self.port))
         self.app.run(host=self.host, port=self.port)
@@ -52,19 +52,18 @@ class IndexSvc:
         self.id_map = map
 
     def search(self):
-        print("Calling search function")
         data = request.json
-        limit = data.get('limit', 0) 
+        limit = data.get('limit', 0)
         if limit <= 0:
             limit = 30
         img = data['image']
 
-        res = self.query_func(img, limit)
+        result = self.query_func(img, limit)
 
-        result = {
-            'status': 'ok',
-            'results': res
-        }
+        # result = {
+        #     'status': 'ok',
+        #     'results': res
+        # }
 
         return jsonify(result)
 
@@ -77,27 +76,25 @@ class IndexSvc:
 
 def query_index(data, endpoints, limit=10):
     """Function to be passed into Provenance Filtering function to query the index shards"""
+    logging.debug("Running Query function")
     json_query = {
         'limit': limit,
         'image': data
     }
-    
+
     compiled_results = []
     for index in endpoints:
-        index_results = requests.post(index, json=json_query).json()
-        print(index_results)
-        for img_matches in index_results["results"]:
-            for i, img_id in enumerate(img_matches['ids']):
-                new_match = provenance_pb2.ImageMatch()
-                if not img_id:
-                    new_match.image_id = str(img_matches["fids"][i])
-                else:
-                    new_match.image_id = str(img_id)
+        r = requests.post(index, json=json_query)
+        index_results = {
+                "status":{
+                     "code": r.status_code,
+                },
+                "value": r.json()
+        }
+        if r.status_code == requests.codes.ok:
+            index_results["status"]["msg"] = r.reason
 
-                new_match.score = img_matches["dists"][i]
-                compiled_results.append(new_match)
-
-    
+        compiled_results.append(index_results)
 
     return compiled_results
 
@@ -186,7 +183,10 @@ class ProvenanceService:
             ctx.abort(grpc.StatusCode.UNIMPLEMENTED, "Endpoint {!r} not implemented".format(ep_type))
 
         try:
-            ep_func(req, resp, query_index)
+            if ep_type == 'ProvenanceFiltering':
+                ep_func(req, resp, query_index)
+            else:
+                ep_func(req, resp)
         except ValueError as e:
             logging.exception('invalid input')
             ctx.abort(grpc.StatusCode.INVALID_ARGUMENT, "Endpoint {!r} invalid input: {}".format(ep_type, e))

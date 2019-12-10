@@ -1,44 +1,52 @@
 version: "3"
 
 networks:
-  mfnet: 
+  mfnet:
 
 services:
-  faiss_svc1:
-    image: faiss-example-2:v2
+  filter_svc:
+    image: mediaforensics/samples:prov-filter-svc
     restart: always
-    ports: 
-      - 8080:8080
+    ports:
+      - 50051:50051
     volumes:
-      - "./:/data"
+      - "./:/input"
+    command:
+      - "--url=http://faiss1:8080/search"
+      - "--url=http://faiss2:8080/search"
+      - "--url=http://faiss3:8080/search"
+    networks:
+      - mfnet
+
+  faiss1:
+    image: mediaforensics/samples:prov-index-svc
+    restart: always
+    volumes:
+      - "./index_svc:/data"
     command:
       - "--index=/data/index.faiss"
       - "--port=8080"
     networks:
       - mfnet
-  
-  fiass_svc2:
-    image: faiss-example-2:v2
+
+  faiss2:
+    image: mediaforensics/samples:prov-index-svc
     restart: always
-    ports: 
-      - 8081:8081
     volumes:
-      - "./:/data"
+      - "./index_svc:/data"
     command:
       - "--index=/data/index2.faiss"
-      - "--port=8081"
+      - "--port=8080"
     networks:
       - mfnet
 
-  faiss_svc3:
-    image: faiss-example-2:v2
+  faiss3:
+    image: mediaforensics/samples:prov-index-svc
     restart: always
-    ports: 
-      - 8082:8082
     volumes:
-      - "./:/data"
+      - "./index_svc:/data"
     command:
       - "--index=/data/index3.faiss"
-      - "--port=8082"
+      - "--port=8080"
     networks:
       - mfnet
