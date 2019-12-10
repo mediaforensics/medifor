@@ -9,12 +9,8 @@ WORKDIR /app
 COPY *.py *.txt ./
 
 RUN pip3 install -r requirements.txt
-RUN pip3 install --no-cache-dir git+https://github.com/mediaforensics/medifor.git@develop
+RUN pip3 install --no-cache-dir git+https://github.com/mediaforensics/medifor.git@feature/provenance
 
-# Bail if it isn't importable.
-RUN python3 -c 'import faiss'
+EXPOSE 50051
 
-# EXPOSE 8081
-
-ENTRYPOINT ["python3", "./faisssvc.py"]
-CMD ["--index", "/data/index.faiss"]
+ENTRYPOINT ["python3", "./filtersvc.py"]
