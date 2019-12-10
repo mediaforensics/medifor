@@ -57,6 +57,8 @@ analytics and support for additional languages.
 
   4) Test the analytic using the medifor cli:
 
+  At this point you may wish to test your analytic prior to building the container. To do this simply run your analytic in another window (e.g., `python analytic.py`) and then, while the analytic is running, use the medifor CLI to send test images/videos to the analytic. 
+
 
     python -m medifor.v1.cli [args] <command> [file] -o <path to output directory>
 
@@ -64,6 +66,7 @@ analytics and support for additional languages.
    Where the command is `imgmanip` for image manipulation detection or `vidmanip`
    for video manipulation detection.
 
+  Testing the analytic this way can be useful since it does not require mounting volumes and path translation, which is often required when running analytic containers.
 
   5) Build an analytic container.
 
