@@ -33,12 +33,13 @@ if __name__ == '__main__':
     # Index: The location of the faiss index file
     # Map: Used to map index IDs (integers) to actual image IDs (NIST provided MD5 hashes)
     p.add_argument('--port', type=int, default=8080, help='Port to listen on')
-    p.add_argument('--index', type=str, default='', required=True, help="Location of FAISS index file.")
+    p.add_argument('--index', default=[], required=True, action="append", help="Location of FAISS index file.")
     p.add_argument('--map', type=str, default='', help='Location of file mapping index IDs to other IDs as needed.')
     args = p.parse_args()
 
     # Import the index
-    idx = faiss.read_index(args.index)
+    # Just taking the first element for this example, but the index flag now supports multiple index files. Use them as you need.
+    idx = faiss.read_index(args.index[0])
     
     # Create the ID map
     id_map = {}

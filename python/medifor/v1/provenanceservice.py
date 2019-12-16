@@ -60,10 +60,6 @@ class IndexSvc:
 
         result = self.query_func(img, limit)
 
-        # result = {
-        #     'status': 'ok',
-        #     'results': res
-        # }
 
         return jsonify(result)
 

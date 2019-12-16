@@ -15,7 +15,12 @@ analytics and support for additional languages.
     * Setup medifor.v1 package
     * Refactored mediforclient and cli to be included in the medifor.v1 package
     * Added streaming service to analyticservice and `streamdetect` command to
-    the cli.    
+    the cli.
+
+-  v0.3.0   
+    * Refactored CLI to be included in the medifor package (i.e. `python -m medifor --help`)
+    * Added provenance filtering and graph building client
+
 
 ## Quickstart
   (Note: Before starting you may wish to create a python virtual environment (e.g., `python venv env`) and then activate that environment (`source env/bin/activate`)
@@ -60,7 +65,7 @@ analytics and support for additional languages.
   At this point you may wish to test your analytic prior to building the container. To do this simply run your analytic in another window (e.g., `python analytic.py`) and then, while the analytic is running, use the medifor CLI to send test images/videos to the analytic. 
 
 
-    python -m medifor.v1.cli [args] <command> [file] -o <path to output directory>
+    python -m medifor [args] <command> [file] -o <path to output directory>
 
 
    Where the command is `imgmanip` for image manipulation detection or `vidmanip`
@@ -356,7 +361,12 @@ using the medifor library.
 A client library and CLI have been provided for communicating with media forensic analytics.
 
 The medifor client cli can be used to run or test media forensic analytics.  It
-currently has four commands:
+currently has  3 primary commands:
+ 1)`detect` - used for image/video manipulation detection
+ 2) `provenance` - used for provenance filtering & graph building tasks
+ 3) `pipeline` - used to talk to an existing medifor pipeline
+
+The `detect` command is the primary use of the medifor cli and has subcommands: 
  1) `imgmanip` - Used to run the analytic over a single image
  2) `vidmanip` - Used to run the analytic over a single video
  3) `detectbatch` - Used to run the analytic over every image/video in a specified directory.
@@ -368,7 +378,7 @@ currently has four commands:
 
 Usage for the cli:
 ```
-$ python -m medifor.v1.cli [flags] <command> [options]
+$ python -m medifor [flags] <command> [options]
 ```
 
 Each of command has its own set of flags and arguments in addition to the global
