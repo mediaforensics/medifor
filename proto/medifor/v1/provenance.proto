@@ -18,7 +18,7 @@ enum LinkType {
 
 // FilterRequest is used to ask a provenance analytic to return the 
 // top N matches for a given image.
-message ImageFilterRequest{
+message ProvenanceFilteringRequest{
     // Unique identifier for the request.
     string request_id = 1;
 
@@ -44,7 +44,7 @@ message ImageMatch {
 
 // ImageFilter contains the top N results that match the probe image
 // along with the corresponding scores.
-message ImageFilter {
+message FilteringResult {
     // List of matching images with scores.  The length of the list
     // is determined by the result_limit provided in the request.
     repeated ImageMatch matches = 1;
@@ -78,33 +78,38 @@ message Association {
     // UUID of the matching image
     string target = 3;
 
-    // Real number that is higher if an image has been manipulated and lower 
-    // if the image has not been manipulated.
+    // Real number that is higher if the association exists.
     float score = 4;
 
-    // Localization for the source image
-    Resource source_mask = 5;
+    // Explanation of the association and supporting evidence.
+    string explanation = 5;
 
-    // Localization for the target image
-    Resource target_mask = 6;
+}
 
-    // Explanation of the manipulation and supporting evidence.
-    string explanation = 7;
+// Association provides details describing the relationship between two probes.
+message Node {
 
-
+    // UUID of the image
+    string image_id = 1;
+    
+    // Real number that is higher if an image is in the graph
+    float score = 2;
 }
 
 // ProvenanceGraph
 message ProvenanceGraph {
 
-    // List of associations that specify the relationship between nodes on the graph.
-    repeated Association associations = 1;
+    // List of nodes in the graph.
+    repeated Node nodes = 1;
+    
+    // List of associations that specify the relationship between nodes on the gra
+    repeated Association associations = 2;
 
     // Whether the algorithm opted out of the task
-    bool opt_out = 2;
+    bool opt_out = 3;
 }
 
 service Provenance {
-    rpc ProvenanceFiltering(ImageFilterRequest) returns (ImageFilter);
+    rpc ProvenanceFiltering(ProvenanceFilteringRequest) returns (FilteringResult);
     rpc ProvenanceGraphBuilding(ProvenanceGraphRequest) returns (ProvenanceGraph);
 }
