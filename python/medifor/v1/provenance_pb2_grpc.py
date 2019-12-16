@@ -16,8 +16,8 @@ class ProvenanceStub(object):
     """
     self.ProvenanceFiltering = channel.unary_unary(
         '/mediforproto.Provenance/ProvenanceFiltering',
-        request_serializer=medifor_dot_v1_dot_provenance__pb2.ImageFilterRequest.SerializeToString,
-        response_deserializer=medifor_dot_v1_dot_provenance__pb2.ImageFilter.FromString,
+        request_serializer=medifor_dot_v1_dot_provenance__pb2.ProvenanceFilteringRequest.SerializeToString,
+        response_deserializer=medifor_dot_v1_dot_provenance__pb2.FilteringResult.FromString,
         )
     self.ProvenanceGraphBuilding = channel.unary_unary(
         '/mediforproto.Provenance/ProvenanceGraphBuilding',
@@ -49,8 +49,8 @@ def add_ProvenanceServicer_to_server(servicer, server):
   rpc_method_handlers = {
       'ProvenanceFiltering': grpc.unary_unary_rpc_method_handler(
           servicer.ProvenanceFiltering,
-          request_deserializer=medifor_dot_v1_dot_provenance__pb2.ImageFilterRequest.FromString,
-          response_serializer=medifor_dot_v1_dot_provenance__pb2.ImageFilter.SerializeToString,
+          request_deserializer=medifor_dot_v1_dot_provenance__pb2.ProvenanceFilteringRequest.FromString,
+          response_serializer=medifor_dot_v1_dot_provenance__pb2.FilteringResult.SerializeToString,
       ),
       'ProvenanceGraphBuilding': grpc.unary_unary_rpc_method_handler(
           servicer.ProvenanceGraphBuilding,
