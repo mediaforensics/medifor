@@ -88,9 +88,11 @@ def walk_proto(proto, func, args=[]):
         value = getattr(proto, fd.name, None)
         if fd.label == fd.LABEL_REPEATED:
             for v in value:
-                yield from walk_proto(v, func, args)
+                for x in walk_proto(v, func, args):
+                    yield x
         else:
-            yield from walk_proto(value, func, args)
+            for x in walk_proto(value, func, args):
+                yield x
 
 
 def rewrite_uris(proto, name_map):
@@ -111,7 +113,8 @@ def get_uris(proto):
             yield p.uri
             return
 
-    yield from walk_proto(proto, gen_uri)
+    for x in walk_proto(proto, gen_uri):
+        yield x
 
 
 class _AnalyticServicer(analytic_pb2_grpc.AnalyticServicer):
