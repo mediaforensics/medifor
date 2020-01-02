@@ -11,7 +11,7 @@ Test Command
 
  # Terminal 2
  # Run command from this directory
- python -m medifor -s $PWD -t /input  provenance filter $PWD/python/examples/provenance/assets/Koala.jpg
+ python -m medifor -s $PWD -t /input  provenance filter $PWD/assets/Koala.jpg
  ```
 
 Modify the mount path for `filtersvc.py` in the `docker-compose.yml` to point to your own images to run additional images through the example (It's a toy example though, so the index is jsut random).
