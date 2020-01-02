@@ -3,19 +3,14 @@ This directory contains an example provenance analytic which uses the front end 
 index.  The example code can be used to demonstrate the general workflow of a provenance filtering analytic, though you will need to make changes to
 have it fit your implementation.
 
-## Running the Test Analytic
- - Build the FAISS container `docker build -t faiss-example .`
- - Generate a dummy index `docker run -v ${PWD}:/data -i --entrypoint '/bin/bash' faiss-example -c "python3 buildrandom.py /data/index.faiss"`
- - Run the FAISS container `docker run -dv ${PWD}:/data -p 8080:8080 faiss-example`
- - Run the front end service `python testsvc.py`
- - Send requests via medifor tool:
-
 Test Command
  ```
  # Terminal 1
+ # Run command from this directory
  docker-compose up
 
  # Terminal 2
+ # Run command from this directory
  python -m medifor -s $PWD -t /input  provenance filter $PWD/python/examples/provenance/assets/Koala.jpg
  ```
 
