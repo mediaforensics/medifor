@@ -102,7 +102,7 @@ class _ProvenanceServicer(provenance_pb2_grpc.ProvenanceServicer):
         self.svc = svc
 
     def ProvenanceFiltering(self, req, ctx):
-        return self.svc._CallEndpoint(self.svc.PROVENANCE_FILTERING, req, provenance_pb2.ImageFilter(), ctx)
+        return self.svc._CallEndpoint(self.svc.PROVENANCE_FILTERING, req, provenance_pb2.FilteringResult(), ctx)
 
     def ProvenanceGraphBuilding(self, req, ctx):
         return self.svc._CallEndpoint(self.svc.PROVENANCE_GRAPH, req, provenance_pb2.ProvenanceGraph(), ctx)
