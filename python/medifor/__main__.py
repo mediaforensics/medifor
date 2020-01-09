@@ -251,6 +251,10 @@ def updatetags(ctx, id, tag, delete, delete_all):
 def taginfo(ctx):
     print(json_format.MessageToJson(ctx.obj.pipeclient.detection_tag_info()))
 
+@main.command()
+@click.pass_context
+def getanalyticmeta(ctx):
+    print(json_format.MessageToJson(ctx.obj.pipeclient.get_analytic_meta()))
 
 if __name__ == '__main__':
     main(obj=Context())

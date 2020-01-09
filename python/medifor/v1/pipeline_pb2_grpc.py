@@ -59,6 +59,11 @@ class PipelineStub(object):
         request_serializer=medifor_dot_v1_dot_pipeline__pb2.DetectionTagInfoRequest.SerializeToString,
         response_deserializer=medifor_dot_v1_dot_pipeline__pb2.DetectionTagInfo.FromString,
         )
+    self.GetAnalyticMeta = channel.unary_unary(
+        '/workflowproto.Pipeline/GetAnalyticMeta',
+        request_serializer=medifor_dot_v1_dot_pipeline__pb2.Empty.SerializeToString,
+        response_deserializer=medifor_dot_v1_dot_pipeline__pb2.AnalyticList.FromString,
+        )
 
 
 class PipelineServicer(object):
@@ -128,6 +133,13 @@ class PipelineServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def GetAnalyticMeta(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_PipelineServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -175,6 +187,11 @@ def add_PipelineServicer_to_server(servicer, server):
           servicer.GetDetectionTagInfo,
           request_deserializer=medifor_dot_v1_dot_pipeline__pb2.DetectionTagInfoRequest.FromString,
           response_serializer=medifor_dot_v1_dot_pipeline__pb2.DetectionTagInfo.SerializeToString,
+      ),
+      'GetAnalyticMeta': grpc.unary_unary_rpc_method_handler(
+          servicer.GetAnalyticMeta,
+          request_deserializer=medifor_dot_v1_dot_pipeline__pb2.Empty.FromString,
+          response_serializer=medifor_dot_v1_dot_pipeline__pb2.AnalyticList.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

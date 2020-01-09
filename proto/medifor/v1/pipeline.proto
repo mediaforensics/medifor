@@ -29,6 +29,13 @@ enum FusionThresholdType {
   FUSION_GT_THRESHOLD = 2;
 }
 
+enum MediaType {
+  IMAGE = 0;
+  VIDEO = 1;
+  FUSION_IMAGE = 2;
+  FUSION_VIDEO = 3;
+}
+
 // SortCol identifies the column to sort by and whether to sort in ascending order
 // Next tag: 6
 message SortCol {
@@ -286,7 +293,29 @@ message DeleteDetectionRequest {
   string detection_id = 1;
 }
 
-message Empty {}
+// AnalyticMeta containes analytic metadata defining which analytics are currently active
+// on the system, what they do, and their resource requirements
+message AnalyticMeta {
+  string id = 1;
+  string version = 2;
+  double cpu = 3;
+  double ram = 4;
+  int32 gpu = 5;
+  MediaType media = 6;
+  string description = 7;
+  string name = 8;
+  
+  map<string, string> user_fields = 9;
+
+}
+
+// AnalyticList holds a list of AnalyticMeta configuration metadata objects
+message AnalyticList {
+  repeated AnalyticMeta analytics = 1;
+}
+
+message Empty {
+}
 
 service Pipeline {
   rpc Detect(DetectionRequest) returns (DetectionInfo);
@@ -298,4 +327,5 @@ service Pipeline {
   rpc FuseAllIDs(FuseAllIDsRequest) returns (FuseAllIDsResponse);
   rpc UpdateDetectionTags(UpdateDetectionTagsRequest) returns (DetectionInfo);
   rpc GetDetectionTagInfo(DetectionTagInfoRequest) returns (DetectionTagInfo);
+  rpc GetAnalyticMeta(Empty) returns (AnalyticList);
 }

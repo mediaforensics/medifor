@@ -22,7 +22,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='workflowproto',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x19medifor/v1/pipeline.proto\x12\rworkflowproto\x1a\x19medifor/v1/analytic.proto\x1a\x17medifor/v1/fusion.proto\"c\n\x07SortCol\x12#\n\x03key\x18\x01 \x01(\x0e\x32\x16.workflowproto.SortKey\x12\x0e\n\x06is_asc\x18\x02 \x01(\x08\x12\x11\n\ttype_cast\x18\x03 \x01(\t\x12\x10\n\x08meta_key\x18\x04 \x01(\t\"\xcc\x03\n\x10\x44\x65tectionRequest\x12\n\n\x02id\x18\x03 \x01(\t\x12(\n\x07request\x18\x01 \x01(\x0b\x32\x17.mediforproto.Detection\x12\x13\n\x0b\x61nalytic_id\x18\x02 \x03(\t\x12\x10\n\x08\x66user_id\x18\x08 \x03(\t\x12\x37\n\x04tags\x18\x04 \x03(\x0b\x32).workflowproto.DetectionRequest.TagsEntry\x12@\n\tuser_tags\x18\x06 \x03(\x0b\x32-.workflowproto.DetectionRequest.UserTagsEntry\x12\x37\n\x04meta\x18\x07 \x03(\x0b\x32).workflowproto.DetectionRequest.MetaEntry\x12\x1c\n\x14\x61nalytic_timeout_sec\x18\x05 \x01(\x03\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a/\n\rUserTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a+\n\tMetaEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xb6\x01\n\x15\x41nalyticDetectionInfo\x12\x13\n\x0b\x61nalytic_id\x18\x01 \x01(\t\x12,\n\x05stage\x18\x02 \x01(\x0e\x32\x1d.workflowproto.DetectionStage\x12.\n\x06status\x18\x03 \x01(\x0e\x32\x1e.workflowproto.DetectionStatus\x12*\n\tdetection\x18\x04 \x01(\x0b\x32\x17.mediforproto.Detection\"\xa0\x04\n\rDetectionInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12;\n\ranalytic_info\x18\x02 \x03(\x0b\x32$.workflowproto.AnalyticDetectionInfo\x12\x33\n\x0b\x66usion_info\x18\x08 \x03(\x0b\x32\x1e.workflowproto.FuserFusionInfo\x12\x34\n\x04tags\x18\x03 \x03(\x0b\x32&.workflowproto.DetectionInfo.TagsEntry\x12=\n\tuser_tags\x18\x06 \x03(\x0b\x32*.workflowproto.DetectionInfo.UserTagsEntry\x12\x34\n\x04meta\x18\x07 \x03(\x0b\x32&.workflowproto.DetectionInfo.MetaEntry\x12\x11\n\thas_fused\x18\x04 \x01(\x08\x12\x13\n\x0b\x66used_score\x18\x05 \x01(\x01\x12\x17\n\x0f\x61nalytics_total\x18\t \x01(\x05\x12\x1a\n\x12\x61nalytics_finished\x18\n \x01(\x05\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a/\n\rUserTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a+\n\tMetaEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"6\n\x14\x44\x65tectionInfoRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x12\n\nwant_fused\x18\x02 \x01(\x08\"\xf1\x02\n\x14\x44\x65tectionListRequest\x12;\n\x04tags\x18\x01 \x03(\x0b\x32-.workflowproto.DetectionListRequest.TagsEntry\x12\x15\n\rdetection_ids\x18\x07 \x03(\t\x12\x12\n\nwant_fused\x18\x04 \x01(\x08\x12(\n\x08order_by\x18\x05 \x03(\x0b\x32\x16.workflowproto.SortCol\x12\x10\n\x08\x66user_id\x18\x06 \x01(\t\x12\x41\n\x15\x66usion_threshold_type\x18\x08 \x01(\x0e\x32\".workflowproto.FusionThresholdType\x12\x1e\n\x16\x66usion_threshold_value\x18\t \x01(\x02\x12\x11\n\tpage_size\x18\x02 \x01(\x05\x12\x12\n\npage_token\x18\x03 \x01(\t\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"d\n\rDetectionList\x12\x30\n\ndetections\x18\x01 \x03(\x0b\x32\x1c.workflowproto.DetectionInfo\x12\r\n\x05total\x18\x03 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\"\xeb\x01\n\rFusionRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12%\n\x07request\x18\x02 \x01(\x0b\x32\x14.mediforproto.Fusion\x12\x10\n\x08\x66user_id\x18\x04 \x03(\t\x12\x34\n\x04tags\x18\x03 \x03(\x0b\x32&.workflowproto.FusionRequest.TagsEntry\x12\x14\n\x0c\x64\x65tection_id\x18\x05 \x01(\t\x12\x1c\n\x14\x64\x65tection_id_out_dir\x18\x06 \x01(\t\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xa7\x01\n\x0f\x46userFusionInfo\x12\x10\n\x08\x66user_id\x18\x01 \x01(\t\x12,\n\x05stage\x18\x02 \x01(\x0e\x32\x1d.workflowproto.DetectionStage\x12.\n\x06status\x18\x03 \x01(\x0e\x32\x1e.workflowproto.DetectionStatus\x12$\n\x06\x66usion\x18\x04 \x01(\x0b\x32\x14.mediforproto.Fusion\"\xd6\x01\n\nFusionInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12\x34\n\x0c\x66usion_infos\x18\x02 \x03(\x0b\x32\x1e.workflowproto.FuserFusionInfo\x12\x31\n\x04tags\x18\x03 \x03(\x0b\x32#.workflowproto.FusionInfo.TagsEntry\x12\x11\n\thas_fused\x18\x04 \x01(\x08\x12\x13\n\x0b\x66used_score\x18\x05 \x01(\x01\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"6\n\x11\x46useAllIDsRequest\x12\x10\n\x08\x66user_id\x18\x01 \x03(\t\x12\x0f\n\x07out_dir\x18\x02 \x01(\t\"\x14\n\x12\x46useAllIDsResponse\"\xc8\x01\n\x1aUpdateDetectionTagsRequest\x12\x14\n\x0c\x64\x65tection_id\x18\x01 \x01(\t\x12\x0f\n\x07replace\x18\x02 \x01(\x08\x12\x41\n\x04tags\x18\x03 \x03(\x0b\x32\x33.workflowproto.UpdateDetectionTagsRequest.TagsEntry\x12\x13\n\x0b\x64\x65lete_tags\x18\x04 \x03(\t\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x19\n\x17\x44\x65tectionTagInfoRequest\"\x8b\x02\n\x10\x44\x65tectionTagInfo\x12\x42\n\ntag_counts\x18\x01 \x03(\x0b\x32..workflowproto.DetectionTagInfo.TagCountsEntry\x12K\n\x0fuser_tag_counts\x18\x02 \x03(\x0b\x32\x32.workflowproto.DetectionTagInfo.UserTagCountsEntry\x1a\x30\n\x0eTagCountsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a\x34\n\x12UserTagCountsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\".\n\x16\x44\x65leteDetectionRequest\x12\x14\n\x0c\x64\x65tection_id\x18\x01 \x01(\t\"\x07\n\x05\x45mpty*\x81\x01\n\x0e\x44\x65tectionStage\x12\x18\n\x14\x44\x45TECTION_STAGE_NONE\x10\x00\x12\x1a\n\x16\x44\x45TECTION_STAGE_QUEUED\x10\x01\x12\x1b\n\x17\x44\x45TECTION_STAGE_CLAIMED\x10\x02\x12\x1c\n\x18\x44\x45TECTION_STAGE_FINISHED\x10\x03*h\n\x0f\x44\x65tectionStatus\x12\x19\n\x15\x44\x45TECTION_STATUS_NONE\x10\x00\x12\x1c\n\x18\x44\x45TECTION_STATUS_SUCCESS\x10\x01\x12\x1c\n\x18\x44\x45TECTION_STATUS_FAILURE\x10\x02*\x1e\n\x07SortKey\x12\t\n\x05SCORE\x10\x00\x12\x08\n\x04META\x10\x01*`\n\x13\x46usionThresholdType\x12\x17\n\x13\x46USION_NO_THRESHOLD\x10\x00\x12\x17\n\x13\x46USION_LT_THRESHOLD\x10\x01\x12\x17\n\x13\x46USION_GT_THRESHOLD\x10\x02\x32\xea\x05\n\x08Pipeline\x12G\n\x06\x44\x65tect\x12\x1f.workflowproto.DetectionRequest\x1a\x1c.workflowproto.DetectionInfo\x12U\n\x10GetDetectionInfo\x12#.workflowproto.DetectionInfoRequest\x1a\x1c.workflowproto.DetectionInfo\x12U\n\x10GetDetectionList\x12#.workflowproto.DetectionListRequest\x1a\x1c.workflowproto.DetectionList\x12N\n\x0f\x44\x65leteDetection\x12%.workflowproto.DeleteDetectionRequest\x1a\x14.workflowproto.Empty\x12?\n\x04\x46use\x12\x1c.workflowproto.FusionRequest\x1a\x19.workflowproto.FusionInfo\x12\x43\n\x08\x46useByID\x12\x1c.workflowproto.FusionRequest\x1a\x19.workflowproto.FusionInfo\x12Q\n\nFuseAllIDs\x12 .workflowproto.FuseAllIDsRequest\x1a!.workflowproto.FuseAllIDsResponse\x12^\n\x13UpdateDetectionTags\x12).workflowproto.UpdateDetectionTagsRequest\x1a\x1c.workflowproto.DetectionInfo\x12^\n\x13GetDetectionTagInfo\x12&.workflowproto.DetectionTagInfoRequest\x1a\x1f.workflowproto.DetectionTagInfob\x06proto3')
+  serialized_pb=_b('\n\x19medifor/v1/pipeline.proto\x12\rworkflowproto\x1a\x19medifor/v1/analytic.proto\x1a\x17medifor/v1/fusion.proto\"c\n\x07SortCol\x12#\n\x03key\x18\x01 \x01(\x0e\x32\x16.workflowproto.SortKey\x12\x0e\n\x06is_asc\x18\x02 \x01(\x08\x12\x11\n\ttype_cast\x18\x03 \x01(\t\x12\x10\n\x08meta_key\x18\x04 \x01(\t\"\xcc\x03\n\x10\x44\x65tectionRequest\x12\n\n\x02id\x18\x03 \x01(\t\x12(\n\x07request\x18\x01 \x01(\x0b\x32\x17.mediforproto.Detection\x12\x13\n\x0b\x61nalytic_id\x18\x02 \x03(\t\x12\x10\n\x08\x66user_id\x18\x08 \x03(\t\x12\x37\n\x04tags\x18\x04 \x03(\x0b\x32).workflowproto.DetectionRequest.TagsEntry\x12@\n\tuser_tags\x18\x06 \x03(\x0b\x32-.workflowproto.DetectionRequest.UserTagsEntry\x12\x37\n\x04meta\x18\x07 \x03(\x0b\x32).workflowproto.DetectionRequest.MetaEntry\x12\x1c\n\x14\x61nalytic_timeout_sec\x18\x05 \x01(\x03\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a/\n\rUserTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a+\n\tMetaEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xb6\x01\n\x15\x41nalyticDetectionInfo\x12\x13\n\x0b\x61nalytic_id\x18\x01 \x01(\t\x12,\n\x05stage\x18\x02 \x01(\x0e\x32\x1d.workflowproto.DetectionStage\x12.\n\x06status\x18\x03 \x01(\x0e\x32\x1e.workflowproto.DetectionStatus\x12*\n\tdetection\x18\x04 \x01(\x0b\x32\x17.mediforproto.Detection\"\xa0\x04\n\rDetectionInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12;\n\ranalytic_info\x18\x02 \x03(\x0b\x32$.workflowproto.AnalyticDetectionInfo\x12\x33\n\x0b\x66usion_info\x18\x08 \x03(\x0b\x32\x1e.workflowproto.FuserFusionInfo\x12\x34\n\x04tags\x18\x03 \x03(\x0b\x32&.workflowproto.DetectionInfo.TagsEntry\x12=\n\tuser_tags\x18\x06 \x03(\x0b\x32*.workflowproto.DetectionInfo.UserTagsEntry\x12\x34\n\x04meta\x18\x07 \x03(\x0b\x32&.workflowproto.DetectionInfo.MetaEntry\x12\x11\n\thas_fused\x18\x04 \x01(\x08\x12\x13\n\x0b\x66used_score\x18\x05 \x01(\x01\x12\x17\n\x0f\x61nalytics_total\x18\t \x01(\x05\x12\x1a\n\x12\x61nalytics_finished\x18\n \x01(\x05\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a/\n\rUserTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a+\n\tMetaEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"6\n\x14\x44\x65tectionInfoRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x12\n\nwant_fused\x18\x02 \x01(\x08\"\xf1\x02\n\x14\x44\x65tectionListRequest\x12;\n\x04tags\x18\x01 \x03(\x0b\x32-.workflowproto.DetectionListRequest.TagsEntry\x12\x15\n\rdetection_ids\x18\x07 \x03(\t\x12\x12\n\nwant_fused\x18\x04 \x01(\x08\x12(\n\x08order_by\x18\x05 \x03(\x0b\x32\x16.workflowproto.SortCol\x12\x10\n\x08\x66user_id\x18\x06 \x01(\t\x12\x41\n\x15\x66usion_threshold_type\x18\x08 \x01(\x0e\x32\".workflowproto.FusionThresholdType\x12\x1e\n\x16\x66usion_threshold_value\x18\t \x01(\x02\x12\x11\n\tpage_size\x18\x02 \x01(\x05\x12\x12\n\npage_token\x18\x03 \x01(\t\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"d\n\rDetectionList\x12\x30\n\ndetections\x18\x01 \x03(\x0b\x32\x1c.workflowproto.DetectionInfo\x12\r\n\x05total\x18\x03 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\"\xeb\x01\n\rFusionRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12%\n\x07request\x18\x02 \x01(\x0b\x32\x14.mediforproto.Fusion\x12\x10\n\x08\x66user_id\x18\x04 \x03(\t\x12\x34\n\x04tags\x18\x03 \x03(\x0b\x32&.workflowproto.FusionRequest.TagsEntry\x12\x14\n\x0c\x64\x65tection_id\x18\x05 \x01(\t\x12\x1c\n\x14\x64\x65tection_id_out_dir\x18\x06 \x01(\t\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xa7\x01\n\x0f\x46userFusionInfo\x12\x10\n\x08\x66user_id\x18\x01 \x01(\t\x12,\n\x05stage\x18\x02 \x01(\x0e\x32\x1d.workflowproto.DetectionStage\x12.\n\x06status\x18\x03 \x01(\x0e\x32\x1e.workflowproto.DetectionStatus\x12$\n\x06\x66usion\x18\x04 \x01(\x0b\x32\x14.mediforproto.Fusion\"\xd6\x01\n\nFusionInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12\x34\n\x0c\x66usion_infos\x18\x02 \x03(\x0b\x32\x1e.workflowproto.FuserFusionInfo\x12\x31\n\x04tags\x18\x03 \x03(\x0b\x32#.workflowproto.FusionInfo.TagsEntry\x12\x11\n\thas_fused\x18\x04 \x01(\x08\x12\x13\n\x0b\x66used_score\x18\x05 \x01(\x01\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"6\n\x11\x46useAllIDsRequest\x12\x10\n\x08\x66user_id\x18\x01 \x03(\t\x12\x0f\n\x07out_dir\x18\x02 \x01(\t\"\x14\n\x12\x46useAllIDsResponse\"\xc8\x01\n\x1aUpdateDetectionTagsRequest\x12\x14\n\x0c\x64\x65tection_id\x18\x01 \x01(\t\x12\x0f\n\x07replace\x18\x02 \x01(\x08\x12\x41\n\x04tags\x18\x03 \x03(\x0b\x32\x33.workflowproto.UpdateDetectionTagsRequest.TagsEntry\x12\x13\n\x0b\x64\x65lete_tags\x18\x04 \x03(\t\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x19\n\x17\x44\x65tectionTagInfoRequest\"\x8b\x02\n\x10\x44\x65tectionTagInfo\x12\x42\n\ntag_counts\x18\x01 \x03(\x0b\x32..workflowproto.DetectionTagInfo.TagCountsEntry\x12K\n\x0fuser_tag_counts\x18\x02 \x03(\x0b\x32\x32.workflowproto.DetectionTagInfo.UserTagCountsEntry\x1a\x30\n\x0eTagCountsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a\x34\n\x12UserTagCountsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\".\n\x16\x44\x65leteDetectionRequest\x12\x14\n\x0c\x64\x65tection_id\x18\x01 \x01(\t\"\x93\x02\n\x0c\x41nalyticMeta\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12\x0b\n\x03\x63pu\x18\x03 \x01(\x01\x12\x0b\n\x03ram\x18\x04 \x01(\x01\x12\x0b\n\x03gpu\x18\x05 \x01(\x05\x12\'\n\x05media\x18\x06 \x01(\x0e\x32\x18.workflowproto.MediaType\x12\x13\n\x0b\x64\x65scription\x18\x07 \x01(\t\x12\x0c\n\x04name\x18\x08 \x01(\t\x12@\n\x0buser_fields\x18\t \x03(\x0b\x32+.workflowproto.AnalyticMeta.UserFieldsEntry\x1a\x31\n\x0fUserFieldsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\">\n\x0c\x41nalyticList\x12.\n\tanalytics\x18\x01 \x03(\x0b\x32\x1b.workflowproto.AnalyticMeta\"\x07\n\x05\x45mpty*\x81\x01\n\x0e\x44\x65tectionStage\x12\x18\n\x14\x44\x45TECTION_STAGE_NONE\x10\x00\x12\x1a\n\x16\x44\x45TECTION_STAGE_QUEUED\x10\x01\x12\x1b\n\x17\x44\x45TECTION_STAGE_CLAIMED\x10\x02\x12\x1c\n\x18\x44\x45TECTION_STAGE_FINISHED\x10\x03*h\n\x0f\x44\x65tectionStatus\x12\x19\n\x15\x44\x45TECTION_STATUS_NONE\x10\x00\x12\x1c\n\x18\x44\x45TECTION_STATUS_SUCCESS\x10\x01\x12\x1c\n\x18\x44\x45TECTION_STATUS_FAILURE\x10\x02*\x1e\n\x07SortKey\x12\t\n\x05SCORE\x10\x00\x12\x08\n\x04META\x10\x01*`\n\x13\x46usionThresholdType\x12\x17\n\x13\x46USION_NO_THRESHOLD\x10\x00\x12\x17\n\x13\x46USION_LT_THRESHOLD\x10\x01\x12\x17\n\x13\x46USION_GT_THRESHOLD\x10\x02*E\n\tMediaType\x12\t\n\x05IMAGE\x10\x00\x12\t\n\x05VIDEO\x10\x01\x12\x10\n\x0c\x46USION_IMAGE\x10\x02\x12\x10\n\x0c\x46USION_VIDEO\x10\x03\x32\xb0\x06\n\x08Pipeline\x12G\n\x06\x44\x65tect\x12\x1f.workflowproto.DetectionRequest\x1a\x1c.workflowproto.DetectionInfo\x12U\n\x10GetDetectionInfo\x12#.workflowproto.DetectionInfoRequest\x1a\x1c.workflowproto.DetectionInfo\x12U\n\x10GetDetectionList\x12#.workflowproto.DetectionListRequest\x1a\x1c.workflowproto.DetectionList\x12N\n\x0f\x44\x65leteDetection\x12%.workflowproto.DeleteDetectionRequest\x1a\x14.workflowproto.Empty\x12?\n\x04\x46use\x12\x1c.workflowproto.FusionRequest\x1a\x19.workflowproto.FusionInfo\x12\x43\n\x08\x46useByID\x12\x1c.workflowproto.FusionRequest\x1a\x19.workflowproto.FusionInfo\x12Q\n\nFuseAllIDs\x12 .workflowproto.FuseAllIDsRequest\x1a!.workflowproto.FuseAllIDsResponse\x12^\n\x13UpdateDetectionTags\x12).workflowproto.UpdateDetectionTagsRequest\x1a\x1c.workflowproto.DetectionInfo\x12^\n\x13GetDetectionTagInfo\x12&.workflowproto.DetectionTagInfoRequest\x1a\x1f.workflowproto.DetectionTagInfo\x12\x44\n\x0fGetAnalyticMeta\x12\x14.workflowproto.Empty\x1a\x1b.workflowproto.AnalyticListb\x06proto3')
   ,
   dependencies=[medifor_dot_v1_dot_analytic__pb2.DESCRIPTOR,medifor_dot_v1_dot_fusion__pb2.DESCRIPTOR,])
 
@@ -51,8 +51,8 @@ _DETECTIONSTAGE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=3183,
-  serialized_end=3312,
+  serialized_start=3525,
+  serialized_end=3654,
 )
 _sym_db.RegisterEnumDescriptor(_DETECTIONSTAGE)
 
@@ -78,8 +78,8 @@ _DETECTIONSTATUS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=3314,
-  serialized_end=3418,
+  serialized_start=3656,
+  serialized_end=3760,
 )
 _sym_db.RegisterEnumDescriptor(_DETECTIONSTATUS)
 
@@ -101,8 +101,8 @@ _SORTKEY = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=3420,
-  serialized_end=3450,
+  serialized_start=3762,
+  serialized_end=3792,
 )
 _sym_db.RegisterEnumDescriptor(_SORTKEY)
 
@@ -128,12 +128,43 @@ _FUSIONTHRESHOLDTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=3452,
-  serialized_end=3548,
+  serialized_start=3794,
+  serialized_end=3890,
 )
 _sym_db.RegisterEnumDescriptor(_FUSIONTHRESHOLDTYPE)
 
 FusionThresholdType = enum_type_wrapper.EnumTypeWrapper(_FUSIONTHRESHOLDTYPE)
+_MEDIATYPE = _descriptor.EnumDescriptor(
+  name='MediaType',
+  full_name='workflowproto.MediaType',
+  filename=None,
+  file=DESCRIPTOR,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='IMAGE', index=0, number=0,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='VIDEO', index=1, number=1,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='FUSION_IMAGE', index=2, number=2,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='FUSION_VIDEO', index=3, number=3,
+      serialized_options=None,
+      type=None),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=3892,
+  serialized_end=3961,
+)
+_sym_db.RegisterEnumDescriptor(_MEDIATYPE)
+
+MediaType = enum_type_wrapper.EnumTypeWrapper(_MEDIATYPE)
 DETECTION_STAGE_NONE = 0
 DETECTION_STAGE_QUEUED = 1
 DETECTION_STAGE_CLAIMED = 2
@@ -146,6 +177,10 @@ META = 1
 FUSION_NO_THRESHOLD = 0
 FUSION_LT_THRESHOLD = 1
 FUSION_GT_THRESHOLD = 2
+IMAGE = 0
+VIDEO = 1
+FUSION_IMAGE = 2
+FUSION_VIDEO = 3
 
 
 
@@ -1425,6 +1460,161 @@ _DELETEDETECTIONREQUEST = _descriptor.Descriptor(
 )
 
 
+_ANALYTICMETA_USERFIELDSENTRY = _descriptor.Descriptor(
+  name='UserFieldsEntry',
+  full_name='workflowproto.AnalyticMeta.UserFieldsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='workflowproto.AnalyticMeta.UserFieldsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='workflowproto.AnalyticMeta.UserFieldsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3400,
+  serialized_end=3449,
+)
+
+_ANALYTICMETA = _descriptor.Descriptor(
+  name='AnalyticMeta',
+  full_name='workflowproto.AnalyticMeta',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='workflowproto.AnalyticMeta.id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='version', full_name='workflowproto.AnalyticMeta.version', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='cpu', full_name='workflowproto.AnalyticMeta.cpu', index=2,
+      number=3, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='ram', full_name='workflowproto.AnalyticMeta.ram', index=3,
+      number=4, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='gpu', full_name='workflowproto.AnalyticMeta.gpu', index=4,
+      number=5, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='media', full_name='workflowproto.AnalyticMeta.media', index=5,
+      number=6, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='description', full_name='workflowproto.AnalyticMeta.description', index=6,
+      number=7, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='name', full_name='workflowproto.AnalyticMeta.name', index=7,
+      number=8, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='user_fields', full_name='workflowproto.AnalyticMeta.user_fields', index=8,
+      number=9, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_ANALYTICMETA_USERFIELDSENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3174,
+  serialized_end=3449,
+)
+
+
+_ANALYTICLIST = _descriptor.Descriptor(
+  name='AnalyticList',
+  full_name='workflowproto.AnalyticList',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='analytics', full_name='workflowproto.AnalyticList.analytics', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3451,
+  serialized_end=3513,
+)
+
+
 _EMPTY = _descriptor.Descriptor(
   name='Empty',
   full_name='workflowproto.Empty',
@@ -1444,8 +1634,8 @@ _EMPTY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3173,
-  serialized_end=3180,
+  serialized_start=3515,
+  serialized_end=3522,
 )
 
 _SORTCOL.fields_by_name['key'].enum_type = _SORTKEY
@@ -1487,6 +1677,10 @@ _DETECTIONTAGINFO_TAGCOUNTSENTRY.containing_type = _DETECTIONTAGINFO
 _DETECTIONTAGINFO_USERTAGCOUNTSENTRY.containing_type = _DETECTIONTAGINFO
 _DETECTIONTAGINFO.fields_by_name['tag_counts'].message_type = _DETECTIONTAGINFO_TAGCOUNTSENTRY
 _DETECTIONTAGINFO.fields_by_name['user_tag_counts'].message_type = _DETECTIONTAGINFO_USERTAGCOUNTSENTRY
+_ANALYTICMETA_USERFIELDSENTRY.containing_type = _ANALYTICMETA
+_ANALYTICMETA.fields_by_name['media'].enum_type = _MEDIATYPE
+_ANALYTICMETA.fields_by_name['user_fields'].message_type = _ANALYTICMETA_USERFIELDSENTRY
+_ANALYTICLIST.fields_by_name['analytics'].message_type = _ANALYTICMETA
 DESCRIPTOR.message_types_by_name['SortCol'] = _SORTCOL
 DESCRIPTOR.message_types_by_name['DetectionRequest'] = _DETECTIONREQUEST
 DESCRIPTOR.message_types_by_name['AnalyticDetectionInfo'] = _ANALYTICDETECTIONINFO
@@ -1503,11 +1697,14 @@ DESCRIPTOR.message_types_by_name['UpdateDetectionTagsRequest'] = _UPDATEDETECTIO
 DESCRIPTOR.message_types_by_name['DetectionTagInfoRequest'] = _DETECTIONTAGINFOREQUEST
 DESCRIPTOR.message_types_by_name['DetectionTagInfo'] = _DETECTIONTAGINFO
 DESCRIPTOR.message_types_by_name['DeleteDetectionRequest'] = _DELETEDETECTIONREQUEST
+DESCRIPTOR.message_types_by_name['AnalyticMeta'] = _ANALYTICMETA
+DESCRIPTOR.message_types_by_name['AnalyticList'] = _ANALYTICLIST
 DESCRIPTOR.message_types_by_name['Empty'] = _EMPTY
 DESCRIPTOR.enum_types_by_name['DetectionStage'] = _DETECTIONSTAGE
 DESCRIPTOR.enum_types_by_name['DetectionStatus'] = _DETECTIONSTATUS
 DESCRIPTOR.enum_types_by_name['SortKey'] = _SORTKEY
 DESCRIPTOR.enum_types_by_name['FusionThresholdType'] = _FUSIONTHRESHOLDTYPE
+DESCRIPTOR.enum_types_by_name['MediaType'] = _MEDIATYPE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 SortCol = _reflection.GeneratedProtocolMessageType('SortCol', (_message.Message,), dict(
@@ -1718,6 +1915,28 @@ DeleteDetectionRequest = _reflection.GeneratedProtocolMessageType('DeleteDetecti
   ))
 _sym_db.RegisterMessage(DeleteDetectionRequest)
 
+AnalyticMeta = _reflection.GeneratedProtocolMessageType('AnalyticMeta', (_message.Message,), dict(
+
+  UserFieldsEntry = _reflection.GeneratedProtocolMessageType('UserFieldsEntry', (_message.Message,), dict(
+    DESCRIPTOR = _ANALYTICMETA_USERFIELDSENTRY,
+    __module__ = 'medifor.v1.pipeline_pb2'
+    # @@protoc_insertion_point(class_scope:workflowproto.AnalyticMeta.UserFieldsEntry)
+    ))
+  ,
+  DESCRIPTOR = _ANALYTICMETA,
+  __module__ = 'medifor.v1.pipeline_pb2'
+  # @@protoc_insertion_point(class_scope:workflowproto.AnalyticMeta)
+  ))
+_sym_db.RegisterMessage(AnalyticMeta)
+_sym_db.RegisterMessage(AnalyticMeta.UserFieldsEntry)
+
+AnalyticList = _reflection.GeneratedProtocolMessageType('AnalyticList', (_message.Message,), dict(
+  DESCRIPTOR = _ANALYTICLIST,
+  __module__ = 'medifor.v1.pipeline_pb2'
+  # @@protoc_insertion_point(class_scope:workflowproto.AnalyticList)
+  ))
+_sym_db.RegisterMessage(AnalyticList)
+
 Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), dict(
   DESCRIPTOR = _EMPTY,
   __module__ = 'medifor.v1.pipeline_pb2'
@@ -1738,6 +1957,7 @@ _FUSIONINFO_TAGSENTRY._options = None
 _UPDATEDETECTIONTAGSREQUEST_TAGSENTRY._options = None
 _DETECTIONTAGINFO_TAGCOUNTSENTRY._options = None
 _DETECTIONTAGINFO_USERTAGCOUNTSENTRY._options = None
+_ANALYTICMETA_USERFIELDSENTRY._options = None
 
 _PIPELINE = _descriptor.ServiceDescriptor(
   name='Pipeline',
@@ -1745,8 +1965,8 @@ _PIPELINE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=3551,
-  serialized_end=4297,
+  serialized_start=3964,
+  serialized_end=4780,
   methods=[
   _descriptor.MethodDescriptor(
     name='Detect',
@@ -1827,6 +2047,15 @@ _PIPELINE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_DETECTIONTAGINFOREQUEST,
     output_type=_DETECTIONTAGINFO,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetAnalyticMeta',
+    full_name='workflowproto.Pipeline.GetAnalyticMeta',
+    index=9,
+    containing_service=None,
+    input_type=_EMPTY,
+    output_type=_ANALYTICLIST,
     serialized_options=None,
   ),
 ])

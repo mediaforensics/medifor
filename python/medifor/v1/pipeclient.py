@@ -246,6 +246,10 @@ class MediForPipeline(pipeline_pb2_grpc.PipelineStub):
         )
         return self.FuseAllIDs(req)
 
+    def get_analytic_meta(self):
+        req = pipeline_pb2.Empty()
+        return self.GetAnalyticMeta(req)
+
 def parse_tags(tags):
     if not tags:
         return {}
