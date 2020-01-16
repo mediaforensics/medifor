@@ -21,7 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='mediforproto',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x17medifor/v1/fusion.proto\x12\x0cmediforproto\x1a\x17google/rpc/status.proto\x1a\x19medifor/v1/analytic.proto\"\xdf\x04\n\x06\x46usion\x12\"\n\x06status\x18\x01 \x01(\x0b\x32\x12.google.rpc.Status\x12\x19\n\x11start_time_millis\x18\x02 \x01(\x03\x12\x17\n\x0f\x65nd_time_millis\x18\x03 \x01(\x03\x12\x43\n\rimg_manip_req\x18\x0b \x01(\x0b\x32*.mediforproto.FuseImageManipulationRequestH\x00\x12\x43\n\rvid_manip_req\x18\x0c \x01(\x0b\x32*.mediforproto.FuseVideoManipulationRequestH\x00\x12>\n\x0eimg_splice_req\x18\r \x01(\x0b\x32$.mediforproto.FuseImageSpliceRequestH\x00\x12\x46\n\x11img_cam_match_req\x18\x0e \x01(\x0b\x32).mediforproto.FuseImageCameraMatchRequestH\x00\x12\x34\n\timg_manip\x18\x15 \x01(\x0b\x32\x1f.mediforproto.ImageManipulationH\x01\x12\x34\n\tvid_manip\x18\x16 \x01(\x0b\x32\x1f.mediforproto.VideoManipulationH\x01\x12/\n\nimg_splice\x18\x17 \x01(\x0b\x32\x19.mediforproto.ImageSpliceH\x01\x12\x37\n\rimg_cam_match\x18\x18 \x01(\x0b\x32\x1e.mediforproto.ImageCameraMatchH\x01\x42\t\n\x07requestB\n\n\x08response\"h\n\x1a\x41nnotatedImageManipulation\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12-\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x1f.mediforproto.ImageManipulation\"\xd3\x01\n\x1c\x46useImageManipulationRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12\x0f\n\x07out_dir\x18\x02 \x01(\t\x12=\n\rimg_manip_req\x18\x03 \x01(\x0b\x32&.mediforproto.ImageManipulationRequest\x12;\n\timg_manip\x18\x04 \x03(\x0b\x32(.mediforproto.AnnotatedImageManipulation\x12\x12\n\nwant_masks\x18\x05 \x01(\x08\"h\n\x1a\x41nnotatedVideoManipulation\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12-\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x1f.mediforproto.VideoManipulation\"\xd3\x01\n\x1c\x46useVideoManipulationRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12\x0f\n\x07out_dir\x18\x02 \x01(\t\x12=\n\rvid_manip_req\x18\x03 \x01(\x0b\x32&.mediforproto.VideoManipulationRequest\x12;\n\tvid_manip\x18\x04 \x03(\x0b\x32(.mediforproto.AnnotatedVideoManipulation\x12\x12\n\nwant_masks\x18\x05 \x01(\x08\"\\\n\x14\x41nnotatedImageSplice\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12\'\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x19.mediforproto.ImageSplice\"\xc3\x01\n\x16\x46useImageSpliceRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12\x0f\n\x07out_dir\x18\x02 \x01(\t\x12\x38\n\x0eimg_splice_req\x18\x03 \x01(\x0b\x32 .mediforproto.ImageSpliceRequest\x12\x36\n\nimg_splice\x18\x04 \x03(\x0b\x32\".mediforproto.AnnotatedImageSplice\x12\x12\n\nwant_masks\x18\x05 \x01(\x08\"f\n\x19\x41nnotatedImageCameraMatch\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12,\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x1e.mediforproto.ImageCameraMatch\"\xd8\x01\n\x1b\x46useImageCameraMatchRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12\x0f\n\x07out_dir\x18\x02 \x01(\t\x12@\n\x11img_cam_match_req\x18\x03 \x01(\x0b\x32%.mediforproto.ImageCameraMatchRequest\x12>\n\rimg_cam_match\x18\x04 \x03(\x0b\x32\'.mediforproto.AnnotatedImageCameraMatch\x12\x12\n\nwant_masks\x18\x05 \x01(\x08\x32\xbc\x03\n\x05\x46user\x12\x64\n\x15\x46useImageManipulation\x12*.mediforproto.FuseImageManipulationRequest\x1a\x1f.mediforproto.ImageManipulation\x12R\n\x0f\x46useImageSplice\x12$.mediforproto.FuseImageSpliceRequest\x1a\x19.mediforproto.ImageSplice\x12\x64\n\x15\x46useVideoManipulation\x12*.mediforproto.FuseVideoManipulationRequest\x1a\x1f.mediforproto.VideoManipulation\x12\x61\n\x14\x46useImageCameraMatch\x12).mediforproto.FuseImageCameraMatchRequest\x1a\x1e.mediforproto.ImageCameraMatch\x12\x30\n\x04Kill\x12\x13.mediforproto.Empty\x1a\x13.mediforproto.Emptyb\x06proto3')
+  serialized_pb=_b('\n\x17medifor/v1/fusion.proto\x12\x0cmediforproto\x1a\x17google/rpc/status.proto\x1a\x19medifor/v1/analytic.proto\"\xdf\x04\n\x06\x46usion\x12\"\n\x06status\x18\x01 \x01(\x0b\x32\x12.google.rpc.Status\x12\x19\n\x11start_time_millis\x18\x02 \x01(\x03\x12\x17\n\x0f\x65nd_time_millis\x18\x03 \x01(\x03\x12\x43\n\rimg_manip_req\x18\x0b \x01(\x0b\x32*.mediforproto.FuseImageManipulationRequestH\x00\x12\x43\n\rvid_manip_req\x18\x0c \x01(\x0b\x32*.mediforproto.FuseVideoManipulationRequestH\x00\x12>\n\x0eimg_splice_req\x18\r \x01(\x0b\x32$.mediforproto.FuseImageSpliceRequestH\x00\x12\x46\n\x11img_cam_match_req\x18\x0e \x01(\x0b\x32).mediforproto.FuseImageCameraMatchRequestH\x00\x12\x34\n\timg_manip\x18\x15 \x01(\x0b\x32\x1f.mediforproto.ImageManipulationH\x01\x12\x34\n\tvid_manip\x18\x16 \x01(\x0b\x32\x1f.mediforproto.VideoManipulationH\x01\x12/\n\nimg_splice\x18\x17 \x01(\x0b\x32\x19.mediforproto.ImageSpliceH\x01\x12\x37\n\rimg_cam_match\x18\x18 \x01(\x0b\x32\x1e.mediforproto.ImageCameraMatchH\x01\x42\t\n\x07requestB\n\n\x08response\"h\n\x1a\x41nnotatedImageManipulation\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12-\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x1f.mediforproto.ImageManipulation\"\xd3\x01\n\x1c\x46useImageManipulationRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12\x0f\n\x07out_dir\x18\x02 \x01(\t\x12=\n\rimg_manip_req\x18\x03 \x01(\x0b\x32&.mediforproto.ImageManipulationRequest\x12;\n\timg_manip\x18\x04 \x03(\x0b\x32(.mediforproto.AnnotatedImageManipulation\x12\x12\n\nwant_masks\x18\x05 \x01(\x08\"h\n\x1a\x41nnotatedVideoManipulation\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12-\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x1f.mediforproto.VideoManipulation\"\xd3\x01\n\x1c\x46useVideoManipulationRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12\x0f\n\x07out_dir\x18\x02 \x01(\t\x12=\n\rvid_manip_req\x18\x03 \x01(\x0b\x32&.mediforproto.VideoManipulationRequest\x12;\n\tvid_manip\x18\x04 \x03(\x0b\x32(.mediforproto.AnnotatedVideoManipulation\x12\x12\n\nwant_masks\x18\x05 \x01(\x08\"\\\n\x14\x41nnotatedImageSplice\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12\'\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x19.mediforproto.ImageSplice\"\xc3\x01\n\x16\x46useImageSpliceRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12\x0f\n\x07out_dir\x18\x02 \x01(\t\x12\x38\n\x0eimg_splice_req\x18\x03 \x01(\x0b\x32 .mediforproto.ImageSpliceRequest\x12\x36\n\nimg_splice\x18\x04 \x03(\x0b\x32\".mediforproto.AnnotatedImageSplice\x12\x12\n\nwant_masks\x18\x05 \x01(\x08\"f\n\x19\x41nnotatedImageCameraMatch\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12,\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x1e.mediforproto.ImageCameraMatch\"\xd8\x01\n\x1b\x46useImageCameraMatchRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12\x0f\n\x07out_dir\x18\x02 \x01(\t\x12@\n\x11img_cam_match_req\x18\x03 \x01(\x0b\x32%.mediforproto.ImageCameraMatchRequest\x12>\n\rimg_cam_match\x18\x04 \x03(\x0b\x32\'.mediforproto.AnnotatedImageCameraMatch\x12\x12\n\nwant_masks\x18\x05 \x01(\x08\"f\n\x19\x41nnotatedVideoCameraMatch\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12,\n\x04\x64\x61ta\x18\x03 \x01(\x0b\x32\x1e.mediforproto.VideoCameraMatch\"\xd8\x01\n\x1b\x46useVideoCameraMatchRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12\x0f\n\x07out_dir\x18\x02 \x01(\t\x12@\n\x11vid_cam_match_req\x18\x03 \x01(\x0b\x32%.mediforproto.VideoCameraMatchRequest\x12>\n\rvid_cam_match\x18\x04 \x03(\x0b\x32\'.mediforproto.AnnotatedVideoCameraMatch\x12\x12\n\nwant_masks\x18\x05 \x01(\x08\x32\x9f\x04\n\x05\x46user\x12\x64\n\x15\x46useImageManipulation\x12*.mediforproto.FuseImageManipulationRequest\x1a\x1f.mediforproto.ImageManipulation\x12R\n\x0f\x46useImageSplice\x12$.mediforproto.FuseImageSpliceRequest\x1a\x19.mediforproto.ImageSplice\x12\x64\n\x15\x46useVideoManipulation\x12*.mediforproto.FuseVideoManipulationRequest\x1a\x1f.mediforproto.VideoManipulation\x12\x61\n\x14\x46useImageCameraMatch\x12).mediforproto.FuseImageCameraMatchRequest\x1a\x1e.mediforproto.ImageCameraMatch\x12\x61\n\x14\x46useVideoCameraMatch\x12).mediforproto.FuseVideoCameraMatchRequest\x1a\x1e.mediforproto.VideoCameraMatch\x12\x30\n\x04Kill\x12\x13.mediforproto.Empty\x1a\x13.mediforproto.Emptyb\x06proto3')
   ,
   dependencies=[google_dot_rpc_dot_status__pb2.DESCRIPTOR,medifor_dot_v1_dot_analytic__pb2.DESCRIPTOR,])
 
@@ -550,6 +550,110 @@ _FUSEIMAGECAMERAMATCHREQUEST = _descriptor.Descriptor(
   serialized_end=1956,
 )
 
+
+_ANNOTATEDVIDEOCAMERAMATCH = _descriptor.Descriptor(
+  name='AnnotatedVideoCameraMatch',
+  full_name='mediforproto.AnnotatedVideoCameraMatch',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='mediforproto.AnnotatedVideoCameraMatch.id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='version', full_name='mediforproto.AnnotatedVideoCameraMatch.version', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='data', full_name='mediforproto.AnnotatedVideoCameraMatch.data', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1958,
+  serialized_end=2060,
+)
+
+
+_FUSEVIDEOCAMERAMATCHREQUEST = _descriptor.Descriptor(
+  name='FuseVideoCameraMatchRequest',
+  full_name='mediforproto.FuseVideoCameraMatchRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='request_id', full_name='mediforproto.FuseVideoCameraMatchRequest.request_id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='out_dir', full_name='mediforproto.FuseVideoCameraMatchRequest.out_dir', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='vid_cam_match_req', full_name='mediforproto.FuseVideoCameraMatchRequest.vid_cam_match_req', index=2,
+      number=3, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='vid_cam_match', full_name='mediforproto.FuseVideoCameraMatchRequest.vid_cam_match', index=3,
+      number=4, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='want_masks', full_name='mediforproto.FuseVideoCameraMatchRequest.want_masks', index=4,
+      number=5, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=2063,
+  serialized_end=2279,
+)
+
 _FUSION.fields_by_name['status'].message_type = google_dot_rpc_dot_status__pb2._STATUS
 _FUSION.fields_by_name['img_manip_req'].message_type = _FUSEIMAGEMANIPULATIONREQUEST
 _FUSION.fields_by_name['vid_manip_req'].message_type = _FUSEVIDEOMANIPULATIONREQUEST
@@ -595,6 +699,9 @@ _FUSEIMAGESPLICEREQUEST.fields_by_name['img_splice'].message_type = _ANNOTATEDIM
 _ANNOTATEDIMAGECAMERAMATCH.fields_by_name['data'].message_type = medifor_dot_v1_dot_analytic__pb2._IMAGECAMERAMATCH
 _FUSEIMAGECAMERAMATCHREQUEST.fields_by_name['img_cam_match_req'].message_type = medifor_dot_v1_dot_analytic__pb2._IMAGECAMERAMATCHREQUEST
 _FUSEIMAGECAMERAMATCHREQUEST.fields_by_name['img_cam_match'].message_type = _ANNOTATEDIMAGECAMERAMATCH
+_ANNOTATEDVIDEOCAMERAMATCH.fields_by_name['data'].message_type = medifor_dot_v1_dot_analytic__pb2._VIDEOCAMERAMATCH
+_FUSEVIDEOCAMERAMATCHREQUEST.fields_by_name['vid_cam_match_req'].message_type = medifor_dot_v1_dot_analytic__pb2._VIDEOCAMERAMATCHREQUEST
+_FUSEVIDEOCAMERAMATCHREQUEST.fields_by_name['vid_cam_match'].message_type = _ANNOTATEDVIDEOCAMERAMATCH
 DESCRIPTOR.message_types_by_name['Fusion'] = _FUSION
 DESCRIPTOR.message_types_by_name['AnnotatedImageManipulation'] = _ANNOTATEDIMAGEMANIPULATION
 DESCRIPTOR.message_types_by_name['FuseImageManipulationRequest'] = _FUSEIMAGEMANIPULATIONREQUEST
@@ -604,6 +711,8 @@ DESCRIPTOR.message_types_by_name['AnnotatedImageSplice'] = _ANNOTATEDIMAGESPLICE
 DESCRIPTOR.message_types_by_name['FuseImageSpliceRequest'] = _FUSEIMAGESPLICEREQUEST
 DESCRIPTOR.message_types_by_name['AnnotatedImageCameraMatch'] = _ANNOTATEDIMAGECAMERAMATCH
 DESCRIPTOR.message_types_by_name['FuseImageCameraMatchRequest'] = _FUSEIMAGECAMERAMATCHREQUEST
+DESCRIPTOR.message_types_by_name['AnnotatedVideoCameraMatch'] = _ANNOTATEDVIDEOCAMERAMATCH
+DESCRIPTOR.message_types_by_name['FuseVideoCameraMatchRequest'] = _FUSEVIDEOCAMERAMATCHREQUEST
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Fusion = _reflection.GeneratedProtocolMessageType('Fusion', (_message.Message,), dict(
@@ -669,6 +778,20 @@ FuseImageCameraMatchRequest = _reflection.GeneratedProtocolMessageType('FuseImag
   ))
 _sym_db.RegisterMessage(FuseImageCameraMatchRequest)
 
+AnnotatedVideoCameraMatch = _reflection.GeneratedProtocolMessageType('AnnotatedVideoCameraMatch', (_message.Message,), dict(
+  DESCRIPTOR = _ANNOTATEDVIDEOCAMERAMATCH,
+  __module__ = 'medifor.v1.fusion_pb2'
+  # @@protoc_insertion_point(class_scope:mediforproto.AnnotatedVideoCameraMatch)
+  ))
+_sym_db.RegisterMessage(AnnotatedVideoCameraMatch)
+
+FuseVideoCameraMatchRequest = _reflection.GeneratedProtocolMessageType('FuseVideoCameraMatchRequest', (_message.Message,), dict(
+  DESCRIPTOR = _FUSEVIDEOCAMERAMATCHREQUEST,
+  __module__ = 'medifor.v1.fusion_pb2'
+  # @@protoc_insertion_point(class_scope:mediforproto.FuseVideoCameraMatchRequest)
+  ))
+_sym_db.RegisterMessage(FuseVideoCameraMatchRequest)
+
 
 
 _FUSER = _descriptor.ServiceDescriptor(
@@ -677,8 +800,8 @@ _FUSER = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=1959,
-  serialized_end=2403,
+  serialized_start=2282,
+  serialized_end=2825,
   methods=[
   _descriptor.MethodDescriptor(
     name='FuseImageManipulation',
@@ -717,9 +840,18 @@ _FUSER = _descriptor.ServiceDescriptor(
     serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
+    name='FuseVideoCameraMatch',
+    full_name='mediforproto.Fuser.FuseVideoCameraMatch',
+    index=4,
+    containing_service=None,
+    input_type=_FUSEVIDEOCAMERAMATCHREQUEST,
+    output_type=medifor_dot_v1_dot_analytic__pb2._VIDEOCAMERAMATCH,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
     name='Kill',
     full_name='mediforproto.Fuser.Kill',
-    index=4,
+    index=5,
     containing_service=None,
     input_type=medifor_dot_v1_dot_analytic__pb2._EMPTY,
     output_type=medifor_dot_v1_dot_analytic__pb2._EMPTY,

@@ -112,11 +112,32 @@ message FuseImageCameraMatchRequest {
   bool want_masks = 5;
 }
 
+// Next Tag: 4
+message AnnotatedVideoCameraMatch {
+    string id = 1;
+    string version = 2;
+    VideoCameraMatch data = 3;
+}
+
+// Next Tag: 6
+message FuseVideoCameraMatchRequest {
+  string request_id = 1;
+  string out_dir = 2;
+
+  VideoCameraMatchRequest vid_cam_match_req = 3;
+  repeated AnnotatedVideoCameraMatch vid_cam_match = 4;
+
+  // If this is set, the fusion algorithm should produce mask output. Otherwise
+  // it should only produce a score.
+  bool want_masks = 5;
+}
+
 service Fuser {
   rpc FuseImageManipulation(FuseImageManipulationRequest) returns (ImageManipulation);
   rpc FuseImageSplice(FuseImageSpliceRequest) returns (ImageSplice);
   rpc FuseVideoManipulation(FuseVideoManipulationRequest) returns (VideoManipulation);
   rpc FuseImageCameraMatch(FuseImageCameraMatchRequest) returns (ImageCameraMatch);
+  rpc FuseVideoCameraMatch(FuseVideoCameraMatchRequest) returns (VideoCameraMatch);
 
   rpc Kill(Empty) returns (Empty);
 }
