@@ -24,19 +24,27 @@ setup(name=pkg_name,
       license='Apache License, Version 2.0',
       packages=find_packages(),
       install_requires=[
-          'setuptools==39.0.1',
+          'setuptools',
           'grpcio==1.15.0',
-          'grpcio-tools==1.15.0',
           'grpcio_health_checking==1.15.0',
           'protobuf>=3.6.1',
           'googleapis-common-protos==1.6.0',
-          'Click==7.0',
-          'pillow==6.2.0',
-          'dataclasses==0.6',
-          'six==1.12.0',
-          'requests==2.22.0',
-          'Flask==1.1.1'
+          'dataclasses~=0.6',
+          'six',
       ],
+      extras_require={
+            'protoc': [  # only needed for compiling protobufs
+                'grpcio-tools==1.15.0'
+            ],
+            'prov_example': [  # provenance filter example
+                'pillow~=6.2.0',
+                'Flask~=1.1.1',
+                'requests~=2.22.0',
+            ],
+            'client': [
+                'Click~=7.0',
+            ]
+      },
       data_files=list(iter_protos(pkg_name)),
       py_modules=[
           'medifor.v1.analytic_pb2',
