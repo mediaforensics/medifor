@@ -203,7 +203,7 @@ class AnalyticService:
     VIDEO_MANIPULATION = 'VideoManipulation'
     IMAGE_SPLICE = "ImageSplice"
     IMAGE_CAMERA_MATCH = "ImageCameraMatch"
-    VIDEO_CAMERA_MATCH = "ImageCameraMatch"
+    VIDEO_CAMERA_MATCH = "VideoCameraMatch"
     IMAGE_CAMERAS = "ImageCameras"
     # Add to _ALLOWED_IMPLS if you add things here.
 
@@ -265,14 +265,14 @@ class AnalyticService:
             resp =  self._CallEndpoint(self.IMAGE_CAMERA_MATCH, req, analytic_pb2.ImageCameraMatch(), ctx)
             det.CopyFrom(resp)
         elif type == "vid_cam_match_req":
-            req = det.img_cam_match_req
+            req = det.vid_cam_match_req
             resp = self._CallEndpoint(
-                self.IMAGE_CAMERA_MATCH, req, analytic_pb2.ImageCameraMatch(), ctx)
+                self.VIDEO_CAMERA_MATCH, req, analytic_pb2.VideoCameraMatch(), ctx)
             det.CopyFrom(resp)
         elif type == "img_cam_req":
-            req = det.img_cam_match_req
+            req = det.img_cam_req
             resp = self._CallEndpoint(
-                self.IMAGE_CAMERA_MATCH, req, analytic_pb2.ImageCameraMatch(), ctx)
+                self.IMAGE_CAMERAS, req, analytic_pb2.ImageCameras(), ctx)
             det.CopyFrom(resp)
 
         return det
