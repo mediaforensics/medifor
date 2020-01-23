@@ -35,8 +35,6 @@ class EndpointAction(object):
 
 
 class IndexSvc:
-    app = None
-
     def __init__(self, name, host="::", port=8080, debug=False):
         self.app = Flask(name)
         self.add_endpoint("/search", "search", self.search, methods=["POST"])
