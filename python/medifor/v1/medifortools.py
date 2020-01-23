@@ -1,5 +1,6 @@
 import mimetypes
 import os
+import uuid
 
 from medifor.v1 import analytic_pb2, pipeline_pb2
 
@@ -72,14 +73,14 @@ def get_detection(media, output_dir, request_id=None):
         request_id = str(uuid.uuid4())
     if mtype == "image":
         req = analytic_pb2.ImageManipulationRequest()
-        req.image.uri = self.map(media)
+        req.image.uri = media
         req.image.type = mime
         req.request_id = request_id
         req.out_dir = output_dir
         det.img_manip_req.MergeFrom(req)
     elif mtype == "video":    
         req = analytic_pb2.VideoManipulationRequest()
-        req.video.uri = self.map(media)
+        req.video.uri = media
         req.video.type = mime
         req.request_id = str(uuid.uuid4())
         req.out_dir = output_dir

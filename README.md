@@ -15,17 +15,25 @@ analytics and support for additional languages.
     * Setup medifor.v1 package
     * Refactored mediforclient and cli to be included in the medifor.v1 package
     * Added streaming service to analyticservice and `streamdetect` command to
-    the cli.    
+    the cli.
+
+-  v0.3.0   
+    * Refactored CLI to be included in the medifor package (i.e. `python -m medifor --help`)
+    * Added provenance filtering and graph building client
+
 
 ## Quickstart
-  1) Install the medifor library using `pip install git+https://github.com/mediaforensics/medifor.git`
+  (Note: Before starting you may wish to create a python virtual environment (e.g., `python venv env`) and then activate that environment (`source env/bin/activate`)
+  
+  1) Install the medifor library using `python3 -m pip install git+https://github.com/mediaforensics/medifor.git`
 
 
   2) Wrap your analytic using the `analyticservice` library.  The two easiest ways
  to do this are:
 
    - Create a new python script and import the required modules:
-      `from medifor.v1 import analytic_pb2, analyticservice`
+      `from medifor.v1 import analytic_pb2` and 
+      `from medifor.v1.analyticservice import AnalyticService`
     as well as your current analytic functions. Create a new function that takes
     as input a request and response object.  E.g.,
 
@@ -54,13 +62,16 @@ analytics and support for additional languages.
 
   4) Test the analytic using the medifor cli:
 
+  At this point you may wish to test your analytic prior to building the container. To do this simply run your analytic in another window (e.g., `python analytic.py`) and then, while the analytic is running, use the medifor CLI to send test images/videos to the analytic. 
 
-    python -m medifor.v1.cli [args] <command> [file] -o <path to output directory>
+
+    python -m medifor [args] <command> [file] -o <path to output directory>
 
 
    Where the command is `imgmanip` for image manipulation detection or `vidmanip`
    for video manipulation detection.
 
+  Testing the analytic this way can be useful since it does not require mounting volumes and path translation, which is often required when running analytic containers.
 
   5) Build an analytic container.
 
@@ -239,7 +250,8 @@ import os.path
 import sys
 import time
 
-from medifor.v1 import analytic_pb2, analyticservice
+from medifor.v1 import analytic_pb2
+from medifor.v1.analyticservice import AnalyticService
 
 # additional modules which required to run your algorithm should be imported as well.
 # It may be preferable to do all of your actual analysis in library functions and import those
@@ -312,7 +324,8 @@ import os.path
 import sys
 import time
 
-from medifor.v1 import analytic_pb2, analyticservice
+from medifor.v1 import analytic_pb2
+from medifor.v1.analyticservice import AnalyticService
 
 # additional modules which required to run your algorithm should be imported as well.
 # It may be preferable to do all of your actual analysis in library functions and import those
@@ -348,7 +361,12 @@ using the medifor library.
 A client library and CLI have been provided for communicating with media forensic analytics.
 
 The medifor client cli can be used to run or test media forensic analytics.  It
-currently has four commands:
+currently has  3 primary commands:
+ 1)`detect` - used for image/video manipulation detection
+ 2) `provenance` - used for provenance filtering & graph building tasks
+ 3) `pipeline` - used to talk to an existing medifor pipeline
+
+The `detect` command is the primary use of the medifor cli and has subcommands: 
  1) `imgmanip` - Used to run the analytic over a single image
  2) `vidmanip` - Used to run the analytic over a single video
  3) `detectbatch` - Used to run the analytic over every image/video in a specified directory.
@@ -360,7 +378,7 @@ currently has four commands:
 
 Usage for the cli:
 ```
-$ python -m medifor.v1.cli [flags] <command> [options]
+$ python -m medifor [flags] <command> [options]
 ```
 
 Each of command has its own set of flags and arguments in addition to the global

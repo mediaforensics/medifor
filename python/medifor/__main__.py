@@ -13,7 +13,7 @@ from grpc_health.v1 import health_pb2
 from grpc_health.v1 import health_pb2_grpc
 from google.protobuf import json_format
 
-from medifor.v1 import mediforclient, pipeclient, medifortools, pipeline_pb2
+from medifor.v1 import mediforclient, pipeclient, medifortools, pipeline_pb2, provclient
 
 class Context:
     pass
@@ -119,15 +119,16 @@ def streamdetect(ctx, probe, donor, container_out, local_out):
 @main.group()
 @click.pass_context
 def provenance(ctx):
-    ctx.obj.client = mediforclient.MediforClient(host=ctx.obj.host, port=ctx.obj.port,  src=ctx.obj.src, 
+    ctx.obj.client = provclient.ProvenanceClient(host=ctx.obj.host, port=ctx.obj.port,  src=ctx.obj.src, 
                                                 targ=ctx.obj.targ, osrc=ctx.obj.osrc, otarg=ctx.obj.otarg)
 
 @provenance.command()
 @click.argument('img')
-@click.option('--out', '-o', required=True, help="Output directory for analytic to use.")
-def filter(ctx, img, out_dir):
-    client = ctx.obj.client()
-    print(json_format.MessageToJson(client.prov_filter(img=img, out_dir=out_dir)))
+@click.option('--limit', '-l', required=False, default=5, help="Output directory for analytic to use.")
+@click.pass_context
+def filter(ctx, img, limit):
+    client = ctx.obj.client
+    print(json_format.MessageToJson(client.prov_filter(img=img, limit=limit)))
 
 
 

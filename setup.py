@@ -16,7 +16,7 @@ setup(name=pkg_name,
       package_dir={
           '': 'python',
       },
-      version='0.1.1',
+      version='0.2.3',
       description='Protocol wrapper for MediFor Analytics',
       author='Data Machines Corp.',
       author_email='help@mediforprogram.com',
@@ -26,14 +26,12 @@ setup(name=pkg_name,
       install_requires=[
           'setuptools==39.0.1',
           'grpcio==1.15.0',
-          'grpcio-tools==1.15.0',
           'grpcio_health_checking==1.15.0',
           'protobuf>=3.6.1',
           'googleapis-common-protos==1.6.0',
-          'Click==7.0',
-          'pillow==6.1.0',
-          'dataclasses==0.6',
-          'six==1.12.0'
+          'Click',
+          'requests==2.22.0',
+          'Flask==1.1.1'
       ],
       data_files=list(iter_protos(pkg_name)),
       py_modules=[
@@ -47,10 +45,15 @@ setup(name=pkg_name,
           'medifor.v1.analyticservice',
           'medifor.v1.fusionservice',
           'medifor.v1.mediforclient',
+          'medifor.v1.provenanceservice',
+          'medifor.v1.provenance_pb2',
+          'medifor.v1.provenance_pb2_grpc',
           'medifor.v1.cli',
           'medifor.v1.pipeclient',
           'medifor.v1.pipeline_pb2',
           'medifor.v1.pipeline_pb2_grpc',
-          'medifor.v1.medifortools'
+          'medifor.v1.medifortools',
+          'medifor.v1.provclient',
+          'medifor.__main__'
       ]
       )

@@ -88,9 +88,11 @@ def walk_proto(proto, func, args=[]):
         value = getattr(proto, fd.name, None)
         if fd.label == fd.LABEL_REPEATED:
             for v in value:
-                yield from walk_proto(v, func, args)
+                for x in walk_proto(v, func, args):
+                    yield x
         else:
-            yield from walk_proto(value, func, args)
+            for x in walk_proto(value, func, args):
+                yield x
 
 
 def rewrite_uris(proto, name_map):
@@ -111,7 +113,8 @@ def get_uris(proto):
             yield p.uri
             return
 
-    yield from walk_proto(proto, gen_uri)
+    for x in walk_proto(proto, gen_uri):
+        yield x
 
 
 class _AnalyticServicer(analytic_pb2_grpc.AnalyticServicer):
@@ -132,6 +135,12 @@ class _AnalyticServicer(analytic_pb2_grpc.AnalyticServicer):
 
     def DetectImageCameraMatch(self, req, ctx):
         return self.svc._CallEndpoint(self.svc.IMAGE_CAMERA_MATCH, req, analytic_pb2.ImageCameraMatch(), ctx)
+
+    def DetectVideoCameraMatch(self, req, ctx):
+        return self.svc._CallEndpoint(self.svc.VIDEO_CAMERA_MATCH, req, analytic_pb2.VideoCameraMatch(), ctx)
+
+    def DetectImageCameras(self, req, ctx):
+        return self.svc._CallEndpoint(self.svc.IMAGE_CAMERAS, req, analytic_pb2.ImageCameras(), ctx)
 
 class _StreamingProxyServicer(streamingproxy_pb2_grpc.StreamingProxyServicer):
     """The class registered with grpc that handles streaming requests from the client"""
@@ -194,9 +203,12 @@ class AnalyticService:
     VIDEO_MANIPULATION = 'VideoManipulation'
     IMAGE_SPLICE = "ImageSplice"
     IMAGE_CAMERA_MATCH = "ImageCameraMatch"
+    VIDEO_CAMERA_MATCH = "VideoCameraMatch"
+    IMAGE_CAMERAS = "ImageCameras"
     # Add to _ALLOWED_IMPLS if you add things here.
 
-    _ALLOWED_IMPLS = frozenset([IMAGE_MANIPULATION, VIDEO_MANIPULATION, IMAGE_SPLICE, IMAGE_CAMERA_MATCH])
+    _ALLOWED_IMPLS = frozenset([IMAGE_MANIPULATION, VIDEO_MANIPULATION,
+                                IMAGE_SPLICE, IMAGE_CAMERA_MATCH, VIDEO_CAMERA_MATCH, IMAGE_CAMERAS])
 
     def __init__(self, tmp_dir="/tmp"):
         self._impls = {}
@@ -252,6 +264,16 @@ class AnalyticService:
             req = det.img_cam_match_req
             resp =  self._CallEndpoint(self.IMAGE_CAMERA_MATCH, req, analytic_pb2.ImageCameraMatch(), ctx)
             det.CopyFrom(resp)
+        elif type == "vid_cam_match_req":
+            req = det.vid_cam_match_req
+            resp = self._CallEndpoint(
+                self.VIDEO_CAMERA_MATCH, req, analytic_pb2.VideoCameraMatch(), ctx)
+            det.CopyFrom(resp)
+        elif type == "img_cam_req":
+            req = det.img_cam_req
+            resp = self._CallEndpoint(
+                self.IMAGE_CAMERAS, req, analytic_pb2.ImageCameras(), ctx)
+            det.CopyFrom(resp)
 
         return det
 
@@ -268,6 +290,12 @@ class AnalyticService:
 
     def RegisterImageCameraMatch(self, f):
         return self._RegisterImpl(self.IMAGE_CAMERA_MATCH, f)
+
+    def RegisterVideoCameraMatch(self, f):
+        return self._RegisterImpl(self.VIDEO_CAMERA_MATCH, f)
+
+    def RegisterImageCameras(self, f):
+        return self._RegisterImpl(self.IMAGE_CAMERAS, f)
 
     def _RegisterImpl(self, type_name, f):
         if type_name not in self._ALLOWED_IMPLS:
@@ -343,6 +371,12 @@ class AnalyticServiceFIFO(AnalyticService):
         "imgcammatch": (AnalyticService.IMAGE_CAMERA_MATCH,
                         analytic_pb2.ImageCameraMatchRequest,
                         analytic_pb2.ImageCameraMatch),
+        "vidcammatch": (AnalyticService.VIDEO_CAMERA_MATCH,
+                        analytic_pb2.VideoCameraMatchRequest,
+                        analytic_pb2.VideoCameraMatch),
+        "imgcameras": (AnalyticService.IMAGE_CAMERAS,
+                       analytic_pb2.ImageCamerasRequest,
+                       analytic_pb2.ImageCameras)
     }
 
     def __init__(self, infile=None, outfile=None):

@@ -1,0 +1,52 @@
+version: "3"
+
+networks:
+  mfnet:
+
+services:
+  filter_svc:
+    image: mediaforensics/samples:prov-filter-svc
+    restart: always
+    ports:
+      - 50051:50051
+    volumes:
+      - "./:/input"
+    command:
+      - "--url=http://faiss1:8080/search"
+      - "--url=http://faiss2:8080/search"
+      - "--url=http://faiss3:8080/search"
+    networks:
+      - mfnet
+
+  faiss1:
+    image: mediaforensics/samples:prov-index-svc
+    restart: always
+    volumes:
+      - "./index_svc:/data"
+    command:
+      - "--index=/data/index.faiss"
+      - "--port=8080"
+    networks:
+      - mfnet
+
+  faiss2:
+    image: mediaforensics/samples:prov-index-svc
+    restart: always
+    volumes:
+      - "./index_svc:/data"
+    command:
+      - "--index=/data/index2.faiss"
+      - "--port=8080"
+    networks:
+      - mfnet
+
+  faiss3:
+    image: mediaforensics/samples:prov-index-svc
+    restart: always
+    volumes:
+      - "./index_svc:/data"
+    command:
+      - "--index=/data/index3.faiss"
+      - "--port=8080"
+    networks:
+      - mfnet

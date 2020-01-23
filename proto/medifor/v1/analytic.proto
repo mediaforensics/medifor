@@ -69,6 +69,8 @@ message Detection {
     VideoManipulationRequest vid_manip_req = 12;
     ImageSpliceRequest img_splice_req = 13;
     ImageCameraMatchRequest img_cam_match_req = 14;
+    ImageCamerasRequest img_cams_req = 15;
+    VideoCameraMatchRequest vid_cam_match_req = 16;
   }
 
   // The response received from the analytic.
@@ -77,6 +79,8 @@ message Detection {
     VideoManipulation vid_manip = 22;
     ImageSplice img_splice = 23;
     ImageCameraMatch img_cam_match = 24;
+    ImageCameras img_cams = 25;
+    VideoCameraMatch vid_cam_match = 26;
   }
 }
 
@@ -418,6 +422,75 @@ message ImageCameraMatchRequest {
   string camera_id = 4;
 }
 
+message VideoCameraMatch {
+  // A value in [0, 1][ where 1 indicates "definitely this camera" and 0 menas "definitely not".
+  double score = 1;
+
+  // Set to true if a score can be set. Leaving it default means "opting out of producing a score".
+  // Use the explanation field in that case to communicate whye no score was supplied.
+  bool has_score = 2;
+
+  // Any additional explanation for the given score.
+  string explanation = 3;
+
+  // Localization information (pixel mask) indicating any regions of interest
+  // used in making the camera ID decision.
+  VideoLocalization localization = 4;
+
+  // Set to true if localization information is specified. Leave at default if
+  // no localization info is provided.
+  bool has_localization = 5;
+
+  // Supplemental information, output any type of file, may be surfaced to a user.
+  repeated Resource supplement = 6;
+}
+
+message VideoCameraMatchRequest {
+  // An ID unique to each request. Often a UUID4.
+  string request_id = 1;
+
+  // Location where data should be written by the analytic. See
+  // VideoManipulationRequest's similar field for more detail.
+  string out_dir = 2;
+
+  // The image to check.
+  Resource image = 3;
+
+  // The camera ID this image is assumed to have.
+  string camera_id = 4;
+}
+
+message CameraScore {
+  string camera_id = 1;
+
+  // A value in [0, 1] where 1 indicates "came from this camera".
+  double score = 2;
+
+  // A human-readable explanation for the score given for this camera.
+  // Example: "PRNU match likelihood high".
+  string explanation = 3;
+}
+
+message ImageCameras {
+  // Camera score messages. If empty, assumed opted out (or an error occurred).
+  repeated CameraScore scores = 1;
+
+  // An explanation for why scores were or were not produced. Human-readable.
+  // Example: "Could not score, unknown image type <foo>."
+  string explanation = 2;
+}
+
+message ImageCamerasRequest {
+  // An ID unique to each request. Often a UUID4.
+  string request_id = 1;
+
+  // Currently unused, but here for future use and consistency with other detection requests.
+  string out_dir = 2;
+
+  // The image to find a camera ID for.
+  Resource image = 3;
+}
+
 message Empty {}
 
 service Analytic {
@@ -425,5 +498,7 @@ service Analytic {
   rpc DetectImageSplice(ImageSpliceRequest) returns (ImageSplice);
   rpc DetectVideoManipulation(VideoManipulationRequest) returns (VideoManipulation);
   rpc DetectImageCameraMatch(ImageCameraMatchRequest) returns (ImageCameraMatch);
+  rpc DetectImageCameras(ImageCamerasRequest) returns (ImageCameras);
+  rpc DetectVideoCameraMatch(VideoCameraMatchRequest) returns (VideoCameraMatch);
   rpc Kill(Empty) returns (Empty);
 }

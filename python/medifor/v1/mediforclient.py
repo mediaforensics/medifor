@@ -1,7 +1,6 @@
 #!/bin/python
 
 import base64
-import click
 import grpc
 import mimetypes
 import os.path
@@ -250,7 +249,7 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
             return self.DetectVideoManipulation(req)
         else:
             logging.error("Invalid Task")
-            raise ValueError("{!s} is not a valid task type".format(task))
+            raise ValueError("{!s} is not a valid task type".format(req.DESCRIPTOR.name))
 
     def img_manip(self, img, output_dir):
         """
@@ -357,5 +356,5 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
             req.out_dir = out
             det.img_splice_req.MergeFrom(req)
         else:
-            det = get_detection(probe)
+            det = get_detection(probe, output_dir)
         return self.stream.detect(det, client_output_path)

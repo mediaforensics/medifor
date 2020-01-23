@@ -1,0 +1,115 @@
+syntax = "proto3";
+
+package mediforproto;
+
+option java_package = "com.mediforprogram.proto";
+option java_outer_classname = "ProvenanceProto";
+option go_package = "gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforproto";
+
+import "medifor/v1/analytic.proto";
+
+enum LinkType {
+    SPLICE = 0;
+    PROVENANCE = 1;
+    SPEAKER = 2;
+    CAMERA = 3;
+    LOCATION = 4;
+}
+
+// FilterRequest is used to ask a provenance analytic to return the 
+// top N matches for a given image.
+message ProvenanceFilteringRequest{
+    // Unique identifier for the request.
+    string request_id = 1;
+
+    // The image to be sent to the provenance analytic.
+    Resource image = 2;
+
+    // The number of results to return
+    int32 result_limit = 3;
+}
+
+// ImageMatch contains the image identifier and score denoting how
+// closely it matches the probe image.
+message ImageMatch {
+    // Unique identifier for the image.
+    string image_id = 1;
+
+    // The image resource.
+    Resource matching_image = 2;
+
+    // The score for the matching image.
+    float score = 3;
+}
+
+// ImageFilter contains the top N results that match the probe image
+// along with the corresponding scores.
+message FilteringResult {
+    // List of matching images with scores.  The length of the list
+    // is determined by the result_limit provided in the request.
+    repeated ImageMatch matches = 1;
+
+    // Probe image sent for the filter request, reference (Optional)/
+    Resource probe = 2;
+}
+
+// ProvenanceGraphRequest provides a provenance analytic with a probe image
+// and the results of the filtering task to the analytic.
+message ProvenanceGraphRequest {
+    // Unique identifier for the request.
+    string request_id = 1;
+
+    // The image to be sent to the provenance analytic.
+    Resource image = 2;
+
+    // Image matches from the provenance filtering task
+    repeated ImageMatch filter_results = 3;
+}
+
+// Association provides details describing the relationship between two probes.
+message Association {
+
+    // The specific tyle of link created
+    LinkType type = 1;
+
+    // UUID of the probe image
+    string source = 2;
+
+    // UUID of the matching image
+    string target = 3;
+
+    // Real number that is higher if the association exists.
+    float score = 4;
+
+    // Explanation of the association and supporting evidence.
+    string explanation = 5;
+
+}
+
+// Association provides details describing the relationship between two probes.
+message Node {
+
+    // UUID of the image
+    string image_id = 1;
+    
+    // Real number that is higher if an image is in the graph
+    float score = 2;
+}
+
+// ProvenanceGraph
+message ProvenanceGraph {
+
+    // List of nodes in the graph.
+    repeated Node nodes = 1;
+    
+    // List of associations that specify the relationship between nodes on the gra
+    repeated Association associations = 2;
+
+    // Whether the algorithm opted out of the task
+    bool opt_out = 3;
+}
+
+service Provenance {
+    rpc ProvenanceFiltering(ProvenanceFilteringRequest) returns (FilteringResult);
+    rpc ProvenanceGraphBuilding(ProvenanceGraphRequest) returns (ProvenanceGraph);
+}
