@@ -35,7 +35,7 @@ class _FuserServicer(fusion_pb2_grpc.FuserServicer):
         return self.svc._CallEndpoint(self.svc.IMAGE_CAMERA_MATCH, req, analytic_pb2.ImageCameraMatch(), ctx)
 
     def FuseVideoCameraMatch(self, req, ctx):
-        return self.svc._CallEndpoint(self.svc.VIDO_CAMERA_MATCH, req, analytic_pb2.VideoCameraMatch(), ctx)
+        return self.svc._CallEndpoint(self.svc.VIDEO_CAMERA_MATCH, req, analytic_pb2.VideoCameraMatch(), ctx)
 
 class FusionService:
     """Actual implementation of the service, with function registration."""
@@ -44,10 +44,10 @@ class FusionService:
     VIDEO_MANIPULATION = 'FuseVideoManipulation'
     IMAGE_SPLICE = "FuseImageSplice"
     IMAGE_CAMERA_MATCH = "FuseImageCameraMatch"
-    VIDO_CAMERA_MATCH = "FuseVideoCameraMatch"
+    VIDEO_CAMERA_MATCH = "FuseVideoCameraMatch"
     # Add to _ALLOWED_IMPLS if you add things here.
 
-    _ALLOWED_IMPLS = frozenset([IMAGE_MANIPULATION, VIDEO_MANIPULATION, IMAGE_SPLICE, IMAGE_CAMERA_MATCH, VIDO_CAMERA_MATCH])
+    _ALLOWED_IMPLS = frozenset([IMAGE_MANIPULATION, VIDEO_MANIPULATION, IMAGE_SPLICE, IMAGE_CAMERA_MATCH, VIDEO_CAMERA_MATCH])
 
     def __init__(self):
         self._impls = {}
@@ -93,7 +93,7 @@ class FusionService:
         return self._RegisterImpl(self.IMAGE_CAMERA_MATCH, f)
 
     def RegisterVideoCameraMatch(self, f):
-        return self._RegisterImpl(self.VIDO_CAMERA_MATCH, f)
+        return self._RegisterImpl(self.VIDEO_CAMERA_MATCH, f)
 
     def _RegisterImpl(self, type_name, f):
         if type_name not in self._ALLOWED_IMPLS:
