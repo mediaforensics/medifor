@@ -34,6 +34,16 @@ class AnalyticStub(object):
         request_serializer=medifor_dot_v1_dot_analytic__pb2.ImageCameraMatchRequest.SerializeToString,
         response_deserializer=medifor_dot_v1_dot_analytic__pb2.ImageCameraMatch.FromString,
         )
+    self.DetectImageCameras = channel.unary_unary(
+        '/mediforproto.Analytic/DetectImageCameras',
+        request_serializer=medifor_dot_v1_dot_analytic__pb2.ImageCamerasRequest.SerializeToString,
+        response_deserializer=medifor_dot_v1_dot_analytic__pb2.ImageCameras.FromString,
+        )
+    self.DetectVideoCameraMatch = channel.unary_unary(
+        '/mediforproto.Analytic/DetectVideoCameraMatch',
+        request_serializer=medifor_dot_v1_dot_analytic__pb2.VideoCameraMatchRequest.SerializeToString,
+        response_deserializer=medifor_dot_v1_dot_analytic__pb2.VideoCameraMatch.FromString,
+        )
     self.Kill = channel.unary_unary(
         '/mediforproto.Analytic/Kill',
         request_serializer=medifor_dot_v1_dot_analytic__pb2.Empty.SerializeToString,
@@ -73,6 +83,20 @@ class AnalyticServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def DetectImageCameras(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def DetectVideoCameraMatch(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def Kill(self, request, context):
     # missing associated documentation comment in .proto file
     pass
@@ -102,6 +126,16 @@ def add_AnalyticServicer_to_server(servicer, server):
           servicer.DetectImageCameraMatch,
           request_deserializer=medifor_dot_v1_dot_analytic__pb2.ImageCameraMatchRequest.FromString,
           response_serializer=medifor_dot_v1_dot_analytic__pb2.ImageCameraMatch.SerializeToString,
+      ),
+      'DetectImageCameras': grpc.unary_unary_rpc_method_handler(
+          servicer.DetectImageCameras,
+          request_deserializer=medifor_dot_v1_dot_analytic__pb2.ImageCamerasRequest.FromString,
+          response_serializer=medifor_dot_v1_dot_analytic__pb2.ImageCameras.SerializeToString,
+      ),
+      'DetectVideoCameraMatch': grpc.unary_unary_rpc_method_handler(
+          servicer.DetectVideoCameraMatch,
+          request_deserializer=medifor_dot_v1_dot_analytic__pb2.VideoCameraMatchRequest.FromString,
+          response_serializer=medifor_dot_v1_dot_analytic__pb2.VideoCameraMatch.SerializeToString,
       ),
       'Kill': grpc.unary_unary_rpc_method_handler(
           servicer.Kill,

@@ -35,6 +35,11 @@ class FuserStub(object):
         request_serializer=medifor_dot_v1_dot_fusion__pb2.FuseImageCameraMatchRequest.SerializeToString,
         response_deserializer=medifor_dot_v1_dot_analytic__pb2.ImageCameraMatch.FromString,
         )
+    self.FuseVideoCameraMatch = channel.unary_unary(
+        '/mediforproto.Fuser/FuseVideoCameraMatch',
+        request_serializer=medifor_dot_v1_dot_fusion__pb2.FuseVideoCameraMatchRequest.SerializeToString,
+        response_deserializer=medifor_dot_v1_dot_analytic__pb2.VideoCameraMatch.FromString,
+        )
     self.Kill = channel.unary_unary(
         '/mediforproto.Fuser/Kill',
         request_serializer=medifor_dot_v1_dot_analytic__pb2.Empty.SerializeToString,
@@ -74,6 +79,13 @@ class FuserServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def FuseVideoCameraMatch(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def Kill(self, request, context):
     # missing associated documentation comment in .proto file
     pass
@@ -103,6 +115,11 @@ def add_FuserServicer_to_server(servicer, server):
           servicer.FuseImageCameraMatch,
           request_deserializer=medifor_dot_v1_dot_fusion__pb2.FuseImageCameraMatchRequest.FromString,
           response_serializer=medifor_dot_v1_dot_analytic__pb2.ImageCameraMatch.SerializeToString,
+      ),
+      'FuseVideoCameraMatch': grpc.unary_unary_rpc_method_handler(
+          servicer.FuseVideoCameraMatch,
+          request_deserializer=medifor_dot_v1_dot_fusion__pb2.FuseVideoCameraMatchRequest.FromString,
+          response_serializer=medifor_dot_v1_dot_analytic__pb2.VideoCameraMatch.SerializeToString,
       ),
       'Kill': grpc.unary_unary_rpc_method_handler(
           servicer.Kill,

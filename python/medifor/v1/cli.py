@@ -53,16 +53,28 @@ def friendly_rpc_errors(f):
 @click.pass_context
 def main(ctx, host, port, src, targ, osrc, otarg):
     ctx.ensure_object(Context)
-    ctx.obj.client = mediforclient.MediforClient(host=host, port=port,  src=src, targ=targ, osrc=osrc, otarg=otarg)
+    ctx.obj.host = host
+    ctx.obj.port = port
+    ctx.obj.src = src
+    ctx.obj.targ = targ
+    ctx.obj.osrc = osrc
+    ctx.obj.otarg = otarg
+    # ctx.obj.client = mediforclient.MediforClient(host=host, port=port,  src=src, targ=targ, osrc=osrc, otarg=otarg)
 
-@main.command()
+# @main.command()
+# @click.pass_context
+# @friendly_rpc_errors
+# def health(ctx):
+#     client = ctx.obj.client
+#     print(json_format.MessageToJson(client.health()))
+
+@main.group()
 @click.pass_context
-@friendly_rpc_errors
-def health(ctx):
-    client = ctx.obj.client
-    print(json_format.MessageToJson(client.health()))
+def detect(ctx):
+    ctx.obj.client = mediforclient.MediforClient(host=ctx.obj.host, port=ctx.obj.port,  src=ctx.obj.src, 
+                                                targ=ctx.obj.targ, osrc=ctx.obj.osrc, otarg=ctx.obj.otarg)
 
-@main.command()
+@detect.command()
 @click.pass_context
 @click.argument('img')
 @click.option('--out', '-o', required=True, help="Output directory for analytic to use.")
@@ -70,7 +82,7 @@ def imgmanip(ctx, img, out):
     client = ctx.obj.client
     print(json_format.MessageToJson(client.img_manip(img, out)))
 
-@main.command()
+@detect.command()
 @click.pass_context
 @click.argument('vid')
 @click.option('--out', '-o', required=True, help="Output directory for analytic to use.")
@@ -78,7 +90,7 @@ def vidmanip(ctx, vid, out):
     client = ctx.obj.client
     print(json_format.MessageToJson(client.vid_manip(vid, out)))
 
-@main.command()
+@detect.command()
 @click.pass_context
 @click.option('--dir', '-d', required=True, help="Input directory containing images or videos.")
 @click.option('--out', '-o', required=True, help="Output directory for analytic to use.")
@@ -93,19 +105,33 @@ def detectbatch(ctx, dir, out, make_dirs):
 
     print(output_dict)
 
-@main.command()
+@detect.command()
 @click.pass_context
 @click.option('--probe', '-f', required=True, help="Input file (image/video) path.")
 @click.option('--donor', '-d', required=False, help="Additional image file for splice task.")
 @click.option('--container_out', '-o', required=True, help="Output directory for analytic to use.")
 @click.option('--local_out', required=True, help="Output directory for client to use.")
 def streamdetect(ctx, probe, donor, container_out, local_out):
-    print(probe, donor, container_out, local_out)
     client = ctx.obj.client
     print(json_format.MessageToJson(client.stream_detection(probe=probe, donor=donor, output_dir=container_out, client_output_path=local_out)))
 
 ###################################################################
+@main.group()
+@click.pass_context
+def provenance(ctx):
+    ctx.obj.client = mediforclient.MediforClient(host=ctx.obj.host, port=ctx.obj.port,  src=ctx.obj.src, 
+                                                targ=ctx.obj.targ, osrc=ctx.obj.osrc, otarg=ctx.obj.otarg)
 
+@provenance.command()
+@click.argument('img')
+@click.option('--out', '-o', required=True, help="Output directory for analytic to use.")
+def filter(ctx, img, out_dir):
+    client = ctx.obj.client()
+    print(json_format.MessageToJson(client.prov_filter(img=img, out_dir=out_dir)))
+
+
+
+###################################################################
 @main.group()
 @click.option('--host', default='localhost', show_default=True, help='Send requests to the API service on this host.')
 @click.option('--port', default='50051', show_default=True, help='Send requests to the API service on this port.')
@@ -194,14 +220,14 @@ def detectlist(ctx, tag, limit, page_token, col_sort, fuser_id, want_fused, thre
 @click.argument('id')
 @click.option('--want_fused/--no-fused', default=False, help="Flag to request fusion scores")
 def detectinfo(ctx, id, want_fused):
-    print(json_format.MessageToJson(ctx.obj.client.detect_info(id, want_fused)))
+    print(json_format.MessageToJson(ctx.obj.pipeclient.detect_info(id, want_fused)))
 
 
 @pipeline.command()
 @click.pass_context
 @click.option('--id', '-i', required=True, default='', help='Detection ID to delete.')
 def deletedetection(ctx, id):
-    print(json_format.MessageToJson(ctx.obj.client.delete_detection(id)))
+    print(json_format.MessageToJson(ctx.obj.pipeclient.delete_detection(id)))
 
 
 @pipeline.command()
@@ -211,7 +237,7 @@ def deletedetection(ctx, id):
 @click.option('--delete', '-d', multiple=True, help="Tag keys to delete")
 @click.option('--delete_all', is_flag=True, help="Delete all user tags")
 def updatetags(ctx, id, tag, delete, delete_all):
-    print(json_format.MessageToJson(ctx.obj.client.update_detection_tags(
+    print(json_format.MessageToJson(ctx.obj.pipeclient.update_detection_tags(
         detection_id=id,
         tags=pipeclient.parse_tags(tag),
         delete_tags=delete,
@@ -222,7 +248,7 @@ def updatetags(ctx, id, tag, delete, delete_all):
 @pipeline.command()
 @click.pass_context
 def taginfo(ctx):
-    print(json_format.MessageToJson(ctx.obj.client.detection_tag_info()))
+    print(json_format.MessageToJson(ctx.obj.pipeclient.detection_tag_info()))
 
 
 if __name__ == '__main__':
