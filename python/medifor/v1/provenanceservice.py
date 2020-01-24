@@ -35,8 +35,6 @@ class EndpointAction(object):
 
 
 class IndexSvc:
-    app = None
-
     def __init__(self, name, host="::", port=8080, debug=False):
         self.app = Flask(name)
         self.add_endpoint("/search", "search", self.search, methods=["POST"])
@@ -102,7 +100,7 @@ class _ProvenanceServicer(provenance_pb2_grpc.ProvenanceServicer):
         self.svc = svc
 
     def ProvenanceFiltering(self, req, ctx):
-        return self.svc._CallEndpoint(self.svc.PROVENANCE_FILTERING, req, provenance_pb2.ImageFilter(), ctx)
+        return self.svc._CallEndpoint(self.svc.PROVENANCE_FILTERING, req, provenance_pb2.FilteringResult(), ctx)
 
     def ProvenanceGraphBuilding(self, req, ctx):
         return self.svc._CallEndpoint(self.svc.PROVENANCE_GRAPH, req, provenance_pb2.ProvenanceGraph(), ctx)

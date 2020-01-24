@@ -18,8 +18,7 @@ from medifor.v1.mediforclient import _map_src_targ
 
 
 class ProvenanceClient(provenance_pb2_grpc.ProvenanceStub):
-    """
-    """
+    """ Client for communicating with provenance analytics  """
     def __init__(self, host="localhost", port="50051",src='', targ='', osrc='', otarg=''):
         port = str(port)
         self.addr = "{!s}:{!s}".format(host, port)
@@ -80,8 +79,6 @@ class ProvenanceClient(provenance_pb2_grpc.ProvenanceStub):
         return self.health_stub.Check(health_pb2.HealthCheckRequest())
 
     def send(self, req):
-        """
-        """
         if req.DESCRIPTOR.name == "ProvenanceFilteringRequest":
             return self.ProvenanceFiltering(req)
         elif req.DESCRIPTOR.name == "ProvenanceGraphRequest":
@@ -91,8 +88,7 @@ class ProvenanceClient(provenance_pb2_grpc.ProvenanceStub):
             raise ValueError("{!s} is not a valid task type".format(req.DESCRIPTOR.name))
 
     def prov_filter(self, img, limit):
-        """
-        """
+        """Function to call registered provenance filtering analytic"""
         img = self.map(img)
         req = provenance_pb2.ProvenanceFilteringRequest()
         mime, _ = get_media_type(img)
@@ -103,8 +99,6 @@ class ProvenanceClient(provenance_pb2_grpc.ProvenanceStub):
         return self.send(req)
 
     def prov_build_graph(self, matches, output_dir):
-        """
-        """
         raise NotImplementedError
 
 
