@@ -193,116 +193,51 @@ class ProvenanceService:
         return resp
 
 
-class FIFOTimeoutError(IOError):
-    def __init__(self, op, timeout):
-        return super(FIFOTimeoutError, self).__init__("timed out with op {!r} after {} seconds".format(op, timeout))
-
-
-class FIFOContextAbortedError(IOError):
+class HTTPContextAbortedError(IOError):
     def __init__(self, code, details):
         self.code = code
         self.details = details
-        super(FIFOContextAbortedError, self).__init__("Context aborted with code: {!s}.  Message: {!s}".format(code, details))
+        super(HTTPContextAbortedError, self).__init__("Context aborted with code: {!s}.  Message: {!s}".format(code, details))
 
 
-class FIFOContext:
+class HTTPContext:
     def abort(self, code, details):
-        raise FIFOContextAbortedError(code, details)
+        raise HTTPContextAbortedError(code, details)
 
 
-# class ProvenanceServiceFIFO(ProvenanceService):
-#     """Service implementation using a FIFO connection to be used when libraries preclude the use of grpc """
+class ProvenanceServiceHTTP(ProvenanceService):
+    """Service implementation using basic REST connection to be used when libraries preclude the use of grpc."""
+    def __init__(self, port=8765):
+        self.port = port
+        self.app = Flask(name)
 
-#     DEFAULT_INFILE = "ANALYTIC_FIFO_IN"
-#     DEFAULT_OUTFILE = "ANALYTIC_FIFO_OUT"
+        self.add_endpoint("/api/graph", "api-graph", self.graph, methods=["POST"])
+        self.add_endpoint("/api/filter", "api-filter", self.filter, methods=["POST"])
 
-#     TYPES = {
-#         "imgmanip": (AnalyticService.IMAGE_MANIPULATION,
-#                      analytic_pb2.ImageManipulationRequest,
-#                      analytic_pb2.ImageManipulation),
-#         "vidmanip": (AnalyticService.VIDEO_MANIPULATION,
-#                      analytic_pb2.VideoManipulationRequest,
-#                      analytic_pb2.VideoManipulation),
-#         "imgsplice": (AnalyticService.IMAGE_SPLICE,
-#                       analytic_pb2.ImageSpliceRequest,
-#                       analytic_pb2.ImageSplice),
-#         "imgcammatch": (AnalyticService.IMAGE_CAMERA_MATCH,
-#                         analytic_pb2.ImageCameraMatchRequest,
-#                         analytic_pb2.ImageCameraMatch),
-#     }
+        super(ProvenanceServiceHTTP, self).__init__()
 
-#     def __init__(self, infile=None, outfile=None):
-#         self.lock = threading.Lock()
-#         self.infile = infile or os.environ.get(self.DEFAULT_INFILE)
-#         self.outfile = outfile or os.environ.get(self.DEFAULT_OUTFILE)
-#         self.receiver = None
-#         self.sender = None
-#         super(AnalyticServiceFIFO, self).__init__()
+    def add_endpoint(self, endpoint=None, endpoint_name=None, handler=None, methods=None):
+        if not handler:
+            handler = lambda: raise NotImplementedError()
+        self.app.add_url_rule(endpoint, endpoint_name, lambda *args: handler(), methods=methods)
 
-#     def _ensureOpen(self):
-#         # No lock here - called from main single-request-serving method.
-#         if not self.receiver:
-#             r = os.open(self.infile, os.O_RDONLY)
-#             self.receiver = os.fdopen(r, 'rt')
-#         if not self.sender:
-#             s = os.open(self.outfile, os.O_WRONLY)
-#             self.sender = os.fdopen(s, 'wt')
+    def graph(self):
+        ctx = HTTPContext()
+        data = request.json
+        req = json_format.ParseDict(data, provenance_pb2.ProvenanceGraphRequest())
+        resp = provenance_pb2.ProvenanceGraph()
+        self._CallEndpoint(ProvenanceService.PROVENANCE_GRAPH, req, resp, ctx)
+        return jsonify(json_format.MessageToDict(resp))
 
-#     def close(self):
-#         with self.lock:
-#             if self.receiver:
-#                 self.receiver.close()
-#             if self.sender:
-#                 self.sender.close()
+    def filter(self):
+        ctx = HTTPContext()
+        data = request.json
+        req = json_format.ParseDict(data, provenance_pb2.FilterRequest())
+        resp = provenance_pb2.FilteringResult()
+        self._CallEndpoint(ProvenanceService.PROVENANCE_FILTERING, req, resp, ctx)
+        return jsonify(json_format.MessageToDict(resp))
 
-#     def send(self, data, timeout=0):
-#         self._ensureOpen()
-#         f = self.sender
-#         selArgs = [[], [f], [f]]
-#         if timeout:
-#             selArgs.append(timeout)
-
-#         if not any(select.select(*selArgs)):
-#             raise FIFOTimeoutError("write", timeout)
-
-#         f.write(data + '\n')
-#         f.flush()
-
-#     def receive(self, timeout=0):
-#         self._ensureOpen()
-#         f = self.receiver
-#         selArgs = [[f], [], [f]]
-#         if timeout:
-#             selArgs.append(timeout)
-
-#         if not any(select.select(*selArgs)):
-#             raise FIFOTimeoutError("read", timeout)
-#         return f.readline()
-
-#     def serveOnce(self):
-#         with self.lock:
-#             line = self.receive()
-#             msg = json.loads(line)
-#             if "type" not in msg:
-#                 raise ValueError("Message had no 'type' field")
-#             callType, makeReq, makeResp = self.TYPES[msg["type"]]
-#             req, resp = makeReq(), makeResp()
-
-#             json_format.ParseDict(msg["value"], req)
-#             try:
-#                 resp = self._CallEndpoint(callType, req, resp, FIFOContext())
-#                 self.send(json.dumps({
-#                     "code": "OK",
-#                     "value": json_format.MessageToDict(resp),
-#                 }))
-#             except FIFOContextAbortedError as e:
-#                 self.send(json.dumps({
-#                     "code": str(e.code),
-#                     "value": e.details,
-#                 }))
-
-#     def Run(self):
-#         """Run the service - listens to read FIFO and responds on write FIFO."""
-#         with contextlib.closing(self):
-#             while True:
-#                 self.serveOnce()
+    def Run(self):
+        """Run the HTTP service."""
+        print "Running HTTP provenance service on port {}".format(self.port)
+        return self.app.run(host='0.0.0.0', port=self.port)
