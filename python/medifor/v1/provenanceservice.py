@@ -177,7 +177,7 @@ class ProvenanceService:
             ctx.abort(grpc.StatusCode.UNIMPLEMENTED, "Endpoint {!r} not implemented".format(ep_type))
 
         try:
-            if ep_type == 'ProvenanceFiltering':
+            if ep_type == self.PROVENANCE_FILTERING:
                 ep_func(req, resp, query_index)
             else:
                 ep_func(req, resp)
