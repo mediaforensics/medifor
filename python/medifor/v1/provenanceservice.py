@@ -219,7 +219,7 @@ class ProvenanceServiceHTTP(ProvenanceService):
     def add_endpoint(self, endpoint=None, endpoint_name=None, handler=None, methods=None):
         if not handler:
             handler = lambda: raise NotImplementedError()
-        self.app.add_url_rule(endpoint, endpoint_name, lambda *args: handler(), methods=methods)
+        self.app.add_url_rule(endpoint, endpoint_name, lambda *unused_args, **unused_kargs: handler(), methods=methods)
 
     def graph(self):
         ctx = HTTPContext()
