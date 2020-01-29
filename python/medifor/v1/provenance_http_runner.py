@@ -11,7 +11,7 @@ from google.protobuf import json_format
 from . import provenanceservice as prov
 
 
-class ProxyService(AnalyticService):
+class ProxyService(prov.ProvenanceService):
     def __init__(self, backend):
         self.backend = backend
         self.RegisterProvenanceFiltering(self.prov_filter)
