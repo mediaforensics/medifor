@@ -209,7 +209,7 @@ class ProvenanceServiceHTTP(ProvenanceService):
     """Service implementation using basic REST connection to be used when libraries preclude the use of grpc."""
     def __init__(self, port=8765):
         self.port = port
-        self.app = Flask(name)
+        self.app = Flask(self.__class__.__name__)
 
         self.add_endpoint("/api/graph", "api-graph", self.graph, methods=["POST"])
         self.add_endpoint("/api/filter", "api-filter", self.filter, methods=["POST"])
