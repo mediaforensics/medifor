@@ -205,6 +205,10 @@ class HTTPContext:
         raise HTTPContextAbortedError(code, details)
 
 
+def _not_implemented():
+    raise NotImplementedError()
+
+
 class ProvenanceServiceHTTP(ProvenanceService):
     """Service implementation using basic REST connection to be used when libraries preclude the use of grpc."""
     def __init__(self, port=8765):
@@ -218,7 +222,7 @@ class ProvenanceServiceHTTP(ProvenanceService):
 
     def add_endpoint(self, endpoint=None, endpoint_name=None, handler=None, methods=None):
         if not handler:
-            handler = lambda: raise NotImplementedError()
+            handler = _not_implemented
         self.app.add_url_rule(endpoint, endpoint_name, lambda *unused_args, **unused_kargs: handler(), methods=methods)
 
     def graph(self):
@@ -232,12 +236,12 @@ class ProvenanceServiceHTTP(ProvenanceService):
     def filter(self):
         ctx = HTTPContext()
         data = request.json
-        req = json_format.ParseDict(data, provenance_pb2.FilterRequest())
+        req = json_format.ParseDict(data, provenance_pb2.ProvenanceFilteringRequest())
         resp = provenance_pb2.FilteringResult()
         self._CallEndpoint(ProvenanceService.PROVENANCE_FILTERING, req, resp, ctx)
         return jsonify(json_format.MessageToDict(resp))
 
     def Run(self):
         """Run the HTTP service."""
-        print "Running HTTP provenance service on port {}".format(self.port)
+        print("Running HTTP provenance service on port {}".format(self.port))
         return self.app.run(host='0.0.0.0', port=self.port)
