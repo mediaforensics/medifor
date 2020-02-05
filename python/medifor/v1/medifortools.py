@@ -56,7 +56,7 @@ def get_media_type(uri):
     "application/octet-stream", and the media type "application".
     """
     filename, ext = os.path.splitext(uri)
-    typestring = mimetypes.types_map.get(ext, 'application/octet-stream')
+    typestring = mimetypes.types_map.get(ext.lower(), 'application/octet-stream')
 
     if typestring in additional_video_types:
         return typestring, 'video'
@@ -78,7 +78,7 @@ def get_detection(media, output_dir, request_id=None):
         req.request_id = request_id
         req.out_dir = output_dir
         det.img_manip_req.MergeFrom(req)
-    elif mtype == "video":    
+    elif mtype == "video":
         req = analytic_pb2.VideoManipulationRequest()
         req.video.uri = media
         req.video.type = mime
@@ -110,7 +110,7 @@ def get_pipeline_req(media, detection_id="", analytic_ids=[], out_dir="", fuser_
         req.img_manip_req.copyFrom(vid_req)
     else:
         raise ValueError("Unsupported media format.  Could not regocnize the mimetype for {!s}".format(media))
-    
+
     req.detection_id = detection_id
     req.analytic_id.extend(analytic_ids)
     req.out_dir = out_dir
@@ -118,5 +118,5 @@ def get_pipeline_req(media, detection_id="", analytic_ids=[], out_dir="", fuser_
     req.fuser_id.extend(fuser_id)
     return req
 
-        
-    
+
+
