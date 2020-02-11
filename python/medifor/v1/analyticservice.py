@@ -145,7 +145,7 @@ def add_missing_mime_types(proto):
                 proto.type = magic.from_file(proto.uri, mime=True)
                 logging.info("Added mime type %s for file %s", proto.type, proto.uri)
             if not proto.type or proto.type.lower() == 'application/octet-stream':
-                proto.type = mimetypes.types_map.get(ext.lower(), 'application/octet-stream')
+                proto.type = mimetypes.types_map.get(proto.uri.lower(), 'application/octet-stream')
                 logging.info("Fell back to file-name mime type inference, got %s", proto.type)
 
     walk_proto(proto, fill_mime)
