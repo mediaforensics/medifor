@@ -115,7 +115,7 @@ def walk_proto(proto, func, args=[]):
     if not desc:
         return
 
-    result = func(proto, *args)
+    yield func(proto, *args)
 
     for fd in proto.DESCRIPTOR.fields:
         value = getattr(proto, fd.name, None)
@@ -135,7 +135,7 @@ def rewrite_uris(proto, name_map):
             proto.uri = name_map.get(proto.uri, proto.uri)
             return
 
-    walk_proto(proto, rewrite, name_map)
+    for _ in walk_proto(proto, rewrite, name_map): pass
 
 
 def add_missing_mime_types(proto):
@@ -148,7 +148,7 @@ def add_missing_mime_types(proto):
                 proto.type = mimetypes.types_map.get(proto.uri.lower(), 'application/octet-stream')
                 logging.info("Fell back to file-name mime type inference, got %s", proto.type)
 
-    walk_proto(proto, fill_mime)
+    for _ in walk_proto(proto, rewrite, name_map): pass
 
 
 def get_uris(proto):
