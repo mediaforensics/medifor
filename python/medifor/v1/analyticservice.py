@@ -4,6 +4,7 @@ import base64
 import contextlib
 import json
 import logging
+import magic
 import os
 import select
 import sys
@@ -103,6 +104,16 @@ def rewrite_uris(proto, name_map):
             return
 
     walk_proto(proto, rewrite, name_map)
+
+
+def add_missing_mime_types(proto):
+    def fill_mime(proto):
+        if proto.DESCRIPTOR.full_name == 'mediforproto.Resource' and not proto.type or proto.type.lower() == 'application/octet-stream':
+            proto.type = magic.from_file(proto.uri, mime=True)
+            logging.info("Added mime type %s for file %s", proto.type, proto.uri)
+
+    walk_proto(proto, fill_mime)
+
 
 def get_uris(proto):
     print(proto)
@@ -320,6 +331,8 @@ class AnalyticService:
         ep_func = self._impls.get(ep_type)
         if not ep_func:
             ctx.abort(grpc.StatusCode.UNIMPLEMENTED, "Endpoint {!r} not implemented".format(ep_type))
+
+        add_missing_mime_types(req)
 
         try:
             ep_func(req, resp)

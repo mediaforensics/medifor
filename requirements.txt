@@ -7,3 +7,4 @@ pillow==6.2.0
 googleapis-common-protos==1.6.0
 requests==2.22.0
 Flask==1.1.1
+python-magic>=0.4.15
