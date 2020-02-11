@@ -148,7 +148,7 @@ def add_missing_mime_types(proto):
                 proto.type = mimetypes.types_map.get(proto.uri.lower(), 'application/octet-stream')
                 logging.info("Fell back to file-name mime type inference, got %s", proto.type)
 
-    for _ in walk_proto(proto, rewrite, name_map): pass
+    for _ in walk_proto(proto, fill_mime): pass
 
 
 def get_uris(proto):
