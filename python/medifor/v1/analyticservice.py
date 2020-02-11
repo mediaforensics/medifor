@@ -5,6 +5,7 @@ import contextlib
 import json
 import logging
 import magic
+import mimetypes
 import os
 import select
 import sys
@@ -25,6 +26,37 @@ from grpc_health.v1 import health_pb2
 from grpc_health.v1 import health_pb2_grpc
 
 from google.protobuf import json_format
+
+mimetypes.init()
+
+mimetypes.add_type("image/x-adobe-dng", ".dng")
+mimetypes.add_type("image/x-canon-cr2", ".cr2")
+mimetypes.add_type("image/x-canon-crw", ".crw")
+mimetypes.add_type("image/x-epson-erf", ".erf")
+mimetypes.add_type("image/x-fuji-raf", ".raf")
+mimetypes.add_type("image/x-kodak-dcr", ".dcr")
+mimetypes.add_type("image/x-kodak-k25", ".k25")
+mimetypes.add_type("image/x-kodak-kdc", ".kdc")
+mimetypes.add_type("image/x-minolta-mrw", ".mrw")
+mimetypes.add_type("image/x-nikon-nef", ".nef")
+mimetypes.add_type("image/x-olympus-orf", ".orf")
+mimetypes.add_type("image/x-panasonic-raw", ".raw")
+mimetypes.add_type("image/x-pentax-pef", ".pef")
+mimetypes.add_type("image/x-sigma-x3f", ".x3f")
+mimetypes.add_type("image/x-sony-arw", ".arw")
+mimetypes.add_type("image/x-sony-sr2", ".sr2")
+mimetypes.add_type("image/x-sony-srf", ".srf")
+
+mimetypes.add_type('video/avchd-stream', '.mts')
+mimetypes.add_type("application/x-mpegURL", ".m3u8")
+mimetypes.add_type("video/3gpp", ".3gp")
+mimetypes.add_type("video/MP2T", ".ts")
+mimetypes.add_type("video/mp4", ".mp4")
+mimetypes.add_type("video/quicktime", ".mov")
+mimetypes.add_type("video/x-flv", ".flv")
+mimetypes.add_type("video/x-ms-wmv", ".wmv")
+mimetypes.add_type("video/x-msvideo", ".avi")
+
 
 def OptOutVideoLocalization(resp):
     """Opt out of all video localization types for a given video. Modifies resp."""
@@ -108,9 +140,13 @@ def rewrite_uris(proto, name_map):
 
 def add_missing_mime_types(proto):
     def fill_mime(proto):
-        if proto.DESCRIPTOR.full_name == 'mediforproto.Resource' and not proto.type or proto.type.lower() == 'application/octet-stream':
-            proto.type = magic.from_file(proto.uri, mime=True)
-            logging.info("Added mime type %s for file %s", proto.type, proto.uri)
+        if proto.DESCRIPTOR.full_name == 'mediforproto.Resource':
+            if not proto.type or proto.type.lower() == 'application/octet-stream':
+                proto.type = magic.from_file(proto.uri, mime=True)
+                logging.info("Added mime type %s for file %s", proto.type, proto.uri)
+            if not proto.type or proto.type.lower() == 'application/octet-stream':
+                proto.type = mimetypes.types_map.get(ext.lower(), 'application/octet-stream')
+                logging.info("Fell back to file-name mime type inference, got %s", proto.type)
 
     walk_proto(proto, fill_mime)
 
