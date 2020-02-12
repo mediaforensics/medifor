@@ -31,7 +31,8 @@ setup(name=pkg_name,
           'googleapis-common-protos==1.6.0',
           'Click',
           'requests==2.22.0',
-          'Flask==1.1.1'
+          'Flask==1.1.1',
+          'python-magic-bin==0.4.14',
       ],
       data_files=list(iter_protos(pkg_name)),
       py_modules=[
