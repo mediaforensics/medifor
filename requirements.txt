@@ -6,4 +6,4 @@ protobuf>=3.6.1
 googleapis-common-protos==1.6.0
 requests==2.22.0
 Flask==1.1.1
-python-magic-bin==0.4.14
+python-magic>=0.4.14
