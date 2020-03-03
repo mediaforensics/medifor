@@ -20,9 +20,9 @@ import (
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/status"
 
-	"gitlab.mediforprogram.com/medifor/medifor-proto/pkg/fileutil"
-	pb "gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforproto"
-	"gitlab.mediforprogram.com/medifor/medifor-proto/pkg/protoutil"
+	"github.com/mediaforensics/medifor/pkg/fileutil"
+	pb "github.com/mediaforensics/medifor/pkg/mediforproto"
+	"github.com/mediaforensics/medifor/pkg/protoutil"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 )
 

@@ -5,10 +5,10 @@ import (
 	"log"
 
 	"github.com/google/uuid"
+	"github.com/mediaforensics/medifor/pkg/fileutil"
 	"github.com/spf13/cobra"
-	"gitlab.mediforprogram.com/medifor/medifor-proto/pkg/fileutil"
 
-	pb "gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforproto"
+	pb "github.com/mediaforensics/medifor/pkg/mediforproto"
 )
 
 var (

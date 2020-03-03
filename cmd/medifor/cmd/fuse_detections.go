@@ -8,9 +8,9 @@ import (
 	"os"
 
 	"github.com/golang/protobuf/jsonpb"
+	pb "github.com/mediaforensics/medifor/pkg/mediforproto"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
-	pb "gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforproto"
 )
 
 func readAnnotatedDetections(r io.Reader) ([]*pb.AnnotatedDetection, error) {

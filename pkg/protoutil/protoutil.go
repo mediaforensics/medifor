@@ -7,7 +7,7 @@ import (
 	"reflect"
 
 	"github.com/golang/protobuf/proto"
-	pb "gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforproto"
+	pb "github.com/mediaforensics/medifor/pkg/mediforproto"
 )
 
 // URIRewriter class to rewrite UR as proper resolved local or remote file paths

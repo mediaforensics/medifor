@@ -10,8 +10,8 @@ import (
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 
-	pb "gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforproto"
-	"gitlab.mediforprogram.com/medifor/medifor-proto/pkg/protoutil"
+	pb "github.com/mediaforensics/medifor/pkg/mediforproto"
+	"github.com/mediaforensics/medifor/pkg/protoutil"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/status"
 )
