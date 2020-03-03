@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package mediforproto;
 
-import "google/rpc/status.proto";
-
 import "medifor/v1/analytic.proto";
 
 // FileChunk contains a single chunk of a file. It is intended to be part of a

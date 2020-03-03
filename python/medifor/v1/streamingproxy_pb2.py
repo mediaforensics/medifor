@@ -13,7 +13,6 @@ from google.protobuf import descriptor_pb2
 _sym_db = _symbol_database.Default()
 
 
-from google.rpc import status_pb2 as google_dot_rpc_dot_status__pb2
 from medifor.v1 import analytic_pb2 as medifor_dot_v1_dot_analytic__pb2
 
 
@@ -21,9 +20,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='medifor/v1/streamingproxy.proto',
   package='mediforproto',
   syntax='proto3',
-  serialized_pb=_b('\n\x1fmedifor/v1/streamingproxy.proto\x12\x0cmediforproto\x1a\x17google/rpc/status.proto\x1a\x19medifor/v1/analytic.proto\"`\n\tFileChunk\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x11\n\tmime_type\x18\x02 \x01(\t\x12\x0e\n\x06offset\x18\x03 \x01(\x03\x12\x13\n\x0btotal_bytes\x18\x04 \x01(\x03\x12\r\n\x05value\x18\x05 \x01(\x0c\"v\n\x0e\x44\x65tectionChunk\x12,\n\tdetection\x18\x01 \x01(\x0b\x32\x17.mediforproto.DetectionH\x00\x12-\n\nfile_chunk\x18\x02 \x01(\x0b\x32\x17.mediforproto.FileChunkH\x00\x42\x07\n\x05value2`\n\x0eStreamingProxy\x12N\n\x0c\x44\x65tectStream\x12\x1c.mediforproto.DetectionChunk\x1a\x1c.mediforproto.DetectionChunk(\x01\x30\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x1fmedifor/v1/streamingproxy.proto\x12\x0cmediforproto\x1a\x19medifor/v1/analytic.proto\"`\n\tFileChunk\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x11\n\tmime_type\x18\x02 \x01(\t\x12\x0e\n\x06offset\x18\x03 \x01(\x03\x12\x13\n\x0btotal_bytes\x18\x04 \x01(\x03\x12\r\n\x05value\x18\x05 \x01(\x0c\"v\n\x0e\x44\x65tectionChunk\x12,\n\tdetection\x18\x01 \x01(\x0b\x32\x17.mediforproto.DetectionH\x00\x12-\n\nfile_chunk\x18\x02 \x01(\x0b\x32\x17.mediforproto.FileChunkH\x00\x42\x07\n\x05value2`\n\x0eStreamingProxy\x12N\n\x0c\x44\x65tectStream\x12\x1c.mediforproto.DetectionChunk\x1a\x1c.mediforproto.DetectionChunk(\x01\x30\x01\x62\x06proto3')
   ,
-  dependencies=[google_dot_rpc_dot_status__pb2.DESCRIPTOR,medifor_dot_v1_dot_analytic__pb2.DESCRIPTOR,])
+  dependencies=[medifor_dot_v1_dot_analytic__pb2.DESCRIPTOR,])
 
 
 
@@ -82,8 +81,8 @@ _FILECHUNK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=101,
-  serialized_end=197,
+  serialized_start=76,
+  serialized_end=172,
 )
 
 
@@ -123,8 +122,8 @@ _DETECTIONCHUNK = _descriptor.Descriptor(
       name='value', full_name='mediforproto.DetectionChunk.value',
       index=0, containing_type=None, fields=[]),
   ],
-  serialized_start=199,
-  serialized_end=317,
+  serialized_start=174,
+  serialized_end=292,
 )
 
 _DETECTIONCHUNK.fields_by_name['detection'].message_type = medifor_dot_v1_dot_analytic__pb2._DETECTION
@@ -161,8 +160,8 @@ _STREAMINGPROXY = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=319,
-  serialized_end=415,
+  serialized_start=294,
+  serialized_end=390,
   methods=[
   _descriptor.MethodDescriptor(
     name='DetectStream',
