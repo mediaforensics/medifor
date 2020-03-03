@@ -186,6 +186,12 @@ func (s *analyticService) endpoint(kind string) (interface{}, error) {
 	return e, nil
 }
 
+// Kill causes this process to stop.
+func (s *analyticService) Kill(ctx context.Context, _ *pb.Empty) (*pb.Empty, error) {
+	log.Fatal("Exiting process because of Kill request")
+	return &pb.Empty{}, nil
+}
+
 // DetectImageManipulation calls a registered image manipulation detector if present.
 func (s *analyticService) DetectImageManipulation(ctx context.Context, req *pb.ImageManipulationRequest) (*pb.ImageManipulation, error) {
 	ep, err := s.endpoint("ImageManipulation")
