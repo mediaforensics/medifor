@@ -4,9 +4,6 @@ The `medifor` utility is useful for sending requests to analytics; it
 packages up images or videos into a format that is understood by the gRPC
 interface and asks the analytic to do the detection.
 
-***NOTE***: If you are just wanting to run this, please try *first* to download a build for your platform here:
-https://gitlab.mediforprogram.com/medifor/medifor-proto/-/jobs/artifacts/master/browse/release?job=cli
-
 ## Basic Use
 
 Run the utility with the `help` command to get help about usage.
@@ -183,17 +180,10 @@ and then you can refer to the config file using the `--config` flag, or drop it 
 
 ## Building
 
-*Only* do this if an appropriate release binary is not available in the artifact repository:
-
-https://gitlab.mediforprogram.com/medifor/medifor-proto/-/jobs/artifacts/master/browse/release?job=cli
-
 This utility can be built from the root of this repository by issuing
 
 ```
-$ make build
+$ go build ./...
 ```
 
 This creates a release binary for your platform inside of the `release` directory.
-
-You can also build it using `go build`, provided that the dependencies are
-properly located within your `GOPATH`.

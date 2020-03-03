@@ -4,8 +4,8 @@ import (
 	"context"
 	"log"
 
+	"github.com/mediaforensics/medifor/pkg/medifor"
 	"github.com/spf13/cobra"
-	"gitlab.mediforprogram.com/medifor/medifor-proto/pkg/medifor"
 )
 
 // detectImgmanipCmd represents the imgmanip command

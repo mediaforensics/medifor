@@ -11,11 +11,11 @@ import (
 
 	"github.com/golang/protobuf/jsonpb"
 	"github.com/golang/protobuf/proto"
+	"github.com/mediaforensics/medifor/pkg/fileutil"
+	"github.com/mediaforensics/medifor/pkg/medifor"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"gitlab.mediforprogram.com/medifor/medifor-proto/pkg/fileutil"
-	"gitlab.mediforprogram.com/medifor/medifor-proto/pkg/medifor"
 )
 
 // MarshalFunc is a function that accepts a protocol buffer and outputs string info for it.

@@ -8,6 +8,7 @@ from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
+from google.protobuf import descriptor_pb2
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
@@ -21,7 +22,6 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='medifor/v1/pipeline.proto',
   package='workflowproto',
   syntax='proto3',
-  serialized_options=None,
   serialized_pb=_b('\n\x19medifor/v1/pipeline.proto\x12\rworkflowproto\x1a\x19medifor/v1/analytic.proto\x1a\x17medifor/v1/fusion.proto\"c\n\x07SortCol\x12#\n\x03key\x18\x01 \x01(\x0e\x32\x16.workflowproto.SortKey\x12\x0e\n\x06is_asc\x18\x02 \x01(\x08\x12\x11\n\ttype_cast\x18\x03 \x01(\t\x12\x10\n\x08meta_key\x18\x04 \x01(\t\"\xcc\x03\n\x10\x44\x65tectionRequest\x12\n\n\x02id\x18\x03 \x01(\t\x12(\n\x07request\x18\x01 \x01(\x0b\x32\x17.mediforproto.Detection\x12\x13\n\x0b\x61nalytic_id\x18\x02 \x03(\t\x12\x10\n\x08\x66user_id\x18\x08 \x03(\t\x12\x37\n\x04tags\x18\x04 \x03(\x0b\x32).workflowproto.DetectionRequest.TagsEntry\x12@\n\tuser_tags\x18\x06 \x03(\x0b\x32-.workflowproto.DetectionRequest.UserTagsEntry\x12\x37\n\x04meta\x18\x07 \x03(\x0b\x32).workflowproto.DetectionRequest.MetaEntry\x12\x1c\n\x14\x61nalytic_timeout_sec\x18\x05 \x01(\x03\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a/\n\rUserTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a+\n\tMetaEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xb6\x01\n\x15\x41nalyticDetectionInfo\x12\x13\n\x0b\x61nalytic_id\x18\x01 \x01(\t\x12,\n\x05stage\x18\x02 \x01(\x0e\x32\x1d.workflowproto.DetectionStage\x12.\n\x06status\x18\x03 \x01(\x0e\x32\x1e.workflowproto.DetectionStatus\x12*\n\tdetection\x18\x04 \x01(\x0b\x32\x17.mediforproto.Detection\"\xa0\x04\n\rDetectionInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12;\n\ranalytic_info\x18\x02 \x03(\x0b\x32$.workflowproto.AnalyticDetectionInfo\x12\x33\n\x0b\x66usion_info\x18\x08 \x03(\x0b\x32\x1e.workflowproto.FuserFusionInfo\x12\x34\n\x04tags\x18\x03 \x03(\x0b\x32&.workflowproto.DetectionInfo.TagsEntry\x12=\n\tuser_tags\x18\x06 \x03(\x0b\x32*.workflowproto.DetectionInfo.UserTagsEntry\x12\x34\n\x04meta\x18\x07 \x03(\x0b\x32&.workflowproto.DetectionInfo.MetaEntry\x12\x11\n\thas_fused\x18\x04 \x01(\x08\x12\x13\n\x0b\x66used_score\x18\x05 \x01(\x01\x12\x17\n\x0f\x61nalytics_total\x18\t \x01(\x05\x12\x1a\n\x12\x61nalytics_finished\x18\n \x01(\x05\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a/\n\rUserTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a+\n\tMetaEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"6\n\x14\x44\x65tectionInfoRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x12\n\nwant_fused\x18\x02 \x01(\x08\"\xf1\x02\n\x14\x44\x65tectionListRequest\x12;\n\x04tags\x18\x01 \x03(\x0b\x32-.workflowproto.DetectionListRequest.TagsEntry\x12\x15\n\rdetection_ids\x18\x07 \x03(\t\x12\x12\n\nwant_fused\x18\x04 \x01(\x08\x12(\n\x08order_by\x18\x05 \x03(\x0b\x32\x16.workflowproto.SortCol\x12\x10\n\x08\x66user_id\x18\x06 \x01(\t\x12\x41\n\x15\x66usion_threshold_type\x18\x08 \x01(\x0e\x32\".workflowproto.FusionThresholdType\x12\x1e\n\x16\x66usion_threshold_value\x18\t \x01(\x02\x12\x11\n\tpage_size\x18\x02 \x01(\x05\x12\x12\n\npage_token\x18\x03 \x01(\t\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"d\n\rDetectionList\x12\x30\n\ndetections\x18\x01 \x03(\x0b\x32\x1c.workflowproto.DetectionInfo\x12\r\n\x05total\x18\x03 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\"\xeb\x01\n\rFusionRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12%\n\x07request\x18\x02 \x01(\x0b\x32\x14.mediforproto.Fusion\x12\x10\n\x08\x66user_id\x18\x04 \x03(\t\x12\x34\n\x04tags\x18\x03 \x03(\x0b\x32&.workflowproto.FusionRequest.TagsEntry\x12\x14\n\x0c\x64\x65tection_id\x18\x05 \x01(\t\x12\x1c\n\x14\x64\x65tection_id_out_dir\x18\x06 \x01(\t\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xa7\x01\n\x0f\x46userFusionInfo\x12\x10\n\x08\x66user_id\x18\x01 \x01(\t\x12,\n\x05stage\x18\x02 \x01(\x0e\x32\x1d.workflowproto.DetectionStage\x12.\n\x06status\x18\x03 \x01(\x0e\x32\x1e.workflowproto.DetectionStatus\x12$\n\x06\x66usion\x18\x04 \x01(\x0b\x32\x14.mediforproto.Fusion\"\xd6\x01\n\nFusionInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12\x34\n\x0c\x66usion_infos\x18\x02 \x03(\x0b\x32\x1e.workflowproto.FuserFusionInfo\x12\x31\n\x04tags\x18\x03 \x03(\x0b\x32#.workflowproto.FusionInfo.TagsEntry\x12\x11\n\thas_fused\x18\x04 \x01(\x08\x12\x13\n\x0b\x66used_score\x18\x05 \x01(\x01\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"6\n\x11\x46useAllIDsRequest\x12\x10\n\x08\x66user_id\x18\x01 \x03(\t\x12\x0f\n\x07out_dir\x18\x02 \x01(\t\"\x14\n\x12\x46useAllIDsResponse\"\xc8\x01\n\x1aUpdateDetectionTagsRequest\x12\x14\n\x0c\x64\x65tection_id\x18\x01 \x01(\t\x12\x0f\n\x07replace\x18\x02 \x01(\x08\x12\x41\n\x04tags\x18\x03 \x03(\x0b\x32\x33.workflowproto.UpdateDetectionTagsRequest.TagsEntry\x12\x13\n\x0b\x64\x65lete_tags\x18\x04 \x03(\t\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x19\n\x17\x44\x65tectionTagInfoRequest\"\x8b\x02\n\x10\x44\x65tectionTagInfo\x12\x42\n\ntag_counts\x18\x01 \x03(\x0b\x32..workflowproto.DetectionTagInfo.TagCountsEntry\x12K\n\x0fuser_tag_counts\x18\x02 \x03(\x0b\x32\x32.workflowproto.DetectionTagInfo.UserTagCountsEntry\x1a\x30\n\x0eTagCountsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a\x34\n\x12UserTagCountsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\".\n\x16\x44\x65leteDetectionRequest\x12\x14\n\x0c\x64\x65tection_id\x18\x01 \x01(\t\"\x07\n\x05\x45mpty*\x81\x01\n\x0e\x44\x65tectionStage\x12\x18\n\x14\x44\x45TECTION_STAGE_NONE\x10\x00\x12\x1a\n\x16\x44\x45TECTION_STAGE_QUEUED\x10\x01\x12\x1b\n\x17\x44\x45TECTION_STAGE_CLAIMED\x10\x02\x12\x1c\n\x18\x44\x45TECTION_STAGE_FINISHED\x10\x03*h\n\x0f\x44\x65tectionStatus\x12\x19\n\x15\x44\x45TECTION_STATUS_NONE\x10\x00\x12\x1c\n\x18\x44\x45TECTION_STATUS_SUCCESS\x10\x01\x12\x1c\n\x18\x44\x45TECTION_STATUS_FAILURE\x10\x02*\x1e\n\x07SortKey\x12\t\n\x05SCORE\x10\x00\x12\x08\n\x04META\x10\x01*`\n\x13\x46usionThresholdType\x12\x17\n\x13\x46USION_NO_THRESHOLD\x10\x00\x12\x17\n\x13\x46USION_LT_THRESHOLD\x10\x01\x12\x17\n\x13\x46USION_GT_THRESHOLD\x10\x02\x32\xea\x05\n\x08Pipeline\x12G\n\x06\x44\x65tect\x12\x1f.workflowproto.DetectionRequest\x1a\x1c.workflowproto.DetectionInfo\x12U\n\x10GetDetectionInfo\x12#.workflowproto.DetectionInfoRequest\x1a\x1c.workflowproto.DetectionInfo\x12U\n\x10GetDetectionList\x12#.workflowproto.DetectionListRequest\x1a\x1c.workflowproto.DetectionList\x12N\n\x0f\x44\x65leteDetection\x12%.workflowproto.DeleteDetectionRequest\x1a\x14.workflowproto.Empty\x12?\n\x04\x46use\x12\x1c.workflowproto.FusionRequest\x1a\x19.workflowproto.FusionInfo\x12\x43\n\x08\x46useByID\x12\x1c.workflowproto.FusionRequest\x1a\x19.workflowproto.FusionInfo\x12Q\n\nFuseAllIDs\x12 .workflowproto.FuseAllIDsRequest\x1a!.workflowproto.FuseAllIDsResponse\x12^\n\x13UpdateDetectionTags\x12).workflowproto.UpdateDetectionTagsRequest\x1a\x1c.workflowproto.DetectionInfo\x12^\n\x13GetDetectionTagInfo\x12&.workflowproto.DetectionTagInfoRequest\x1a\x1f.workflowproto.DetectionTagInfob\x06proto3')
   ,
   dependencies=[medifor_dot_v1_dot_analytic__pb2.DESCRIPTOR,medifor_dot_v1_dot_fusion__pb2.DESCRIPTOR,])
@@ -34,23 +34,23 @@ _DETECTIONSTAGE = _descriptor.EnumDescriptor(
   values=[
     _descriptor.EnumValueDescriptor(
       name='DETECTION_STAGE_NONE', index=0, number=0,
-      serialized_options=None,
+      options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
       name='DETECTION_STAGE_QUEUED', index=1, number=1,
-      serialized_options=None,
+      options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
       name='DETECTION_STAGE_CLAIMED', index=2, number=2,
-      serialized_options=None,
+      options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
       name='DETECTION_STAGE_FINISHED', index=3, number=3,
-      serialized_options=None,
+      options=None,
       type=None),
   ],
   containing_type=None,
-  serialized_options=None,
+  options=None,
   serialized_start=3183,
   serialized_end=3312,
 )
@@ -65,19 +65,19 @@ _DETECTIONSTATUS = _descriptor.EnumDescriptor(
   values=[
     _descriptor.EnumValueDescriptor(
       name='DETECTION_STATUS_NONE', index=0, number=0,
-      serialized_options=None,
+      options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
       name='DETECTION_STATUS_SUCCESS', index=1, number=1,
-      serialized_options=None,
+      options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
       name='DETECTION_STATUS_FAILURE', index=2, number=2,
-      serialized_options=None,
+      options=None,
       type=None),
   ],
   containing_type=None,
-  serialized_options=None,
+  options=None,
   serialized_start=3314,
   serialized_end=3418,
 )
@@ -92,15 +92,15 @@ _SORTKEY = _descriptor.EnumDescriptor(
   values=[
     _descriptor.EnumValueDescriptor(
       name='SCORE', index=0, number=0,
-      serialized_options=None,
+      options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
       name='META', index=1, number=1,
-      serialized_options=None,
+      options=None,
       type=None),
   ],
   containing_type=None,
-  serialized_options=None,
+  options=None,
   serialized_start=3420,
   serialized_end=3450,
 )
@@ -115,19 +115,19 @@ _FUSIONTHRESHOLDTYPE = _descriptor.EnumDescriptor(
   values=[
     _descriptor.EnumValueDescriptor(
       name='FUSION_NO_THRESHOLD', index=0, number=0,
-      serialized_options=None,
+      options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
       name='FUSION_LT_THRESHOLD', index=1, number=1,
-      serialized_options=None,
+      options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
       name='FUSION_GT_THRESHOLD', index=2, number=2,
-      serialized_options=None,
+      options=None,
       type=None),
   ],
   containing_type=None,
-  serialized_options=None,
+  options=None,
   serialized_start=3452,
   serialized_end=3548,
 )
@@ -162,35 +162,35 @@ _SORTCOL = _descriptor.Descriptor(
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='is_asc', full_name='workflowproto.SortCol.is_asc', index=1,
       number=2, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='type_cast', full_name='workflowproto.SortCol.type_cast', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='meta_key', full_name='workflowproto.SortCol.meta_key', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -214,21 +214,21 @@ _DETECTIONREQUEST_TAGSENTRY = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='value', full_name='workflowproto.DetectionRequest.TagsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=_b('8\001'),
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -251,21 +251,21 @@ _DETECTIONREQUEST_USERTAGSENTRY = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='value', full_name='workflowproto.DetectionRequest.UserTagsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=_b('8\001'),
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -288,21 +288,21 @@ _DETECTIONREQUEST_METAENTRY = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='value', full_name='workflowproto.DetectionRequest.MetaEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=_b('8\001'),
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -325,63 +325,63 @@ _DETECTIONREQUEST = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='request', full_name='workflowproto.DetectionRequest.request', index=1,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='analytic_id', full_name='workflowproto.DetectionRequest.analytic_id', index=2,
       number=2, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='fuser_id', full_name='workflowproto.DetectionRequest.fuser_id', index=3,
       number=8, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='tags', full_name='workflowproto.DetectionRequest.tags', index=4,
       number=4, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='user_tags', full_name='workflowproto.DetectionRequest.user_tags', index=5,
       number=6, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='meta', full_name='workflowproto.DetectionRequest.meta', index=6,
       number=7, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='analytic_timeout_sec', full_name='workflowproto.DetectionRequest.analytic_timeout_sec', index=7,
       number=5, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[_DETECTIONREQUEST_TAGSENTRY, _DETECTIONREQUEST_USERTAGSENTRY, _DETECTIONREQUEST_METAENTRY, ],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -405,35 +405,35 @@ _ANALYTICDETECTIONINFO = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='stage', full_name='workflowproto.AnalyticDetectionInfo.stage', index=1,
       number=2, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='status', full_name='workflowproto.AnalyticDetectionInfo.status', index=2,
       number=3, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='detection', full_name='workflowproto.AnalyticDetectionInfo.detection', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -457,21 +457,21 @@ _DETECTIONINFO_TAGSENTRY = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='value', full_name='workflowproto.DetectionInfo.TagsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=_b('8\001'),
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -494,21 +494,21 @@ _DETECTIONINFO_USERTAGSENTRY = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='value', full_name='workflowproto.DetectionInfo.UserTagsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=_b('8\001'),
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -531,21 +531,21 @@ _DETECTIONINFO_METAENTRY = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='value', full_name='workflowproto.DetectionInfo.MetaEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=_b('8\001'),
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -568,77 +568,77 @@ _DETECTIONINFO = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='analytic_info', full_name='workflowproto.DetectionInfo.analytic_info', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='fusion_info', full_name='workflowproto.DetectionInfo.fusion_info', index=2,
       number=8, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='tags', full_name='workflowproto.DetectionInfo.tags', index=3,
       number=3, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='user_tags', full_name='workflowproto.DetectionInfo.user_tags', index=4,
       number=6, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='meta', full_name='workflowproto.DetectionInfo.meta', index=5,
       number=7, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='has_fused', full_name='workflowproto.DetectionInfo.has_fused', index=6,
       number=4, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='fused_score', full_name='workflowproto.DetectionInfo.fused_score', index=7,
       number=5, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='analytics_total', full_name='workflowproto.DetectionInfo.analytics_total', index=8,
       number=9, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='analytics_finished', full_name='workflowproto.DetectionInfo.analytics_finished', index=9,
       number=10, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[_DETECTIONINFO_TAGSENTRY, _DETECTIONINFO_USERTAGSENTRY, _DETECTIONINFO_METAENTRY, ],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -662,21 +662,21 @@ _DETECTIONINFOREQUEST = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='want_fused', full_name='workflowproto.DetectionInfoRequest.want_fused', index=1,
       number=2, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -700,21 +700,21 @@ _DETECTIONLISTREQUEST_TAGSENTRY = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='value', full_name='workflowproto.DetectionListRequest.TagsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=_b('8\001'),
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -737,70 +737,70 @@ _DETECTIONLISTREQUEST = _descriptor.Descriptor(
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='detection_ids', full_name='workflowproto.DetectionListRequest.detection_ids', index=1,
       number=7, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='want_fused', full_name='workflowproto.DetectionListRequest.want_fused', index=2,
       number=4, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='order_by', full_name='workflowproto.DetectionListRequest.order_by', index=3,
       number=5, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='fuser_id', full_name='workflowproto.DetectionListRequest.fuser_id', index=4,
       number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='fusion_threshold_type', full_name='workflowproto.DetectionListRequest.fusion_threshold_type', index=5,
       number=8, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='fusion_threshold_value', full_name='workflowproto.DetectionListRequest.fusion_threshold_value', index=6,
       number=9, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='page_size', full_name='workflowproto.DetectionListRequest.page_size', index=7,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='page_token', full_name='workflowproto.DetectionListRequest.page_token', index=8,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[_DETECTIONLISTREQUEST_TAGSENTRY, ],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -824,28 +824,28 @@ _DETECTIONLIST = _descriptor.Descriptor(
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='total', full_name='workflowproto.DetectionList.total', index=1,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='page_token', full_name='workflowproto.DetectionList.page_token', index=2,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -869,21 +869,21 @@ _FUSIONREQUEST_TAGSENTRY = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='value', full_name='workflowproto.FusionRequest.TagsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=_b('8\001'),
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -906,49 +906,49 @@ _FUSIONREQUEST = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='request', full_name='workflowproto.FusionRequest.request', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='fuser_id', full_name='workflowproto.FusionRequest.fuser_id', index=2,
       number=4, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='tags', full_name='workflowproto.FusionRequest.tags', index=3,
       number=3, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='detection_id', full_name='workflowproto.FusionRequest.detection_id', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='detection_id_out_dir', full_name='workflowproto.FusionRequest.detection_id_out_dir', index=5,
       number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[_FUSIONREQUEST_TAGSENTRY, ],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -972,35 +972,35 @@ _FUSERFUSIONINFO = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='stage', full_name='workflowproto.FuserFusionInfo.stage', index=1,
       number=2, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='status', full_name='workflowproto.FuserFusionInfo.status', index=2,
       number=3, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='fusion', full_name='workflowproto.FuserFusionInfo.fusion', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -1024,21 +1024,21 @@ _FUSIONINFO_TAGSENTRY = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='value', full_name='workflowproto.FusionInfo.TagsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=_b('8\001'),
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -1061,42 +1061,42 @@ _FUSIONINFO = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='fusion_infos', full_name='workflowproto.FusionInfo.fusion_infos', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='tags', full_name='workflowproto.FusionInfo.tags', index=2,
       number=3, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='has_fused', full_name='workflowproto.FusionInfo.has_fused', index=3,
       number=4, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='fused_score', full_name='workflowproto.FusionInfo.fused_score', index=4,
       number=5, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[_FUSIONINFO_TAGSENTRY, ],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -1120,21 +1120,21 @@ _FUSEALLIDSREQUEST = _descriptor.Descriptor(
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='out_dir', full_name='workflowproto.FuseAllIDsRequest.out_dir', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -1158,7 +1158,7 @@ _FUSEALLIDSRESPONSE = _descriptor.Descriptor(
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -1182,21 +1182,21 @@ _UPDATEDETECTIONTAGSREQUEST_TAGSENTRY = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='value', full_name='workflowproto.UpdateDetectionTagsRequest.TagsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=_b('8\001'),
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -1219,35 +1219,35 @@ _UPDATEDETECTIONTAGSREQUEST = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='replace', full_name='workflowproto.UpdateDetectionTagsRequest.replace', index=1,
       number=2, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='tags', full_name='workflowproto.UpdateDetectionTagsRequest.tags', index=2,
       number=3, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='delete_tags', full_name='workflowproto.UpdateDetectionTagsRequest.delete_tags', index=3,
       number=4, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[_UPDATEDETECTIONTAGSREQUEST_TAGSENTRY, ],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -1271,7 +1271,7 @@ _DETECTIONTAGINFOREQUEST = _descriptor.Descriptor(
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -1295,21 +1295,21 @@ _DETECTIONTAGINFO_TAGCOUNTSENTRY = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='value', full_name='workflowproto.DetectionTagInfo.TagCountsEntry.value', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=_b('8\001'),
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -1332,21 +1332,21 @@ _DETECTIONTAGINFO_USERTAGCOUNTSENTRY = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='value', full_name='workflowproto.DetectionTagInfo.UserTagCountsEntry.value', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=_b('8\001'),
+  options=_descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001')),
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -1369,21 +1369,21 @@ _DETECTIONTAGINFO = _descriptor.Descriptor(
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='user_tag_counts', full_name='workflowproto.DetectionTagInfo.user_tag_counts', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[_DETECTIONTAGINFO_TAGCOUNTSENTRY, _DETECTIONTAGINFO_USERTAGCOUNTSENTRY, ],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -1407,14 +1407,14 @@ _DELETEDETECTIONREQUEST = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -1438,7 +1438,7 @@ _EMPTY = _descriptor.Descriptor(
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -1726,25 +1726,37 @@ Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), d
 _sym_db.RegisterMessage(Empty)
 
 
-_DETECTIONREQUEST_TAGSENTRY._options = None
-_DETECTIONREQUEST_USERTAGSENTRY._options = None
-_DETECTIONREQUEST_METAENTRY._options = None
-_DETECTIONINFO_TAGSENTRY._options = None
-_DETECTIONINFO_USERTAGSENTRY._options = None
-_DETECTIONINFO_METAENTRY._options = None
-_DETECTIONLISTREQUEST_TAGSENTRY._options = None
-_FUSIONREQUEST_TAGSENTRY._options = None
-_FUSIONINFO_TAGSENTRY._options = None
-_UPDATEDETECTIONTAGSREQUEST_TAGSENTRY._options = None
-_DETECTIONTAGINFO_TAGCOUNTSENTRY._options = None
-_DETECTIONTAGINFO_USERTAGCOUNTSENTRY._options = None
+_DETECTIONREQUEST_TAGSENTRY.has_options = True
+_DETECTIONREQUEST_TAGSENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_DETECTIONREQUEST_USERTAGSENTRY.has_options = True
+_DETECTIONREQUEST_USERTAGSENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_DETECTIONREQUEST_METAENTRY.has_options = True
+_DETECTIONREQUEST_METAENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_DETECTIONINFO_TAGSENTRY.has_options = True
+_DETECTIONINFO_TAGSENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_DETECTIONINFO_USERTAGSENTRY.has_options = True
+_DETECTIONINFO_USERTAGSENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_DETECTIONINFO_METAENTRY.has_options = True
+_DETECTIONINFO_METAENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_DETECTIONLISTREQUEST_TAGSENTRY.has_options = True
+_DETECTIONLISTREQUEST_TAGSENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_FUSIONREQUEST_TAGSENTRY.has_options = True
+_FUSIONREQUEST_TAGSENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_FUSIONINFO_TAGSENTRY.has_options = True
+_FUSIONINFO_TAGSENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_UPDATEDETECTIONTAGSREQUEST_TAGSENTRY.has_options = True
+_UPDATEDETECTIONTAGSREQUEST_TAGSENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_DETECTIONTAGINFO_TAGCOUNTSENTRY.has_options = True
+_DETECTIONTAGINFO_TAGCOUNTSENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
+_DETECTIONTAGINFO_USERTAGCOUNTSENTRY.has_options = True
+_DETECTIONTAGINFO_USERTAGCOUNTSENTRY._options = _descriptor._ParseOptions(descriptor_pb2.MessageOptions(), _b('8\001'))
 
 _PIPELINE = _descriptor.ServiceDescriptor(
   name='Pipeline',
   full_name='workflowproto.Pipeline',
   file=DESCRIPTOR,
   index=0,
-  serialized_options=None,
+  options=None,
   serialized_start=3551,
   serialized_end=4297,
   methods=[
@@ -1755,7 +1767,7 @@ _PIPELINE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_DETECTIONREQUEST,
     output_type=_DETECTIONINFO,
-    serialized_options=None,
+    options=None,
   ),
   _descriptor.MethodDescriptor(
     name='GetDetectionInfo',
@@ -1764,7 +1776,7 @@ _PIPELINE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_DETECTIONINFOREQUEST,
     output_type=_DETECTIONINFO,
-    serialized_options=None,
+    options=None,
   ),
   _descriptor.MethodDescriptor(
     name='GetDetectionList',
@@ -1773,7 +1785,7 @@ _PIPELINE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_DETECTIONLISTREQUEST,
     output_type=_DETECTIONLIST,
-    serialized_options=None,
+    options=None,
   ),
   _descriptor.MethodDescriptor(
     name='DeleteDetection',
@@ -1782,7 +1794,7 @@ _PIPELINE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_DELETEDETECTIONREQUEST,
     output_type=_EMPTY,
-    serialized_options=None,
+    options=None,
   ),
   _descriptor.MethodDescriptor(
     name='Fuse',
@@ -1791,7 +1803,7 @@ _PIPELINE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_FUSIONREQUEST,
     output_type=_FUSIONINFO,
-    serialized_options=None,
+    options=None,
   ),
   _descriptor.MethodDescriptor(
     name='FuseByID',
@@ -1800,7 +1812,7 @@ _PIPELINE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_FUSIONREQUEST,
     output_type=_FUSIONINFO,
-    serialized_options=None,
+    options=None,
   ),
   _descriptor.MethodDescriptor(
     name='FuseAllIDs',
@@ -1809,7 +1821,7 @@ _PIPELINE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_FUSEALLIDSREQUEST,
     output_type=_FUSEALLIDSRESPONSE,
-    serialized_options=None,
+    options=None,
   ),
   _descriptor.MethodDescriptor(
     name='UpdateDetectionTags',
@@ -1818,7 +1830,7 @@ _PIPELINE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_UPDATEDETECTIONTAGSREQUEST,
     output_type=_DETECTIONINFO,
-    serialized_options=None,
+    options=None,
   ),
   _descriptor.MethodDescriptor(
     name='GetDetectionTagInfo',
@@ -1827,7 +1839,7 @@ _PIPELINE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_DETECTIONTAGINFOREQUEST,
     output_type=_DETECTIONTAGINFO,
-    serialized_options=None,
+    options=None,
   ),
 ])
 _sym_db.RegisterServiceDescriptor(_PIPELINE)

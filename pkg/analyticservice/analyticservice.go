@@ -30,7 +30,7 @@ import (
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/status"
 
-	pb "gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforproto"
+	pb "github.com/mediaforensics/medifor/pkg/mediforproto"
 )
 
 // ImageManipulationFunc defines a callback for analytics that detect general image manipulations.

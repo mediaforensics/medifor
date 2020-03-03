@@ -6,8 +6,8 @@ import (
 	"os"
 
 	"github.com/golang/protobuf/jsonpb"
+	pb "github.com/mediaforensics/medifor/pkg/mediforproto"
 	"github.com/spf13/cobra"
-	pb "gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforproto"
 )
 
 // fuseImgmanipCmd represents the imgmanip command when run for fusion.

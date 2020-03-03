@@ -9,10 +9,10 @@ import (
 	"testing"
 	"time"
 
+	"github.com/mediaforensics/medifor/pkg/analyticservice"
+	"github.com/mediaforensics/medifor/pkg/medifor"
+	pb "github.com/mediaforensics/medifor/pkg/mediforproto"
 	"github.com/pkg/errors"
-	"gitlab.mediforprogram.com/medifor/medifor-proto/pkg/analyticservice"
-	"gitlab.mediforprogram.com/medifor/medifor-proto/pkg/medifor"
-	pb "gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforproto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/test/bufconn"
 )
@@ -21,7 +21,7 @@ const (
 	dataDir     = "../../.."
 	manipIndex  = dataDir + "/assets/manipulations.csv"
 	manipIndexP = dataDir + "/assets/manipulationsPipes.csv"
-	// manipIndex = "/Users/nicholasburnett/Workspace/src/gitlab.mediforprogram.com/medifor/medifor-proto/assets/manipulations.csv"
+	// manipIndex = "/Users/nicholasburnett/Workspace/src/github.com/mediaforensics/medifor/assets/manipulations.csv"
 	bufsize = 1 << 20
 )
 

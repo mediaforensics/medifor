@@ -1,6 +1,3 @@
-// Base test Noop test class for validating custom analytic implementation
-// Note: the service interfaces will be tested using the cli and sample images
-// provided by the gitlab.mediforprogram.com/analytic-wrapper/medifor-proto-utils repo
 package fileutil
 
 import (
