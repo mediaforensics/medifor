@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package mediforproto;
 
-import "google/rpc/status.proto";
-
 option java_package = "com.mediforprogram.proto";
 option java_outer_classname = "KillProto";
 

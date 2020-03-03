@@ -13,7 +13,6 @@ from google.protobuf import descriptor_pb2
 _sym_db = _symbol_database.Default()
 
 
-from google.rpc import status_pb2 as google_dot_rpc_dot_status__pb2
 from medifor.v1 import analytic_pb2 as medifor_dot_v1_dot_analytic__pb2
 
 
@@ -21,9 +20,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='medifor/v1/kill.proto',
   package='mediforproto',
   syntax='proto3',
-  serialized_pb=_b('\n\x15medifor/v1/kill.proto\x12\x0cmediforproto\x1a\x17google/rpc/status.proto\x1a\x19medifor/v1/analytic.proto2<\n\x08Killable\x12\x30\n\x04Kill\x12\x13.mediforproto.Empty\x1a\x13.mediforproto.EmptyB%\n\x18\x63om.mediforprogram.protoB\tKillProtob\x06proto3')
+  serialized_pb=_b('\n\x15medifor/v1/kill.proto\x12\x0cmediforproto\x1a\x19medifor/v1/analytic.proto2<\n\x08Killable\x12\x30\n\x04Kill\x12\x13.mediforproto.Empty\x1a\x13.mediforproto.EmptyB%\n\x18\x63om.mediforprogram.protoB\tKillProtob\x06proto3')
   ,
-  dependencies=[google_dot_rpc_dot_status__pb2.DESCRIPTOR,medifor_dot_v1_dot_analytic__pb2.DESCRIPTOR,])
+  dependencies=[medifor_dot_v1_dot_analytic__pb2.DESCRIPTOR,])
 
 
 
@@ -39,8 +38,8 @@ _KILLABLE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=91,
-  serialized_end=151,
+  serialized_start=66,
+  serialized_end=126,
   methods=[
   _descriptor.MethodDescriptor(
     name='Kill',
