@@ -17,14 +17,14 @@ analytics and support for additional languages.
     * Added streaming service to analyticservice and `streamdetect` command to
     the cli.
 
--  v0.3.0   
+-  v0.3.0
     * Refactored CLI to be included in the medifor package (i.e. `python -m medifor --help`)
     * Added provenance filtering and graph building client
 
 
 ## Quickstart
   (Note: Before starting you may wish to create a python virtual environment (e.g., `python venv env`) and then activate that environment (`source env/bin/activate`)
-  
+
   1) Install the medifor library using `python3 -m pip install git+https://github.com/mediaforensics/medifor.git`
 
 
@@ -32,7 +32,7 @@ analytics and support for additional languages.
  to do this are:
 
    - Create a new python script and import the required modules:
-      `from medifor.v1 import analytic_pb2` and 
+      `from medifor.v1 import analytic_pb2` and
       `from medifor.v1.analyticservice import AnalyticService`
     as well as your current analytic functions. Create a new function that takes
     as input a request and response object.  E.g.,
@@ -62,7 +62,7 @@ analytics and support for additional languages.
 
   4) Test the analytic using the medifor cli:
 
-  At this point you may wish to test your analytic prior to building the container. To do this simply run your analytic in another window (e.g., `python analytic.py`) and then, while the analytic is running, use the medifor CLI to send test images/videos to the analytic. 
+  At this point you may wish to test your analytic prior to building the container. To do this simply run your analytic in another window (e.g., `python analytic.py`) and then, while the analytic is running, use the medifor CLI to send test images/videos to the analytic.
 
 
     python -m medifor [args] <command> [file] -o <path to output directory>
@@ -142,7 +142,7 @@ This will install the `medifor.v1` module, which can be used to build a media
 forensic analytic.
 
 #### Analytic API
-The medifor api is defined in the protobuf files located at [`proto/medifor/v1`](proto/medifor/v1).  
+The medifor api is defined in the protobuf files located at [`proto/medifor/v1`](proto/medifor/v1).
 Of interest to analytic developers is the [`analytic.proto`](proto/medifor/v1/analytic.proto)
 file.  This file defines the services as well as the request and response objects.
 To better understand the `analytic.proto` file we'll walk through the different
@@ -260,7 +260,7 @@ from medifor.v1.analyticservice import AnalyticService
 from foo import detect_img_manip
 ```
 
-The most significant import is `from medifor.v1 import analytic_pb2, analyticservice`.  
+The most significant import is `from medifor.v1 import analytic_pb2, analyticservice`.
 The `analyticservice` module allows you to register your function(s) and start a
 service, while `analytic_pb2` allows you to work with protobuf objects.  The other
 modules are not strictly required but will be helpful in most analytics.  The final
@@ -279,7 +279,7 @@ are the `score` and `localization` fields, however the `opt_out` field can also
 be used to indicate that a given image/video was not processed at all by the
 analytic.  This is usually done in cases where an analytic works on a specific
 subset of image/video types and should not be used to ignore errors.  Errors are
-handled by the wrapper and a full stack trace will be returned in the response.  
+handled by the wrapper and a full stack trace will be returned in the response.
 Allowing these errors to be returned can often simplify the debugging process.
 
 An example function might look something like this:
@@ -358,6 +358,7 @@ but hopefully this illustrates how quickly and easily an analytic can be wrapped
 using the medifor library.
 
 #### Using the MediFor Client
+
 A client library and CLI have been provided for communicating with media forensic analytics.
 
 The medifor client cli can be used to run or test media forensic analytics.  It
@@ -366,7 +367,7 @@ currently has  3 primary commands:
  2) `provenance` - used for provenance filtering & graph building tasks
  3) `pipeline` - used to talk to an existing medifor pipeline
 
-The `detect` command is the primary use of the medifor cli and has subcommands: 
+The `detect` command is the primary use of the medifor cli and has subcommands:
  1) `imgmanip` - Used to run the analytic over a single image
  2) `vidmanip` - Used to run the analytic over a single video
  3) `detectbatch` - Used to run the analytic over every image/video in a specified directory.
@@ -446,6 +447,10 @@ and batch detection functions use the mimetype library to identify the media typ
 file extension.  The MediforClient class can also be used as a superclass to your own
 client class if you with to add additional capabilities.
 
+##### Go Implementation
+
+The system was all designed and built in Go originally, and libraries are
+provided for interacting with it from Go. See 'pkg' and 'cmd' for Go implementations.
 
 #### Building an Analytic Container
 This is meant to provide instruction and a simple example for those unfamiliar with docker
