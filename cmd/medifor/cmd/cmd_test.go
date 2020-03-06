@@ -96,7 +96,7 @@ func TestBatchDetect(t *testing.T) {
 			t.Errorf("Error opening input file %q: %v", inputName, err)
 			continue
 		}
-		if err := runBatchDetect(ctx, client, r, os.Stdout, dataDir); err != nil {
+		if err := runBatchDetect(ctx, client, r, os.Stdout); err != nil {
 			t.Errorf("Error running batch detection on %q: %v", inputName, err)
 		}
 	}
