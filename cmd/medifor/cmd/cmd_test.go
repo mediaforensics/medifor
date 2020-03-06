@@ -5,7 +5,6 @@ package cmd
 import (
 	"context"
 	"net"
-	"os"
 	"testing"
 	"time"
 
@@ -18,11 +17,7 @@ import (
 )
 
 const (
-	dataDir     = "../../.."
-	manipIndex  = dataDir + "/assets/manipulations.csv"
-	manipIndexP = dataDir + "/assets/manipulationsPipes.csv"
-	// manipIndex = "/Users/nicholasburnett/Workspace/src/github.com/mediaforensics/medifor/assets/manipulations.csv"
-	bufsize = 1 << 20
+	dataDir = "../../../testfiles"
 )
 
 func analyticClientServer(ctx context.Context) (*medifor.MultiClient, *analyticservice.AnalyticService, error) {
@@ -87,19 +82,7 @@ func TestBatchDetect(t *testing.T) {
 		}
 	}()
 
-	for _, inputName := range []string{
-		manipIndex,
-		manipIndexP,
-	} {
-		r, err := os.Open(inputName)
-		if err != nil {
-			t.Errorf("Error opening input file %q: %v", inputName, err)
-			continue
-		}
-		if err := runBatchDetect(ctx, client, r, os.Stdout); err != nil {
-			t.Errorf("Error running batch detection on %q: %v", inputName, err)
-		}
+	if err := runBatchDetectNames(ctx, client, dataDir, ""); err != nil {
+		t.Errorf("Error running batch detection on %q: %v", dataDir, err)
 	}
-	// TODO: add test for non-error processing (make sure the registered
-	// functions are called and don't return errors by parsing output).
 }

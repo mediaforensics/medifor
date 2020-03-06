@@ -235,6 +235,15 @@ func CheckDetectionScore(detection *pb.Detection) error {
 
 }
 
+// MustDetectionReq calls NewDetectionReq and panics if an error occurs.
+func MustDetectionReq(req Request) *pb.Detection {
+	det, err := NewDetectionReq(req)
+	if err != nil {
+		log.Fatalf("Error creating detection request: %v", err)
+	}
+	return det
+}
+
 // NewDetectionReq creates a detection object from a given request proto.
 // It doesn't do anything special with the request (like set its ID). That
 // should be done by the caller.
