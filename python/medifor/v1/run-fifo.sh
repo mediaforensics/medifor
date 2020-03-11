@@ -11,7 +11,7 @@ python3 -m venv venv
 source "venv/bin/activate"
 
 # Install the medifor-proto library and dependencies
-pip install 'git+ssh://git@gitlab.mediforprogram.com/medifor/medifor-proto.git@master#egg=medifor_proto&subdirectory=lang/python'
+pip install 'git+https://github.com/mediaforensics/medifor'
 
 # TODO: This is a placeholder for your analytic. It is only here to provide a working example.
 cat > my_analytic.py <<EOF
