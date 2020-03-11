@@ -8,6 +8,7 @@ from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
+from google.protobuf import descriptor_pb2
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
@@ -20,8 +21,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='medifor/v1/provenance.proto',
   package='mediforproto',
   syntax='proto3',
-  serialized_options=_b('\n\030com.mediforprogram.protoB\017ProvenanceProtoZ@gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforproto'),
-  serialized_pb=_b('\n\x1bmedifor/v1/provenance.proto\x12\x0cmediforproto\x1a\x19medifor/v1/analytic.proto\"m\n\x1aProvenanceFilteringRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12%\n\x05image\x18\x02 \x01(\x0b\x32\x16.mediforproto.Resource\x12\x14\n\x0cresult_limit\x18\x03 \x01(\x05\"]\n\nImageMatch\x12\x10\n\x08image_id\x18\x01 \x01(\t\x12.\n\x0ematching_image\x18\x02 \x01(\x0b\x32\x16.mediforproto.Resource\x12\r\n\x05score\x18\x03 \x01(\x02\"c\n\x0f\x46ilteringResult\x12)\n\x07matches\x18\x01 \x03(\x0b\x32\x18.mediforproto.ImageMatch\x12%\n\x05probe\x18\x02 \x01(\x0b\x32\x16.mediforproto.Resource\"\x85\x01\n\x16ProvenanceGraphRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12%\n\x05image\x18\x02 \x01(\x0b\x32\x16.mediforproto.Resource\x12\x30\n\x0e\x66ilter_results\x18\x03 \x03(\x0b\x32\x18.mediforproto.ImageMatch\"w\n\x0b\x41ssociation\x12$\n\x04type\x18\x01 \x01(\x0e\x32\x16.mediforproto.LinkType\x12\x0e\n\x06source\x18\x02 \x01(\t\x12\x0e\n\x06target\x18\x03 \x01(\t\x12\r\n\x05score\x18\x04 \x01(\x02\x12\x13\n\x0b\x65xplanation\x18\x05 \x01(\t\"\'\n\x04Node\x12\x10\n\x08image_id\x18\x01 \x01(\t\x12\r\n\x05score\x18\x02 \x01(\x02\"v\n\x0fProvenanceGraph\x12!\n\x05nodes\x18\x01 \x03(\x0b\x32\x12.mediforproto.Node\x12/\n\x0c\x61ssociations\x18\x02 \x03(\x0b\x32\x19.mediforproto.Association\x12\x0f\n\x07opt_out\x18\x03 \x01(\x08*M\n\x08LinkType\x12\n\n\x06SPLICE\x10\x00\x12\x0e\n\nPROVENANCE\x10\x01\x12\x0b\n\x07SPEAKER\x10\x02\x12\n\n\x06\x43\x41MERA\x10\x03\x12\x0c\n\x08LOCATION\x10\x04\x32\xcc\x01\n\nProvenance\x12^\n\x13ProvenanceFiltering\x12(.mediforproto.ProvenanceFilteringRequest\x1a\x1d.mediforproto.FilteringResult\x12^\n\x17ProvenanceGraphBuilding\x12$.mediforproto.ProvenanceGraphRequest\x1a\x1d.mediforproto.ProvenanceGraphBm\n\x18\x63om.mediforprogram.protoB\x0fProvenanceProtoZ@gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforprotob\x06proto3')
+  serialized_pb=_b('\n\x1bmedifor/v1/provenance.proto\x12\x0cmediforproto\x1a\x19medifor/v1/analytic.proto\"m\n\x1aProvenanceFilteringRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12%\n\x05image\x18\x02 \x01(\x0b\x32\x16.mediforproto.Resource\x12\x14\n\x0cresult_limit\x18\x03 \x01(\x05\"]\n\nImageMatch\x12\x10\n\x08image_id\x18\x01 \x01(\t\x12.\n\x0ematching_image\x18\x02 \x01(\x0b\x32\x16.mediforproto.Resource\x12\r\n\x05score\x18\x03 \x01(\x02\"c\n\x0f\x46ilteringResult\x12)\n\x07matches\x18\x01 \x03(\x0b\x32\x18.mediforproto.ImageMatch\x12%\n\x05probe\x18\x02 \x01(\x0b\x32\x16.mediforproto.Resource\"\x85\x01\n\x16ProvenanceGraphRequest\x12\x12\n\nrequest_id\x18\x01 \x01(\t\x12%\n\x05image\x18\x02 \x01(\x0b\x32\x16.mediforproto.Resource\x12\x30\n\x0e\x66ilter_results\x18\x03 \x03(\x0b\x32\x18.mediforproto.ImageMatch\"w\n\x0b\x41ssociation\x12$\n\x04type\x18\x01 \x01(\x0e\x32\x16.mediforproto.LinkType\x12\x0e\n\x06source\x18\x02 \x01(\t\x12\x0e\n\x06target\x18\x03 \x01(\t\x12\r\n\x05score\x18\x04 \x01(\x02\x12\x13\n\x0b\x65xplanation\x18\x05 \x01(\t\"\'\n\x04Node\x12\x10\n\x08image_id\x18\x01 \x01(\t\x12\r\n\x05score\x18\x02 \x01(\x02\"v\n\x0fProvenanceGraph\x12!\n\x05nodes\x18\x01 \x03(\x0b\x32\x12.mediforproto.Node\x12/\n\x0c\x61ssociations\x18\x02 \x03(\x0b\x32\x19.mediforproto.Association\x12\x0f\n\x07opt_out\x18\x03 \x01(\x08*M\n\x08LinkType\x12\n\n\x06SPLICE\x10\x00\x12\x0e\n\nPROVENANCE\x10\x01\x12\x0b\n\x07SPEAKER\x10\x02\x12\n\n\x06\x43\x41MERA\x10\x03\x12\x0c\n\x08LOCATION\x10\x04\x32\xcc\x01\n\nProvenance\x12^\n\x13ProvenanceFiltering\x12(.mediforproto.ProvenanceFilteringRequest\x1a\x1d.mediforproto.FilteringResult\x12^\n\x17ProvenanceGraphBuilding\x12$.mediforproto.ProvenanceGraphRequest\x1a\x1d.mediforproto.ProvenanceGraphB+\n\x18\x63om.mediforprogram.protoB\x0fProvenanceProtob\x06proto3')
   ,
   dependencies=[medifor_dot_v1_dot_analytic__pb2.DESCRIPTOR,])
 
@@ -33,27 +33,27 @@ _LINKTYPE = _descriptor.EnumDescriptor(
   values=[
     _descriptor.EnumValueDescriptor(
       name='SPLICE', index=0, number=0,
-      serialized_options=None,
+      options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
       name='PROVENANCE', index=1, number=1,
-      serialized_options=None,
+      options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
       name='SPEAKER', index=2, number=2,
-      serialized_options=None,
+      options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
       name='CAMERA', index=3, number=3,
-      serialized_options=None,
+      options=None,
       type=None),
     _descriptor.EnumValueDescriptor(
       name='LOCATION', index=4, number=4,
-      serialized_options=None,
+      options=None,
       type=None),
   ],
   containing_type=None,
-  serialized_options=None,
+  options=None,
   serialized_start=797,
   serialized_end=874,
 )
@@ -81,28 +81,28 @@ _PROVENANCEFILTERINGREQUEST = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='image', full_name='mediforproto.ProvenanceFilteringRequest.image', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='result_limit', full_name='mediforproto.ProvenanceFilteringRequest.result_limit', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -126,28 +126,28 @@ _IMAGEMATCH = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='matching_image', full_name='mediforproto.ImageMatch.matching_image', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='score', full_name='mediforproto.ImageMatch.score', index=2,
       number=3, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -171,21 +171,21 @@ _FILTERINGRESULT = _descriptor.Descriptor(
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='probe', full_name='mediforproto.FilteringResult.probe', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -209,28 +209,28 @@ _PROVENANCEGRAPHREQUEST = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='image', full_name='mediforproto.ProvenanceGraphRequest.image', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='filter_results', full_name='mediforproto.ProvenanceGraphRequest.filter_results', index=2,
       number=3, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -254,42 +254,42 @@ _ASSOCIATION = _descriptor.Descriptor(
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='source', full_name='mediforproto.Association.source', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='target', full_name='mediforproto.Association.target', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='score', full_name='mediforproto.Association.score', index=3,
       number=4, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='explanation', full_name='mediforproto.Association.explanation', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -313,21 +313,21 @@ _NODE = _descriptor.Descriptor(
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='score', full_name='mediforproto.Node.score', index=1,
       number=2, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -351,28 +351,28 @@ _PROVENANCEGRAPH = _descriptor.Descriptor(
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='associations', full_name='mediforproto.ProvenanceGraph.associations', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='opt_out', full_name='mediforproto.ProvenanceGraph.opt_out', index=2,
       number=3, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
   enum_types=[
   ],
-  serialized_options=None,
+  options=None,
   is_extendable=False,
   syntax='proto3',
   extension_ranges=[],
@@ -451,14 +451,15 @@ ProvenanceGraph = _reflection.GeneratedProtocolMessageType('ProvenanceGraph', (_
 _sym_db.RegisterMessage(ProvenanceGraph)
 
 
-DESCRIPTOR._options = None
+DESCRIPTOR.has_options = True
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\030com.mediforprogram.protoB\017ProvenanceProto'))
 
 _PROVENANCE = _descriptor.ServiceDescriptor(
   name='Provenance',
   full_name='mediforproto.Provenance',
   file=DESCRIPTOR,
   index=0,
-  serialized_options=None,
+  options=None,
   serialized_start=877,
   serialized_end=1081,
   methods=[
@@ -469,7 +470,7 @@ _PROVENANCE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_PROVENANCEFILTERINGREQUEST,
     output_type=_FILTERINGRESULT,
-    serialized_options=None,
+    options=None,
   ),
   _descriptor.MethodDescriptor(
     name='ProvenanceGraphBuilding',
@@ -478,7 +479,7 @@ _PROVENANCE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_PROVENANCEGRAPHREQUEST,
     output_type=_PROVENANCEGRAPH,
-    serialized_options=None,
+    options=None,
   ),
 ])
 _sym_db.RegisterServiceDescriptor(_PROVENANCE)
