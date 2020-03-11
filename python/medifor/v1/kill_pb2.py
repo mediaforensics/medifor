@@ -7,12 +7,12 @@ from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
+from google.protobuf import descriptor_pb2
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
 
 
-from google.rpc import status_pb2 as google_dot_rpc_dot_status__pb2
 from medifor.v1 import analytic_pb2 as medifor_dot_v1_dot_analytic__pb2
 
 
@@ -20,26 +20,26 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='medifor/v1/kill.proto',
   package='mediforproto',
   syntax='proto3',
-  serialized_options=_b('\n\030com.mediforprogram.protoB\tKillProtoZ@gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforproto'),
-  serialized_pb=_b('\n\x15medifor/v1/kill.proto\x12\x0cmediforproto\x1a\x17google/rpc/status.proto\x1a\x19medifor/v1/analytic.proto2<\n\x08Killable\x12\x30\n\x04Kill\x12\x13.mediforproto.Empty\x1a\x13.mediforproto.EmptyBg\n\x18\x63om.mediforprogram.protoB\tKillProtoZ@gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforprotob\x06proto3')
+  serialized_pb=_b('\n\x15medifor/v1/kill.proto\x12\x0cmediforproto\x1a\x19medifor/v1/analytic.proto2<\n\x08Killable\x12\x30\n\x04Kill\x12\x13.mediforproto.Empty\x1a\x13.mediforproto.EmptyB%\n\x18\x63om.mediforprogram.protoB\tKillProtob\x06proto3')
   ,
-  dependencies=[google_dot_rpc_dot_status__pb2.DESCRIPTOR,medifor_dot_v1_dot_analytic__pb2.DESCRIPTOR,])
+  dependencies=[medifor_dot_v1_dot_analytic__pb2.DESCRIPTOR,])
 
 
 
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 
-DESCRIPTOR._options = None
+DESCRIPTOR.has_options = True
+DESCRIPTOR._options = _descriptor._ParseOptions(descriptor_pb2.FileOptions(), _b('\n\030com.mediforprogram.protoB\tKillProto'))
 
 _KILLABLE = _descriptor.ServiceDescriptor(
   name='Killable',
   full_name='mediforproto.Killable',
   file=DESCRIPTOR,
   index=0,
-  serialized_options=None,
-  serialized_start=91,
-  serialized_end=151,
+  options=None,
+  serialized_start=66,
+  serialized_end=126,
   methods=[
   _descriptor.MethodDescriptor(
     name='Kill',
@@ -48,7 +48,7 @@ _KILLABLE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=medifor_dot_v1_dot_analytic__pb2._EMPTY,
     output_type=medifor_dot_v1_dot_analytic__pb2._EMPTY,
-    serialized_options=None,
+    options=None,
   ),
 ])
 _sym_db.RegisterServiceDescriptor(_KILLABLE)

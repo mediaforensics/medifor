@@ -4,7 +4,6 @@ package mediforproto;
 
 option java_package = "com.mediforprogram.proto";
 option java_outer_classname = "ProvenanceProto";
-option go_package = "gitlab.mediforprogram.com/medifor/medifor-proto/pkg/mediforproto";
 
 import "medifor/v1/analytic.proto";
 
@@ -16,7 +15,7 @@ enum LinkType {
     LOCATION = 4;
 }
 
-// FilterRequest is used to ask a provenance analytic to return the 
+// FilterRequest is used to ask a provenance analytic to return the
 // top N matches for a given image.
 message ProvenanceFilteringRequest{
     // Unique identifier for the request.
@@ -91,7 +90,7 @@ message Node {
 
     // UUID of the image
     string image_id = 1;
-    
+
     // Real number that is higher if an image is in the graph
     float score = 2;
 }
@@ -101,7 +100,7 @@ message ProvenanceGraph {
 
     // List of nodes in the graph.
     repeated Node nodes = 1;
-    
+
     // List of associations that specify the relationship between nodes on the gra
     repeated Association associations = 2;
 
