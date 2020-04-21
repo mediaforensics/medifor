@@ -78,6 +78,20 @@ def _map_src_targ(src, targ, fname):
     suffix = fname[len(src):].lstrip('/')
     return os.path.join(targ, suffix)
 
+def _map_targ_src(targ, src, fname):
+    src = os.path.normpath(os.path.abspath(os.path.expanduser(src))).rstrip('/')
+    targ = os.path.normpath(os.path.abspath(os.path.expanduser(targ))).rstrip('/')
+    fname = os.path.normpath(os.path.abspath(os.path.expanduser(fname)))
+
+    if not os.path.isdir(src):
+        raise ValueError('Source mapping must be a directory, but got {!r}'.format(src))
+
+    if not fname.startswith(targ):
+        raise ValueError('Not a child of target: cannot map {!r} with {!r} -> {!r}'.format(fname, targ, src))
+
+    suffix = fname[len(targ):].lstrip('/')
+    return os.path.join(src, suffix)
+
 def gen_detection_stream(det):
     print("Detection to chunk",det)
     yield streamingproxy_pb2.DetectionChunk(detection=det)
@@ -204,7 +218,7 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
         """Unmap input filename from in-container to on-host. Opposite of map."""
         if not self.src:
             return fname
-        return _map_src_targ(self.targ, self.src, fname)
+        return _map_targ_src(self.targ, self.src, fname)
 
     def o_map(self, fname):
         """Unmap output filename from in-container to on-host. Opposite of o_unmap."""
@@ -223,7 +237,7 @@ class MediforClient(analytic_pb2_grpc.AnalyticStub):
         """
         if not self.osrc:
             return fname
-        return _map_src_targ(self.otarg, self.osrc, fname)
+        return _map_targ_src(self.otarg, self.osrc, fname)
 
     def health(self):
         return self.health_stub.Check(health_pb2.HealthCheckRequest())
