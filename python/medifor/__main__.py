@@ -71,7 +71,7 @@ def main(ctx, host, port, src, targ, osrc, otarg):
 @main.group()
 @click.pass_context
 def detect(ctx):
-    ctx.obj.client = mediforclient.MediforClient(host=ctx.obj.host, port=ctx.obj.port,  src=ctx.obj.src, 
+    ctx.obj.client = mediforclient.MediforClient(host=ctx.obj.host, port=ctx.obj.port,  src=ctx.obj.src,
                                                 targ=ctx.obj.targ, osrc=ctx.obj.osrc, otarg=ctx.obj.otarg)
 
 @detect.command()
@@ -119,7 +119,7 @@ def streamdetect(ctx, probe, donor, container_out, local_out):
 @main.group()
 @click.pass_context
 def provenance(ctx):
-    ctx.obj.client = provclient.ProvenanceClient(host=ctx.obj.host, port=ctx.obj.port,  src=ctx.obj.src, 
+    ctx.obj.client = provclient.ProvenanceClient(host=ctx.obj.host, port=ctx.obj.port,  src=ctx.obj.src,
                                                 targ=ctx.obj.targ, osrc=ctx.obj.osrc, otarg=ctx.obj.otarg)
 
 @provenance.command()
@@ -158,7 +158,6 @@ def health(ctx):
 @pipeline.command()
 @click.pass_context
 @click.argument('infile')
-@click.argument('ids', nargs=-1)
 @click.option('--detection_id', default=None, help='Allows a specific detection ID to be used.')
 @click.option('--fuser_id', multiple=True, help="Fuser IDs for fusion algorithms to be used to fuse results")
 @click.option("--out", required=True, help="Output Directory for results.")
