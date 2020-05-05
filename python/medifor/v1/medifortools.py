@@ -105,13 +105,13 @@ def get_pipeline_req(media, detection_id="", analytic_ids=[], out_dir="", fuser_
         img_req.image.uri = media
         img_req.image.type = mtype
         img_req.out_dir = out_dir
-        req.request.img_manip_req.copyFrom(img_req)
+        req.request.img_manip_req.CopyFrom(img_req)
     elif mtype == "video":
         vid_req = analytic_pb2.VideoManipulationRequest()
         vid_req.video.uri = media
         vid_req.video.type = mtype
         vid_req.out_dir = out_dir
-        req.request.vid_manip_req.copyFrom(vid_req)
+        req.request.vid_manip_req.CopyFrom(vid_req)
     else:
         raise ValueError("Unsupported media format.  Could not regocnize the mimetype for {!s}".format(media))
 
