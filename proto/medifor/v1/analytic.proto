@@ -41,19 +41,6 @@ enum SpecificityType {
   SPEC_METADATA = 3;
 }
 
-enum DetectionStage {
-  DETECTION_STAGE_NONE = 0;
-  DETECTION_STAGE_QUEUED = 1;
-  DETECTION_STAGE_CLAIMED = 2;
-  DETECTION_STAGE_FINISHED = 3;
-}
-
-enum DetectionStatus {
-  DETECTION_STATUS_NONE = 0;
-  DETECTION_STATUS_SUCCESS = 1;
-  DETECTION_STATUS_FAILURE = 2;
-}
-
 // Detection holds round-trip information for any of the "DetectFoo" request/response endpoints.
 message Detection {
   // Standard RPC status - we stash the actual RPC error/non-error here.
