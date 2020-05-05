@@ -179,7 +179,7 @@ def detect(ctx, infile, analytic_id, detection_id, fuser_id, out, tag):
     out = ctx.obj.pipeclient.o_map(out)
     tags = pipeclient.parse_tags(tag)
     req = medifortools.get_pipeline_req(f, detection_id=detection_id, analytic_ids=analytic_id, out_dir=out, fuser_id=fuser_id, tags=tags)
-    print(json_format(ctx.obj.pipeclient.Detect(req)))
+    print(json_format.MessageToJson(ctx.obj.pipeclient.Detect(req)))
 
 
 @pipeline.command()
@@ -190,7 +190,7 @@ def detect(ctx, infile, analytic_id, detection_id, fuser_id, out, tag):
 @click.option("--fuser_id", "-f", multiple=True, help="Fuser IDs to use to fuse results.")
 @click.option("--tag", "-t", multiple=True, help="Tag maps to apply of the form `tag=value` or 'tag'.")
 def systembatch(ctx, dir, analytic_id, fuser_id, out, tag):
-    print(json_format(ctx.obj.pipeclient.detect_batch(dir=dir, analytic_id=analytic_id, fuser_id=fuser_id, output_dir=out, tags=tag)))
+    print(json_format.MessageToJson(ctx.obj.pipeclient.detect_batch(dir=dir, analytic_id=analytic_id, fuser_id=fuser_id, output_dir=out, tags=tag)))
 
 
 @pipeline.command()
