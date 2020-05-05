@@ -66,6 +66,7 @@ def get_media_type(uri):
 
     return typestring, typestring.split("/")[0]
 
+
 def get_detection(media, output_dir, request_id=None):
     mime, mtype = get_media_type(media)
     det = analytic_pb2.Detection()
@@ -90,33 +91,32 @@ def get_detection(media, output_dir, request_id=None):
 
     return det
 
+
 def get_detection_req(media):
     mime, mtype = get_media_type(media)
     return analytic_req_map[mtype]
 
+
 def get_pipeline_req(media, detection_id="", analytic_ids=[], out_dir="", fuser_id=[], tags=[]):
     req = pipeline_pb2.DetectionRequest()
-    req.request = analytic_pb2.Detection()
     mime, mtype = get_media_type(media)
     if mtype == "image":
         img_req = analytic_pb2.ImageManipulationRequest()
         img_req.image.uri = media
         img_req.image.type = mtype
-        req.img_manip_req.copyFrom(img_req)
-    elif mtype =="video":
+        img_req.out_dir = out_dir
+        req.request.img_manip_req.copyFrom(img_req)
+    elif mtype == "video":
         vid_req = analytic_pb2.VideoManipulationRequest()
         vid_req.video.uri = media
         vid_req.video.type = mtype
-        req.img_manip_req.copyFrom(vid_req)
+        vid_req.out_dir = out_dir
+        req.request.vid_manip_req.copyFrom(vid_req)
     else:
         raise ValueError("Unsupported media format.  Could not regocnize the mimetype for {!s}".format(media))
 
-    req.detection_id = detection_id
+    req.id = detection_id
     req.analytic_id.extend(analytic_ids)
-    req.out_dir = out_dir
     req.tags.update(tags)
     req.fuser_id.extend(fuser_id)
     return req
-
-
-
