@@ -1,19 +1,40 @@
 syntax = "proto3";
 
-package mediforproto;
+package workflowproto;
 
 import "medifor/v1/analytic.proto";
 import "medifor/v1/fusion.proto";
 
+enum DetectionStage {
+  DETECTION_STAGE_NONE = 0;
+  DETECTION_STAGE_QUEUED = 1;
+  DETECTION_STAGE_CLAIMED = 2;
+  DETECTION_STAGE_FINISHED = 3;
+}
+
+enum DetectionStatus {
+  DETECTION_STATUS_NONE = 0;
+  DETECTION_STATUS_SUCCESS = 1;
+  DETECTION_STATUS_FAILURE = 2;
+}
+
 enum SortKey {
   SCORE = 0;
   META = 1;
+  META_QUERY = 2;
 }
 
 enum FusionThresholdType {
   FUSION_NO_THRESHOLD = 0;
   FUSION_LT_THRESHOLD = 1;
   FUSION_GT_THRESHOLD = 2;
+}
+
+enum MediaType {
+  IMAGE = 0;
+  VIDEO = 1;
+  FUSION_IMAGE = 2;
+  FUSION_VIDEO = 3;
 }
 
 // SortCol identifies the column to sort by and whether to sort in ascending order
@@ -45,7 +66,7 @@ message DetectionRequest {
   string id = 3;
 
   // A Detection proto with just the important request parts filled out.
-  Detection request = 1;
+  mediforproto.Detection request = 1;
 
   // The analytics to run.
   repeated string analytic_id = 2;
@@ -84,7 +105,7 @@ message AnalyticDetectionInfo {
 
   // The Detection with the result and status filled out (and the request).
   // If the response and status are empty (default), then it is not finished.
-  Detection detection = 4;
+  mediforproto.Detection detection = 4;
 }
 
 // DetectionInfo provides details on a given detection event specified by the id.
@@ -178,7 +199,7 @@ message FusionRequest{
 
   // A Fusion Proto containing the original probe as well as the detection objects from
   // each analytic that ran over that probe.
-  Fusion request = 2;
+  mediforproto.Fusion request = 2;
 
   // IDs for the fusion analytics
   repeated string fuser_id = 4;
@@ -210,7 +231,7 @@ message FuserFusionInfo {
 
   // The Fusion with the result and status filled out (and the request).
   // If the response and status are empty (default), then it is not finished.
-  Fusion fusion = 4;
+  mediforproto.Fusion fusion = 4;
 }
 
 // FusionInfo provides details on a given fusion event specified by the ID.
@@ -271,6 +292,9 @@ message DetectionTagInfo {
 
 message DeleteDetectionRequest {
   string detection_id = 1;
+}
+
+message Empty {
 }
 
 service Pipeline {
