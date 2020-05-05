@@ -15,8 +15,10 @@ from google.protobuf import json_format
 
 from medifor.v1 import mediforclient, pipeclient, medifortools, pipeline_pb2, provclient
 
+
 class Context:
     pass
+
 
 def _rpc_error_leaf_nodes(rpc_error):
     def _find_leaves(debug_info):
@@ -31,6 +33,7 @@ def _rpc_error_leaf_nodes(rpc_error):
     debug_info = json.loads(rpc_error.debug_error_string())
     yield from _find_leaves(debug_info)
 
+
 def friendly_rpc_errors(f):
     @functools.wraps(f)
     def wrapper(*args, **kargs):
@@ -42,6 +45,7 @@ def friendly_rpc_errors(f):
                 print(json.dumps(root_cause, sort_keys=True, indent=2), file=sys.stderr)
             return
     return wrapper
+
 
 @click.group()
 @click.option('--host', default='localhost', show_default=True, help='Send requests to the API service on this host.')
@@ -68,11 +72,13 @@ def main(ctx, host, port, src, targ, osrc, otarg):
 #     client = ctx.obj.client
 #     print(json_format.MessageToJson(client.health()))
 
+
 @main.group()
 @click.pass_context
 def detect(ctx):
     ctx.obj.client = mediforclient.MediforClient(host=ctx.obj.host, port=ctx.obj.port,  src=ctx.obj.src,
-                                                targ=ctx.obj.targ, osrc=ctx.obj.osrc, otarg=ctx.obj.otarg)
+                                                 targ=ctx.obj.targ, osrc=ctx.obj.osrc, otarg=ctx.obj.otarg)
+
 
 @detect.command()
 @click.pass_context
@@ -82,6 +88,7 @@ def imgmanip(ctx, img, out):
     client = ctx.obj.client
     print(json_format.MessageToJson(client.img_manip(img, out)))
 
+
 @detect.command()
 @click.pass_context
 @click.argument('vid')
@@ -89,6 +96,7 @@ def imgmanip(ctx, img, out):
 def vidmanip(ctx, vid, out):
     client = ctx.obj.client
     print(json_format.MessageToJson(client.vid_manip(vid, out)))
+
 
 @detect.command()
 @click.pass_context
@@ -105,6 +113,7 @@ def detectbatch(ctx, dir, out, make_dirs):
 
     print(output_dict)
 
+
 @detect.command()
 @click.pass_context
 @click.option('--probe', '-f', required=True, help="Input file (image/video) path.")
@@ -120,7 +129,8 @@ def streamdetect(ctx, probe, donor, container_out, local_out):
 @click.pass_context
 def provenance(ctx):
     ctx.obj.client = provclient.ProvenanceClient(host=ctx.obj.host, port=ctx.obj.port,  src=ctx.obj.src,
-                                                targ=ctx.obj.targ, osrc=ctx.obj.osrc, otarg=ctx.obj.otarg)
+                                                 targ=ctx.obj.targ, osrc=ctx.obj.osrc, otarg=ctx.obj.otarg)
+
 
 @provenance.command()
 @click.argument('img')
@@ -129,7 +139,6 @@ def provenance(ctx):
 def filter(ctx, img, limit):
     client = ctx.obj.client
     print(json_format.MessageToJson(client.prov_filter(img=img, limit=limit)))
-
 
 
 ###################################################################
@@ -168,7 +177,7 @@ def detect(ctx, infile, analytic_id, detection_id, fuser_id, out, tag):
         detection_id = str(uuid.uuid4())
     f = ctx.obj.pipeclient.map(infile)
     out = ctx.obj.pipeclient.o_map(out)
-    tags = parse_tags(tags)
+    tags = pipeclient.parse_tags(tags)
     req = medifortools(f, detection_id=detection_id, analytic_ids=analytic_id, out_dir=out, fuser_id=fuser_id, tags=tags)
     print(json_format(ctx.obj.pipeclient.Detect(req)))
 
