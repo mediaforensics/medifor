@@ -178,7 +178,7 @@ def detect(ctx, infile, analytic_id, detection_id, fuser_id, out, tag):
     f = ctx.obj.pipeclient.map(infile)
     out = ctx.obj.pipeclient.o_map(out)
     tags = pipeclient.parse_tags(tag)
-    req = medifortools(f, detection_id=detection_id, analytic_ids=analytic_id, out_dir=out, fuser_id=fuser_id, tags=tags)
+    req = medifortools.get_pipeline_req(f, detection_id=detection_id, analytic_ids=analytic_id, out_dir=out, fuser_id=fuser_id, tags=tags)
     print(json_format(ctx.obj.pipeclient.Detect(req)))
 
 
