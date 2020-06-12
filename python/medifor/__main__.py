@@ -261,7 +261,7 @@ def taginfo(ctx):
     print(json_format.MessageToJson(ctx.obj.pipeclient.detection_tag_info()))
 
 
-@main.command()
+@pipeline.command()
 @click.pass_context
 def analytics(ctx):
     print(json_format.MessageToJson(ctx.obj.pipeclient.get_analytic_meta()))
