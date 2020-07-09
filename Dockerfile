@@ -9,9 +9,11 @@ RUN cd cmd/analyticproxy && go build; cd -; \
     cd cmd/medifor && go build; cd -
 
 FROM python:3.8-slim-buster
-COPY --from=builder /go/python /app/bin/
-RUN pip install -U pip
-RUN pip install -r requirements.txt
+
+RUN mkdir -p /src/medifor
+ADD ./setup.py ./python /src/medifor/
+
+RUN pip install -U pip && pip install /src/medifor
 
 
 ENV PATH ${PATH}:/app/bin
