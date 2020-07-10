@@ -143,16 +143,14 @@ def filter(ctx, img, limit):
 
 ###################################################################
 @main.group()
-@click.option('--host', default='localhost', show_default=True, help='Send requests to the API service on this host.')
-@click.option('--port', default='50051', show_default=True, help='Send requests to the API service on this port.')
 @click.option('--src', '-s', default='', help='Source directory (on host), used for mapping host files to container volume mounts.')
 @click.option('--targ', '-t', default='', help='Target directory (in container), used for mapping host files to container volume mounts.')
 @click.option('--osrc', '-S', default='', help='Output host-local path for mapping to output volume mounts in container.')
 @click.option('--otarg', '-T', default='', help='Output target directory (in container) for mapping output host files to container files.')
 @click.pass_context
-def pipeline(ctx, host, port, src, targ, osrc, otarg):
+def pipeline(ctx, src, targ, osrc, otarg):
     ctx.ensure_object(Context)
-    addr = "{!s}:{!s}".format(host, port)
+    addr = "{!s}:{!s}".format(ctx.obj.host, ctx.obj.port)
     ctx.obj.pipeclient = pipeclient.MediForPipeline(addr=addr, src=src, targ=targ, osrc=osrc, otarg=otarg)
 
 
