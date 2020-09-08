@@ -46,6 +46,8 @@ def friendly_rpc_errors(f):
             return
     return wrapper
 
+def get_analytic_meta(self):
+        return self.GetAnalyticMeta(pipeline_pb2.Empty())
 
 @click.group()
 @click.option('--host', default='localhost', show_default=True, help='Send requests to the API service on this host.')
@@ -252,6 +254,13 @@ def updatetags(ctx, id, tag, delete, delete_all):
         delete_tags=delete,
         delete_all=delete_all,
     )))
+
+@pipeline.command()
+@click.pass_context
+def analytics(ctx):
+    """Provides a list of analytics which are currently in use by the system"""
+    print(json_format.MessageToJson(ctx.obj.client.get_analytic_meta()))
+
 
 
 @pipeline.command()
