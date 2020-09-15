@@ -97,23 +97,6 @@ func mustClient(ctx context.Context, opts ...medifor.Option) *medifor.Client {
 	return client
 }
 
-// GetAnalyticMeta provides a list of analytics and associated metadata
-func (s *apiService) GetAnalyticMeta(context.Context, *wpb.Empty) (*wpb.AnalyticList, error) {
-	s.Lock()
-	defer s.Unlock()
-
-	if s.analyticList != nil {
-		return s.analyticList, nil
-	}
-
-	log.Printf("Loading analytic config file %q", analyticConfigPath)
-	var err error
-	if s.analyticList, err = configlist.LoadAnalyticConfig(analyticConfigPath); err != nil {
-		return nil, errors.Wrapf(err, "load analytic list from file %q", analyticConfigPath)
-	}
-	return s.analyticList, nil
-}
-
 func mustFusionClient(ctx context.Context, opts ...medifor.Option) *medifor.FusionClient {
 	if len(hosts) != 1 {
 		log.Fatalf("Number of hosts was %d, expected 1", len(hosts))
