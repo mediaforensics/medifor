@@ -125,7 +125,7 @@ class MediForPipeline(pipeline_pb2_grpc.PipelineStub):
             f = self.map(f)
             req = get_pipeline_req(f, detection_id=str(uuid.uuid4()), analytic_ids=analytic_ids, fuser_id=fuser_ids, out_dir=output_dir, tags=tags)
             results.append(self.Detect(req))
-        
+
         return results
 
     def img_manip(self, img, out_dir, ids, dev_id='', tags=None, user_tags=None, meta=None, detection_id=None, fuser_id=None):
@@ -245,6 +245,9 @@ class MediForPipeline(pipeline_pb2_grpc.PipelineStub):
             fuser_id=fuser_ids,
         )
         return self.FuseAllIDs(req)
+        
+    def get_analytic_meta(self):
+            return self.GetAnalyticMeta(pipeline_pb2.Empty())
 
 def parse_tags(tags):
     if not tags:
