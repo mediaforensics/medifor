@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package workflowproto;
+package mediforproto;
 
 import "medifor/v1/analytic.proto";
 import "medifor/v1/fusion.proto";
@@ -312,9 +312,6 @@ message AnalyticMeta {
 // AnalyticList holds a list of AnalyticMeta configuration metadata objects
 message AnalyticList {
   repeated AnalyticMeta analytics = 1;
-}
-
-message Empty {
 }
 
 service Pipeline {

@@ -4,10 +4,12 @@
 package mediforproto
 
 import (
+	context "context"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	context "golang.org/x/net/context"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 	math "math"
 )
 
@@ -20,7 +22,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // FileChunk contains a single chunk of a file. It is intended to be part of a
 // streaming protocol, so size and offset are implied
@@ -175,78 +177,12 @@ func (m *DetectionChunk) GetFileChunk() *FileChunk {
 	return nil
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*DetectionChunk) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _DetectionChunk_OneofMarshaler, _DetectionChunk_OneofUnmarshaler, _DetectionChunk_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*DetectionChunk) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*DetectionChunk_Detection)(nil),
 		(*DetectionChunk_FileChunk)(nil),
 	}
-}
-
-func _DetectionChunk_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*DetectionChunk)
-	// value
-	switch x := m.Value.(type) {
-	case *DetectionChunk_Detection:
-		b.EncodeVarint(1<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.Detection); err != nil {
-			return err
-		}
-	case *DetectionChunk_FileChunk:
-		b.EncodeVarint(2<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.FileChunk); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("DetectionChunk.Value has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _DetectionChunk_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*DetectionChunk)
-	switch tag {
-	case 1: // value.detection
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(Detection)
-		err := b.DecodeMessage(msg)
-		m.Value = &DetectionChunk_Detection{msg}
-		return true, err
-	case 2: // value.file_chunk
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(FileChunk)
-		err := b.DecodeMessage(msg)
-		m.Value = &DetectionChunk_FileChunk{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _DetectionChunk_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*DetectionChunk)
-	// value
-	switch x := m.Value.(type) {
-	case *DetectionChunk_Detection:
-		s := proto.Size(x.Detection)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *DetectionChunk_FileChunk:
-		s := proto.Size(x.FileChunk)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
 }
 
 func init() {
@@ -335,6 +271,14 @@ func (x *streamingProxyDetectStreamClient) Recv() (*DetectionChunk, error) {
 // StreamingProxyServer is the server API for StreamingProxy service.
 type StreamingProxyServer interface {
 	DetectStream(StreamingProxy_DetectStreamServer) error
+}
+
+// UnimplementedStreamingProxyServer can be embedded to have forward compatible implementations.
+type UnimplementedStreamingProxyServer struct {
+}
+
+func (*UnimplementedStreamingProxyServer) DetectStream(srv StreamingProxy_DetectStreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method DetectStream not implemented")
 }
 
 func RegisterStreamingProxyServer(s *grpc.Server, srv StreamingProxyServer) {
