@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package workflowproto;
+package mediforproto;
 
 import "medifor/v1/analytic.proto";
 import "medifor/v1/fusion.proto";
@@ -114,6 +114,11 @@ message DetectionInfo {
   // The detection event ID.
   string id = 1;
 
+  // A list of input resources for this detection. Usually a singleton, but can
+  // contain multiple if multiple are accepted for this particular kind of 
+  // request 
+  repeated mediforproto.Resource req_resources = 11;
+
   // Results for individual analytics.
   repeated AnalyticDetectionInfo analytic_info = 2;
 
@@ -143,12 +148,38 @@ message DetectionInfoRequest {
   bool want_fused = 2;
 }
 
+message DateRange {
+  // Inclusive start time in seconds since the Epoch UTC.
+  int64 start_seconds_utc = 1;
+
+  // Inclusive end time in seconds since the Epoch UTC.
+  int64 end_seconds_utc = 2;
+}
+
+enum DetectionListVerbosity {
+  DETECTION_VERBOSITY_FULL = 0;
+  DETECTION_VERBOSITY_MINIMAL = 1;
+}
+
 // Next Tag: 10
 message DetectionListRequest {
+  // How much should be returned? Default: all.
+  DetectionListVerbosity verbosity = 12;
+
   // If specified (can be empty), all listed tags (both key and value) must be
   // simultaneously present for a detection ID to be returned.
   map<string, string> tags = 1;
+  
+  // This contains a "fuzzy meta search" query. It will look through
+  // detection metatags for string values that match the given query.
+  string meta_query = 10;
 
+  // Filter on dates
+  // If start time is present (nonzero), all detections must have at least one analytic with a create time >= start.
+  // If end time is present (nonzero), all detections must have at least one analytic create time <= end.
+  // If either is zero (not present), then the filter is unbounded in that direction.
+  DateRange date_range = 11;
+  
   // If specified, only returns results from the given list of detection IDs.
   // Good for returning a single detection or one of a few. Not great for very
   // long lists (thousands).
@@ -278,6 +309,14 @@ message UpdateDetectionTagsRequest {
 
 // DetectionTagInfoRequest asks for high-level information about detection tags.
 message DetectionTagInfoRequest {
+  // If specified, only tags that coexist with the given required tags will
+  // be returned. One possible use of this is to limit tags returned by login
+  // group.
+  map<string, string> require_tags = 1;
+
+  // If specified, all keys prefixed with any value in this list will
+  // not be returned in the result.
+  repeated string skip_prefixes = 2;
 }
 
 // DetectionTagInfo contains high-level information about detection tags.
@@ -312,9 +351,6 @@ message AnalyticMeta {
 // AnalyticList holds a list of AnalyticMeta configuration metadata objects
 message AnalyticList {
   repeated AnalyticMeta analytics = 1;
-}
-
-message Empty {
 }
 
 service Pipeline {
