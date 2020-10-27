@@ -4,10 +4,12 @@
 package mediforproto
 
 import (
+	context "context"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	context "golang.org/x/net/context"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 	math "math"
 )
 
@@ -20,7 +22,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 func init() { proto.RegisterFile("medifor/v1/kill.proto", fileDescriptor_d8c4e3e1b4a500bc) }
 
@@ -71,6 +73,14 @@ func (c *killableClient) Kill(ctx context.Context, in *Empty, opts ...grpc.CallO
 // KillableServer is the server API for Killable service.
 type KillableServer interface {
 	Kill(context.Context, *Empty) (*Empty, error)
+}
+
+// UnimplementedKillableServer can be embedded to have forward compatible implementations.
+type UnimplementedKillableServer struct {
+}
+
+func (*UnimplementedKillableServer) Kill(ctx context.Context, req *Empty) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Kill not implemented")
 }
 
 func RegisterKillableServer(s *grpc.Server, srv KillableServer) {

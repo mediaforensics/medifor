@@ -1,0 +1,34 @@
+{
+	"analytics": [
+		{
+			"id": "ela-base",
+			"name": "Error Level Analysis",
+			"description": "Identifying areas within an image that are at different compression levels",
+			"version": "20190327-120000",
+			"cpu": 1,
+			"ram": 2,
+			"gpu": 0,
+			"media": ["IMAGE"]
+		},
+		{
+			"id": "colorphenomenology",
+			"name": "Colorphenomenology",
+			"description": "Colorphenomenology description",
+			"version": "20190327-120000",
+			"cpu": 1,
+			"ram": 4,
+			"gpu": 0,
+			"media": ["IMAGE"]
+		},
+		{
+			"id": "luisa",
+			"description": "USCISI Ta11 -Luisa Deepfake face description",
+			"name": "CNN-based Video Face Forgery Detector",
+			"version": "20190327-120000",
+			"cpu": 2,
+			"ram": 16,
+			"gpu": 1,
+			"media": ["VIDEO"]
+		}
+	]
+}

@@ -4,11 +4,13 @@
 package mediforproto
 
 import (
+	context "context"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	context "golang.org/x/net/context"
 	status "google.golang.org/genproto/googleapis/rpc/status"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status1 "google.golang.org/grpc/status"
 	math "math"
 )
 
@@ -21,7 +23,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // Fusion holds round-trip information for any of the "FuseFoo" request/response endpoints.
 type Fusion struct {
@@ -223,9 +225,9 @@ func (m *Fusion) GetImgCamMatch() *ImageCameraMatch {
 	return nil
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*Fusion) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _Fusion_OneofMarshaler, _Fusion_OneofUnmarshaler, _Fusion_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*Fusion) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*Fusion_ImgManipReq)(nil),
 		(*Fusion_VidManipReq)(nil),
 		(*Fusion_ImgSpliceReq)(nil),
@@ -235,192 +237,6 @@ func (*Fusion) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error,
 		(*Fusion_ImgSplice)(nil),
 		(*Fusion_ImgCamMatch)(nil),
 	}
-}
-
-func _Fusion_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*Fusion)
-	// request
-	switch x := m.Request.(type) {
-	case *Fusion_ImgManipReq:
-		b.EncodeVarint(11<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.ImgManipReq); err != nil {
-			return err
-		}
-	case *Fusion_VidManipReq:
-		b.EncodeVarint(12<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.VidManipReq); err != nil {
-			return err
-		}
-	case *Fusion_ImgSpliceReq:
-		b.EncodeVarint(13<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.ImgSpliceReq); err != nil {
-			return err
-		}
-	case *Fusion_ImgCamMatchReq:
-		b.EncodeVarint(14<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.ImgCamMatchReq); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("Fusion.Request has unexpected type %T", x)
-	}
-	// response
-	switch x := m.Response.(type) {
-	case *Fusion_ImgManip:
-		b.EncodeVarint(21<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.ImgManip); err != nil {
-			return err
-		}
-	case *Fusion_VidManip:
-		b.EncodeVarint(22<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.VidManip); err != nil {
-			return err
-		}
-	case *Fusion_ImgSplice:
-		b.EncodeVarint(23<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.ImgSplice); err != nil {
-			return err
-		}
-	case *Fusion_ImgCamMatch:
-		b.EncodeVarint(24<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.ImgCamMatch); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("Fusion.Response has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _Fusion_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*Fusion)
-	switch tag {
-	case 11: // request.img_manip_req
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(FuseImageManipulationRequest)
-		err := b.DecodeMessage(msg)
-		m.Request = &Fusion_ImgManipReq{msg}
-		return true, err
-	case 12: // request.vid_manip_req
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(FuseVideoManipulationRequest)
-		err := b.DecodeMessage(msg)
-		m.Request = &Fusion_VidManipReq{msg}
-		return true, err
-	case 13: // request.img_splice_req
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(FuseImageSpliceRequest)
-		err := b.DecodeMessage(msg)
-		m.Request = &Fusion_ImgSpliceReq{msg}
-		return true, err
-	case 14: // request.img_cam_match_req
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(FuseImageCameraMatchRequest)
-		err := b.DecodeMessage(msg)
-		m.Request = &Fusion_ImgCamMatchReq{msg}
-		return true, err
-	case 21: // response.img_manip
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(ImageManipulation)
-		err := b.DecodeMessage(msg)
-		m.Response = &Fusion_ImgManip{msg}
-		return true, err
-	case 22: // response.vid_manip
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(VideoManipulation)
-		err := b.DecodeMessage(msg)
-		m.Response = &Fusion_VidManip{msg}
-		return true, err
-	case 23: // response.img_splice
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(ImageSplice)
-		err := b.DecodeMessage(msg)
-		m.Response = &Fusion_ImgSplice{msg}
-		return true, err
-	case 24: // response.img_cam_match
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(ImageCameraMatch)
-		err := b.DecodeMessage(msg)
-		m.Response = &Fusion_ImgCamMatch{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _Fusion_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*Fusion)
-	// request
-	switch x := m.Request.(type) {
-	case *Fusion_ImgManipReq:
-		s := proto.Size(x.ImgManipReq)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Fusion_VidManipReq:
-		s := proto.Size(x.VidManipReq)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Fusion_ImgSpliceReq:
-		s := proto.Size(x.ImgSpliceReq)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Fusion_ImgCamMatchReq:
-		s := proto.Size(x.ImgCamMatchReq)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	// response
-	switch x := m.Response.(type) {
-	case *Fusion_ImgManip:
-		s := proto.Size(x.ImgManip)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Fusion_VidManip:
-		s := proto.Size(x.VidManip)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Fusion_ImgSplice:
-		s := proto.Size(x.ImgSplice)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *Fusion_ImgCamMatch:
-		s := proto.Size(x.ImgCamMatch)
-		n += 2 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
 }
 
 // Next Tag: 4
@@ -1236,6 +1052,29 @@ type FuserServer interface {
 	FuseImageCameraMatch(context.Context, *FuseImageCameraMatchRequest) (*ImageCameraMatch, error)
 	FuseVideoCameraMatch(context.Context, *FuseVideoCameraMatchRequest) (*VideoCameraMatch, error)
 	Kill(context.Context, *Empty) (*Empty, error)
+}
+
+// UnimplementedFuserServer can be embedded to have forward compatible implementations.
+type UnimplementedFuserServer struct {
+}
+
+func (*UnimplementedFuserServer) FuseImageManipulation(ctx context.Context, req *FuseImageManipulationRequest) (*ImageManipulation, error) {
+	return nil, status1.Errorf(codes.Unimplemented, "method FuseImageManipulation not implemented")
+}
+func (*UnimplementedFuserServer) FuseImageSplice(ctx context.Context, req *FuseImageSpliceRequest) (*ImageSplice, error) {
+	return nil, status1.Errorf(codes.Unimplemented, "method FuseImageSplice not implemented")
+}
+func (*UnimplementedFuserServer) FuseVideoManipulation(ctx context.Context, req *FuseVideoManipulationRequest) (*VideoManipulation, error) {
+	return nil, status1.Errorf(codes.Unimplemented, "method FuseVideoManipulation not implemented")
+}
+func (*UnimplementedFuserServer) FuseImageCameraMatch(ctx context.Context, req *FuseImageCameraMatchRequest) (*ImageCameraMatch, error) {
+	return nil, status1.Errorf(codes.Unimplemented, "method FuseImageCameraMatch not implemented")
+}
+func (*UnimplementedFuserServer) FuseVideoCameraMatch(ctx context.Context, req *FuseVideoCameraMatchRequest) (*VideoCameraMatch, error) {
+	return nil, status1.Errorf(codes.Unimplemented, "method FuseVideoCameraMatch not implemented")
+}
+func (*UnimplementedFuserServer) Kill(ctx context.Context, req *Empty) (*Empty, error) {
+	return nil, status1.Errorf(codes.Unimplemented, "method Kill not implemented")
 }
 
 func RegisterFuserServer(s *grpc.Server, srv FuserServer) {
