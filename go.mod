@@ -2,8 +2,6 @@ module github.com/mediaforensics/medifor
 
 go 1.13
 
-replace github.com/mediaforensics/medifor => ./
-
 require (
 	entrogo.com/entroq v0.3.19
 	github.com/go-ini/ini v1.52.0 // indirect
