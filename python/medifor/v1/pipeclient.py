@@ -14,7 +14,7 @@ from grpc_health.v1 import health_pb2
 from grpc_health.v1 import health_pb2_grpc
 from google.protobuf import json_format
 
-from medifor.v1 import pipeline_pb2, pipeline_pb2_grpc
+from medifor.v1 import pipeline_pb2, pipeline_pb2_grpc, analytic_pb2
 from medifor.v1.medifortools import get_detection_req, get_pipeline_req
 
 
@@ -247,7 +247,7 @@ class MediForPipeline(pipeline_pb2_grpc.PipelineStub):
         return self.FuseAllIDs(req)
         
     def get_analytic_meta(self):
-            return self.GetAnalyticMeta(pipeline_pb2.Empty())
+            return self.GetAnalyticMeta(analytic_pb2.Empty())
 
 def parse_tags(tags):
     if not tags:
