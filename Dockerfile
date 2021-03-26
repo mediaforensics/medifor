@@ -6,7 +6,10 @@ ENV GOPATH ""
 
 COPY . ./
 RUN cd cmd/analyticproxy && go build; cd -; \
-    cd cmd/medifor && go build; cd -
+    cd cmd/medifor && go build; cd - \
+    cd cmd/analyticworker && go build; cd -  \
+    cd cmd/analyticworkflow && go build; cd - \
+    cd cmd/fusionworker && go build; cd -
 
 FROM python:3.8-slim-buster as pybuild
 
@@ -27,6 +30,9 @@ RUN mkdir -p /app/bin \
 
 COPY --from=gobuild /go/cmd/analyticproxy/analyticproxy /app/bin/
 COPY --from=gobuild /go/cmd/medifor/medifor /app/bin/
+COPY --from=gobuild /go/cmd/analyticworker/analyticworker /app/bin
+COPY --from=gobuild /go/cmd/analyticworkflow/analyticworkflow /app/bin
+COPY --from=gobuild /go/cmd/fusionworker/fusionworker /app/bin
 COPY --from=pybuild /usr/local/lib/python3.8/ /usr/local/lib/python3.8/
 
 ENV PATH ${PATH}:/app/bin
