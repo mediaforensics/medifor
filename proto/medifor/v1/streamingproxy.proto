@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package mediforproto;
 
+option go_package = "github.com/mediaforensics/medifor/pkg/mediforproto";
 import "medifor/v1/analytic.proto";
 
 // FileChunk contains a single chunk of a file. It is intended to be part of a
