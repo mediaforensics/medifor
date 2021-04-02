@@ -9,7 +9,6 @@ import (
 	"sort"
 
 	"github.com/golang/protobuf/jsonpb"
-	"github.com/golang/protobuf/proto"
 	"github.com/mediaforensics/medifor/pkg/medifor"
 	pb "github.com/mediaforensics/medifor/pkg/mediforproto"
 	"github.com/pkg/errors"
@@ -42,7 +41,12 @@ func reflectResources(v reflect.Value, handler ResourceHandler, seenPtrs map[uin
 	resourceType := reflect.TypeOf(pb.Resource{})
 
 	switch v.Kind() {
-	case reflect.Ptr, reflect.Interface:
+	case reflect.Interface:
+		if v.IsNil() {
+			return nil
+		}
+		return errors.Wrap(reflectResources(v.Elem(), handler, seenPtrs), "reflect interface")
+	case reflect.Ptr:
 		if v.IsNil() {
 			return nil
 		}
@@ -75,8 +79,18 @@ func reflectResources(v reflect.Value, handler ResourceHandler, seenPtrs map[uin
 	}
 }
 
-// FindResources finds all Resource types in a proto and calls the given handler for each.
-func FindResources(val proto.Message) ([]*pb.Resource, error) {
+// FindDetectionRequestResources finds all Resource types in a detection proto's request field.
+func FindDetectionRequestResources(det *pb.Detection) ([]*pb.Resource, error) {
+	return findResourcesImpl(det.GetRequest())
+}
+
+// FindDetectionResources finds all Resource types in a detection proto.
+func FindDetectionResources(det *pb.Detection) ([]*pb.Resource, error) {
+	return findResourcesImpl(det)
+}
+
+// findResourcesImpl finds all Resource types in a proto and calls the given handler for each.
+func findResourcesImpl(val interface{}) ([]*pb.Resource, error) {
 	var resources []*pb.Resource
 	handler := func(r *pb.Resource) {
 		resources = append(resources, r)

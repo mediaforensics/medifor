@@ -21,18 +21,18 @@ import (
 	"github.com/golang/protobuf/jsonpb"
 	"github.com/google/uuid"
 	"github.com/lib/pq"
-	homedir "github.com/mitchellh/go-homedir"
-	"github.com/pkg/errors"
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	"github.com/mediaforensics/medifor/pkg/analytic"
 	"github.com/mediaforensics/medifor/pkg/configlist"
 	"github.com/mediaforensics/medifor/pkg/fanoutworker"
 	"github.com/mediaforensics/medifor/pkg/fusionfanoutworker"
 	"github.com/mediaforensics/medifor/pkg/fusiongenworker"
+	"github.com/mediaforensics/medifor/pkg/medifor"
 	"github.com/mediaforensics/medifor/pkg/outboxworker"
 	"github.com/mediaforensics/medifor/pkg/pg"
-	"github.com/mediaforensics/medifor/pkg/medifor"
+	homedir "github.com/mitchellh/go-homedir"
+	"github.com/pkg/errors"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -734,7 +734,7 @@ func (t pageToken) Encode() string {
 // If there are no analytics in it, this is a no-op.
 func annotateDetectionInfoResources(dInfo *pb.DetectionInfo) error {
 	if len(dInfo.GetAnalyticInfo()) != 0 {
-		resources, err := analytic.FindResources(dInfo.GetAnalyticInfo()[0].GetDetection().GetRequest())
+		resources, err := analytic.FindDetectionRequestResources(dInfo.GetAnalyticInfo()[0].GetDetection())
 		if err != nil {
 			return errors.Wrap(err, "find resources in analytic list")
 		}

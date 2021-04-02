@@ -9,9 +9,10 @@ import (
 
 func TestFindResources(t *testing.T) {
 	cases := []struct {
-		name      string
-		detection interface{}
-		want      []*pb.Resource
+		name        string
+		detection   *pb.Detection
+		want        []*pb.Resource
+		onlyRequest bool
 	}{
 		{
 			name: "image manip",
@@ -75,25 +76,32 @@ func TestFindResources(t *testing.T) {
 		},
 		{
 			name: "request only",
-			detection: &pb.Detection_ImgManipReq{
-				ImgManipReq: &pb.ImageManipulationRequest{
-					OutDir: "blah",
-					Image: &pb.Resource{
-						Uri: "something.jpg",
+			detection: &pb.Detection{
+				Request: &pb.Detection_ImgManipReq{
+					ImgManipReq: &pb.ImageManipulationRequest{
+						OutDir: "blah",
+						Image: &pb.Resource{
+							Uri: "something.jpg",
+						},
 					},
 				},
 			},
-			want: []*pb.Resource{{Uri: "something.jpg"}},
+			onlyRequest: true,
+			want:        []*pb.Resource{{Uri: "something.jpg"}},
 		},
 	}
 
 	for _, c := range cases {
-		res, err := FindResources(c.detection)
+		find := FindDetectionResources
+		if c.onlyRequest {
+			find = FindDetectionRequestResources
+		}
+		res, err := find(c.detection)
 		if err != nil {
-			t.Fatalf("FindResources failed on %q: %v", c.name, err)
+			t.Fatalf("FindDetectionResources failed on %q: %v", c.name, err)
 		}
 		if diff := cmp.Diff(c.want, res); diff != "" {
-			t.Errorf("FindResources unexpected diff (-want +got):\n%v", diff)
+			t.Errorf("FindDetectionResources unexpected diff (-want +got):\n%v", diff)
 		}
 	}
 }
