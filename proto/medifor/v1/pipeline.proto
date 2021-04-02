@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package mediforproto;
 
+option go_package = "github.com/mediaforensics/medifor/pkg/mediforproto";
+
 import "medifor/v1/analytic.proto";
 import "medifor/v1/fusion.proto";
 
@@ -66,7 +68,7 @@ message DetectionRequest {
   string id = 3;
 
   // A Detection proto with just the important request parts filled out.
-  mediforproto.Detection request = 1;
+  Detection request = 1;
 
   // The analytics to run.
   repeated string analytic_id = 2;
@@ -105,7 +107,7 @@ message AnalyticDetectionInfo {
 
   // The Detection with the result and status filled out (and the request).
   // If the response and status are empty (default), then it is not finished.
-  mediforproto.Detection detection = 4;
+  Detection detection = 4;
 }
 
 // DetectionInfo provides details on a given detection event specified by the id.
@@ -117,7 +119,7 @@ message DetectionInfo {
   // A list of input resources for this detection. Usually a singleton, but can
   // contain multiple if multiple are accepted for this particular kind of 
   // request 
-  repeated mediforproto.Resource req_resources = 11;
+  repeated Resource req_resources = 11;
 
   // Results for individual analytics.
   repeated AnalyticDetectionInfo analytic_info = 2;
@@ -230,7 +232,7 @@ message FusionRequest{
 
   // A Fusion Proto containing the original probe as well as the detection objects from
   // each analytic that ran over that probe.
-  mediforproto.Fusion request = 2;
+  Fusion request = 2;
 
   // IDs for the fusion analytics
   repeated string fuser_id = 4;
@@ -262,7 +264,7 @@ message FuserFusionInfo {
 
   // The Fusion with the result and status filled out (and the request).
   // If the response and status are empty (default), then it is not finished.
-  mediforproto.Fusion fusion = 4;
+  Fusion fusion = 4;
 }
 
 // FusionInfo provides details on a given fusion event specified by the ID.
