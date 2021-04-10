@@ -1,5 +1,7 @@
 # MediaForensics Protocol Buffer and Analytic Service Code
 
+This repository extends the [MediaForensics Protocol](https://github.com/mediaforensics/medifor) to support the API and analysis capabilities of the [Geppetto User Interface](https://github.com/lanl/geppetto-ui).
+
 This repository is intended to provide all of the tools necessary to build and test
 media forensic analytics for use as microservices within a distributed system.
 Currently the repository contains the analytic wrapper which is used to provide a

@@ -38,7 +38,7 @@ enum ManipulationType {
 
 enum SpecificityType {
   SPEC_GLOBAL = 0;
-  SPEC_FRAM = 1;
+  SPEC_FRAME = 1;
   SPEC_PIXEL = 2;
   SPEC_METADATA = 3;
 }

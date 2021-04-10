@@ -117,8 +117,8 @@ message DetectionInfo {
   string id = 1;
 
   // A list of input resources for this detection. Usually a singleton, but can
-  // contain multiple if multiple are accepted for this particular kind of 
-  // request 
+  // contain multiple if multiple are accepted for this particular kind of
+  // request
   repeated Resource req_resources = 11;
 
   // Results for individual analytics.
@@ -171,7 +171,7 @@ message DetectionListRequest {
   // If specified (can be empty), all listed tags (both key and value) must be
   // simultaneously present for a detection ID to be returned.
   map<string, string> tags = 1;
-  
+
   // This contains a "fuzzy meta search" query. It will look through
   // detection metatags for string values that match the given query.
   string meta_query = 10;
@@ -181,7 +181,7 @@ message DetectionListRequest {
   // If end time is present (nonzero), all detections must have at least one analytic create time <= end.
   // If either is zero (not present), then the filter is unbounded in that direction.
   DateRange date_range = 11;
-  
+
   // If specified, only returns results from the given list of detection IDs.
   // Good for returning a single detection or one of a few. Not great for very
   // long lists (thousands).
@@ -355,6 +355,177 @@ message AnalyticList {
   repeated AnalyticMeta analytics = 1;
 }
 
+// Lists detections
+message ListDetectionsRequest {
+  // Filter results by score
+  ScoreFilter score_filter = 1;
+
+  // Filter results by metadata
+  repeated MetaFilter meta_filters = 2;
+
+  // Filter results by tags
+  map<string, string> tags = 3;
+
+  // Exclude results with the specified tags
+  map<string, string> exclude_tags = 9;
+
+  // Filter results by metadata query
+  string meta_query = 10;
+
+  // Sort results
+  repeated SortCol order_by = 4;
+
+  // Analytic whose score is used for filtering and sorting results. If not
+  // specified, fuser_id is used instead.
+  string analytic_id = 5;
+
+  // Fuser whose score is used for filtering and sorting results. Only used
+  // if analytic_id is not specified.
+  string fuser_id = 6;
+
+  // Return at most the specified number of results
+  int32 page_size = 7;
+
+  // Return the specified page of results
+  string page_token = 8;
+}
+
+message ScoreFilter {
+  // Whether the `min` field is valid
+  bool has_min = 1;
+
+  // Minimum score (inclusive)
+  double min = 2;
+
+  // Whether the `max` field is valid
+  bool has_max = 3;
+
+  // Maximum score (inclusive)
+  double max = 4;
+}
+
+message MetaFilter {
+  // Metadata key
+  string meta_key = 1;
+
+  // Whether the `min` field is valid
+  bool has_min = 2;
+
+  // Minimum value (inclusive)
+  string min = 3;
+
+  // Whether the `max` field is valid
+  bool has_max = 4;
+
+  // Maximum value (inclusive)
+  string max = 5;
+}
+
+// Updates a detection's metadata
+message UpdateDetectionMetadataRequest {
+  // Detection ID
+  string detection_id = 1;
+
+  // Metadata to be merged with the detection's existing metadata
+  map<string, string> metadata = 2;
+}
+
+// Gets analytic and fuser stats
+message GetAnalyticStatsRequest {
+  // Analytics to get. If empty, returns all analytics.
+  repeated string analytic_ids = 1;
+
+  // Fusers to get. If empty, returns all fusers.
+  repeated string fuser_ids = 2;
+}
+
+message GetAnalyticStatsResponse {
+  // Analytic stats
+  repeated AnalyticStats analytic_stats = 1;
+
+  // Fuser stats
+  repeated AnalyticStats fuser_stats = 2;
+}
+
+message AnalyticStats {
+  // Analytic/fuser ID
+  string id = 1;
+
+  // Number of tasks that are pending
+  int32 pending = 2;
+
+  // Number of tasks that are running
+  int32 running = 3;
+
+  // Number of tasks that succeeded and produced a score
+  int32 succeeded = 4;
+
+  // Number of tasks that succeeded but did not produce a score
+  int32 opted_out = 6;
+
+  // Number of tasks that failed
+  int32 failed = 5;
+}
+
+// Gets histogram for the specified analytic
+message GetHistogramRequest {
+  // Analytic ID. If empty, use fuser instead.
+  string analytic_id = 1;
+
+  // Fuser ID
+  string fuser_id = 2;
+
+  // Filters detections by system and/or user tags
+  map<string, string> tags = 3;
+
+  // Excludes detections with the specified tags
+  map<string, string> exclude_tags = 5;
+
+  // Number of histogram buckets (default 10)
+  int32 num_buckets = 4;
+}
+
+message GetHistogramResponse {
+  repeated Bucket buckets = 1;
+}
+
+message Bucket {
+  double min = 1;
+  double max = 2;
+  int32 frequency = 3;
+}
+
+// Deletes detection tasks that failed
+message DeleteFailedAnalyticsRequest {
+}
+
+message DeleteFailedAnalyticsResponse {
+  // Maps detection IDs to deleted analytics
+  map<string, DeletedAnalytics> deleted_analytics = 1;
+}
+
+message DeletedAnalytics {
+  // Deleted analytic IDs
+  repeated string deleted_analytic_ids = 1;
+}
+
+// Gets analytics and fusers that produced a score for at least one detection
+message GetAnalyticsWithScoresRequest {
+  // Filters detections by system and/or user tags
+  map<string, string> tags = 1;
+
+  // Excludes detections with the specified tags
+  map<string, string> exclude_tags = 2;
+}
+
+message GetAnalyticsWithScoresResponse {
+  // Analytic IDs with scores
+  repeated string analytic_ids = 1;
+
+  // Fuser IDs with scores
+  repeated string fuser_ids = 2;
+}
+
 service Pipeline {
   rpc Detect(DetectionRequest) returns (DetectionInfo);
   rpc GetDetectionInfo(DetectionInfoRequest) returns (DetectionInfo);
@@ -366,4 +537,10 @@ service Pipeline {
   rpc UpdateDetectionTags(UpdateDetectionTagsRequest) returns (DetectionInfo);
   rpc GetDetectionTagInfo(DetectionTagInfoRequest) returns (DetectionTagInfo);
   rpc GetAnalyticMeta(Empty) returns (AnalyticList);
+  rpc ListDetections(ListDetectionsRequest) returns (DetectionList);
+  rpc UpdateDetectionMetadata(UpdateDetectionMetadataRequest) returns (DetectionInfo);
+  rpc GetAnalyticStats(GetAnalyticStatsRequest) returns (GetAnalyticStatsResponse);
+  rpc GetHistogram(GetHistogramRequest) returns (GetHistogramResponse);
+  rpc DeleteFailedAnalytics(DeleteFailedAnalyticsRequest) returns (DeleteFailedAnalyticsResponse);
+  rpc GetAnalyticsWithScores(GetAnalyticsWithScoresRequest) returns (GetAnalyticsWithScoresResponse);
 }

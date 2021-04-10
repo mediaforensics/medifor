@@ -19,16 +19,16 @@ from medifor.v1 import fusion_pb2 as medifor_dot_v1_dot_fusion__pb2
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='medifor/v1/pipeline.proto',
-  package='workflowproto',
+  package='mediforproto',
   syntax='proto3',
-  serialized_options=None,
-  serialized_pb=_b('\n\x19medifor/v1/pipeline.proto\x12\rworkflowproto\x1a\x19medifor/v1/analytic.proto\x1a\x17medifor/v1/fusion.proto\"c\n\x07SortCol\x12#\n\x03key\x18\x01 \x01(\x0e\x32\x16.workflowproto.SortKey\x12\x0e\n\x06is_asc\x18\x02 \x01(\x08\x12\x11\n\ttype_cast\x18\x03 \x01(\t\x12\x10\n\x08meta_key\x18\x04 \x01(\t\"\xcc\x03\n\x10\x44\x65tectionRequest\x12\n\n\x02id\x18\x03 \x01(\t\x12(\n\x07request\x18\x01 \x01(\x0b\x32\x17.mediforproto.Detection\x12\x13\n\x0b\x61nalytic_id\x18\x02 \x03(\t\x12\x10\n\x08\x66user_id\x18\x08 \x03(\t\x12\x37\n\x04tags\x18\x04 \x03(\x0b\x32).workflowproto.DetectionRequest.TagsEntry\x12@\n\tuser_tags\x18\x06 \x03(\x0b\x32-.workflowproto.DetectionRequest.UserTagsEntry\x12\x37\n\x04meta\x18\x07 \x03(\x0b\x32).workflowproto.DetectionRequest.MetaEntry\x12\x1c\n\x14\x61nalytic_timeout_sec\x18\x05 \x01(\x03\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a/\n\rUserTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a+\n\tMetaEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xb6\x01\n\x15\x41nalyticDetectionInfo\x12\x13\n\x0b\x61nalytic_id\x18\x01 \x01(\t\x12,\n\x05stage\x18\x02 \x01(\x0e\x32\x1d.workflowproto.DetectionStage\x12.\n\x06status\x18\x03 \x01(\x0e\x32\x1e.workflowproto.DetectionStatus\x12*\n\tdetection\x18\x04 \x01(\x0b\x32\x17.mediforproto.Detection\"\xa0\x04\n\rDetectionInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12;\n\ranalytic_info\x18\x02 \x03(\x0b\x32$.workflowproto.AnalyticDetectionInfo\x12\x33\n\x0b\x66usion_info\x18\x08 \x03(\x0b\x32\x1e.workflowproto.FuserFusionInfo\x12\x34\n\x04tags\x18\x03 \x03(\x0b\x32&.workflowproto.DetectionInfo.TagsEntry\x12=\n\tuser_tags\x18\x06 \x03(\x0b\x32*.workflowproto.DetectionInfo.UserTagsEntry\x12\x34\n\x04meta\x18\x07 \x03(\x0b\x32&.workflowproto.DetectionInfo.MetaEntry\x12\x11\n\thas_fused\x18\x04 \x01(\x08\x12\x13\n\x0b\x66used_score\x18\x05 \x01(\x01\x12\x17\n\x0f\x61nalytics_total\x18\t \x01(\x05\x12\x1a\n\x12\x61nalytics_finished\x18\n \x01(\x05\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a/\n\rUserTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a+\n\tMetaEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"6\n\x14\x44\x65tectionInfoRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x12\n\nwant_fused\x18\x02 \x01(\x08\"\xf1\x02\n\x14\x44\x65tectionListRequest\x12;\n\x04tags\x18\x01 \x03(\x0b\x32-.workflowproto.DetectionListRequest.TagsEntry\x12\x15\n\rdetection_ids\x18\x07 \x03(\t\x12\x12\n\nwant_fused\x18\x04 \x01(\x08\x12(\n\x08order_by\x18\x05 \x03(\x0b\x32\x16.workflowproto.SortCol\x12\x10\n\x08\x66user_id\x18\x06 \x01(\t\x12\x41\n\x15\x66usion_threshold_type\x18\x08 \x01(\x0e\x32\".workflowproto.FusionThresholdType\x12\x1e\n\x16\x66usion_threshold_value\x18\t \x01(\x02\x12\x11\n\tpage_size\x18\x02 \x01(\x05\x12\x12\n\npage_token\x18\x03 \x01(\t\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"d\n\rDetectionList\x12\x30\n\ndetections\x18\x01 \x03(\x0b\x32\x1c.workflowproto.DetectionInfo\x12\r\n\x05total\x18\x03 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\"\xeb\x01\n\rFusionRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12%\n\x07request\x18\x02 \x01(\x0b\x32\x14.mediforproto.Fusion\x12\x10\n\x08\x66user_id\x18\x04 \x03(\t\x12\x34\n\x04tags\x18\x03 \x03(\x0b\x32&.workflowproto.FusionRequest.TagsEntry\x12\x14\n\x0c\x64\x65tection_id\x18\x05 \x01(\t\x12\x1c\n\x14\x64\x65tection_id_out_dir\x18\x06 \x01(\t\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xa7\x01\n\x0f\x46userFusionInfo\x12\x10\n\x08\x66user_id\x18\x01 \x01(\t\x12,\n\x05stage\x18\x02 \x01(\x0e\x32\x1d.workflowproto.DetectionStage\x12.\n\x06status\x18\x03 \x01(\x0e\x32\x1e.workflowproto.DetectionStatus\x12$\n\x06\x66usion\x18\x04 \x01(\x0b\x32\x14.mediforproto.Fusion\"\xd6\x01\n\nFusionInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12\x34\n\x0c\x66usion_infos\x18\x02 \x03(\x0b\x32\x1e.workflowproto.FuserFusionInfo\x12\x31\n\x04tags\x18\x03 \x03(\x0b\x32#.workflowproto.FusionInfo.TagsEntry\x12\x11\n\thas_fused\x18\x04 \x01(\x08\x12\x13\n\x0b\x66used_score\x18\x05 \x01(\x01\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"6\n\x11\x46useAllIDsRequest\x12\x10\n\x08\x66user_id\x18\x01 \x03(\t\x12\x0f\n\x07out_dir\x18\x02 \x01(\t\"\x14\n\x12\x46useAllIDsResponse\"\xc8\x01\n\x1aUpdateDetectionTagsRequest\x12\x14\n\x0c\x64\x65tection_id\x18\x01 \x01(\t\x12\x0f\n\x07replace\x18\x02 \x01(\x08\x12\x41\n\x04tags\x18\x03 \x03(\x0b\x32\x33.workflowproto.UpdateDetectionTagsRequest.TagsEntry\x12\x13\n\x0b\x64\x65lete_tags\x18\x04 \x03(\t\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x19\n\x17\x44\x65tectionTagInfoRequest\"\x8b\x02\n\x10\x44\x65tectionTagInfo\x12\x42\n\ntag_counts\x18\x01 \x03(\x0b\x32..workflowproto.DetectionTagInfo.TagCountsEntry\x12K\n\x0fuser_tag_counts\x18\x02 \x03(\x0b\x32\x32.workflowproto.DetectionTagInfo.UserTagCountsEntry\x1a\x30\n\x0eTagCountsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a\x34\n\x12UserTagCountsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\".\n\x16\x44\x65leteDetectionRequest\x12\x14\n\x0c\x64\x65tection_id\x18\x01 \x01(\t\"\x93\x02\n\x0c\x41nalyticMeta\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12\x0b\n\x03\x63pu\x18\x03 \x01(\x01\x12\x0b\n\x03ram\x18\x04 \x01(\x01\x12\x0b\n\x03gpu\x18\x05 \x01(\x05\x12\'\n\x05media\x18\x06 \x03(\x0e\x32\x18.workflowproto.MediaType\x12\x13\n\x0b\x64\x65scription\x18\x07 \x01(\t\x12\x0c\n\x04name\x18\x08 \x01(\t\x12@\n\x0buser_fields\x18\t \x03(\x0b\x32+.workflowproto.AnalyticMeta.UserFieldsEntry\x1a\x31\n\x0fUserFieldsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\">\n\x0c\x41nalyticList\x12.\n\tanalytics\x18\x01 \x03(\x0b\x32\x1b.workflowproto.AnalyticMeta\"\x07\n\x05\x45mpty*\x81\x01\n\x0e\x44\x65tectionStage\x12\x18\n\x14\x44\x45TECTION_STAGE_NONE\x10\x00\x12\x1a\n\x16\x44\x45TECTION_STAGE_QUEUED\x10\x01\x12\x1b\n\x17\x44\x45TECTION_STAGE_CLAIMED\x10\x02\x12\x1c\n\x18\x44\x45TECTION_STAGE_FINISHED\x10\x03*h\n\x0f\x44\x65tectionStatus\x12\x19\n\x15\x44\x45TECTION_STATUS_NONE\x10\x00\x12\x1c\n\x18\x44\x45TECTION_STATUS_SUCCESS\x10\x01\x12\x1c\n\x18\x44\x45TECTION_STATUS_FAILURE\x10\x02*.\n\x07SortKey\x12\t\n\x05SCORE\x10\x00\x12\x08\n\x04META\x10\x01\x12\x0e\n\nMETA_QUERY\x10\x02*`\n\x13\x46usionThresholdType\x12\x17\n\x13\x46USION_NO_THRESHOLD\x10\x00\x12\x17\n\x13\x46USION_LT_THRESHOLD\x10\x01\x12\x17\n\x13\x46USION_GT_THRESHOLD\x10\x02*E\n\tMediaType\x12\t\n\x05IMAGE\x10\x00\x12\t\n\x05VIDEO\x10\x01\x12\x10\n\x0c\x46USION_IMAGE\x10\x02\x12\x10\n\x0c\x46USION_VIDEO\x10\x03\x32\xb0\x06\n\x08Pipeline\x12G\n\x06\x44\x65tect\x12\x1f.workflowproto.DetectionRequest\x1a\x1c.workflowproto.DetectionInfo\x12U\n\x10GetDetectionInfo\x12#.workflowproto.DetectionInfoRequest\x1a\x1c.workflowproto.DetectionInfo\x12U\n\x10GetDetectionList\x12#.workflowproto.DetectionListRequest\x1a\x1c.workflowproto.DetectionList\x12N\n\x0f\x44\x65leteDetection\x12%.workflowproto.DeleteDetectionRequest\x1a\x14.workflowproto.Empty\x12?\n\x04\x46use\x12\x1c.workflowproto.FusionRequest\x1a\x19.workflowproto.FusionInfo\x12\x43\n\x08\x46useByID\x12\x1c.workflowproto.FusionRequest\x1a\x19.workflowproto.FusionInfo\x12Q\n\nFuseAllIDs\x12 .workflowproto.FuseAllIDsRequest\x1a!.workflowproto.FuseAllIDsResponse\x12^\n\x13UpdateDetectionTags\x12).workflowproto.UpdateDetectionTagsRequest\x1a\x1c.workflowproto.DetectionInfo\x12^\n\x13GetDetectionTagInfo\x12&.workflowproto.DetectionTagInfoRequest\x1a\x1f.workflowproto.DetectionTagInfo\x12\x44\n\x0fGetAnalyticMeta\x12\x14.workflowproto.Empty\x1a\x1b.workflowproto.AnalyticListb\x06proto3')
+  serialized_options=_b('Z2github.com/mediaforensics/medifor/pkg/mediforproto'),
+  serialized_pb=_b('\n\x19medifor/v1/pipeline.proto\x12\x0cmediforproto\x1a\x19medifor/v1/analytic.proto\x1a\x17medifor/v1/fusion.proto\"b\n\x07SortCol\x12\"\n\x03key\x18\x01 \x01(\x0e\x32\x15.mediforproto.SortKey\x12\x0e\n\x06is_asc\x18\x02 \x01(\x08\x12\x11\n\ttype_cast\x18\x03 \x01(\t\x12\x10\n\x08meta_key\x18\x04 \x01(\t\"\xc9\x03\n\x10\x44\x65tectionRequest\x12\n\n\x02id\x18\x03 \x01(\t\x12(\n\x07request\x18\x01 \x01(\x0b\x32\x17.mediforproto.Detection\x12\x13\n\x0b\x61nalytic_id\x18\x02 \x03(\t\x12\x10\n\x08\x66user_id\x18\x08 \x03(\t\x12\x36\n\x04tags\x18\x04 \x03(\x0b\x32(.mediforproto.DetectionRequest.TagsEntry\x12?\n\tuser_tags\x18\x06 \x03(\x0b\x32,.mediforproto.DetectionRequest.UserTagsEntry\x12\x36\n\x04meta\x18\x07 \x03(\x0b\x32(.mediforproto.DetectionRequest.MetaEntry\x12\x1c\n\x14\x61nalytic_timeout_sec\x18\x05 \x01(\x03\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a/\n\rUserTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a+\n\tMetaEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xb4\x01\n\x15\x41nalyticDetectionInfo\x12\x13\n\x0b\x61nalytic_id\x18\x01 \x01(\t\x12+\n\x05stage\x18\x02 \x01(\x0e\x32\x1c.mediforproto.DetectionStage\x12-\n\x06status\x18\x03 \x01(\x0e\x32\x1d.mediforproto.DetectionStatus\x12*\n\tdetection\x18\x04 \x01(\x0b\x32\x17.mediforproto.Detection\"\xca\x04\n\rDetectionInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12-\n\rreq_resources\x18\x0b \x03(\x0b\x32\x16.mediforproto.Resource\x12:\n\ranalytic_info\x18\x02 \x03(\x0b\x32#.mediforproto.AnalyticDetectionInfo\x12\x32\n\x0b\x66usion_info\x18\x08 \x03(\x0b\x32\x1d.mediforproto.FuserFusionInfo\x12\x33\n\x04tags\x18\x03 \x03(\x0b\x32%.mediforproto.DetectionInfo.TagsEntry\x12<\n\tuser_tags\x18\x06 \x03(\x0b\x32).mediforproto.DetectionInfo.UserTagsEntry\x12\x33\n\x04meta\x18\x07 \x03(\x0b\x32%.mediforproto.DetectionInfo.MetaEntry\x12\x11\n\thas_fused\x18\x04 \x01(\x08\x12\x13\n\x0b\x66used_score\x18\x05 \x01(\x01\x12\x17\n\x0f\x61nalytics_total\x18\t \x01(\x05\x12\x1a\n\x12\x61nalytics_finished\x18\n \x01(\x05\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a/\n\rUserTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a+\n\tMetaEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"6\n\x14\x44\x65tectionInfoRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x12\n\nwant_fused\x18\x02 \x01(\x08\"?\n\tDateRange\x12\x19\n\x11start_seconds_utc\x18\x01 \x01(\x03\x12\x17\n\x0f\x65nd_seconds_utc\x18\x02 \x01(\x03\"\xe8\x03\n\x14\x44\x65tectionListRequest\x12\x37\n\tverbosity\x18\x0c \x01(\x0e\x32$.mediforproto.DetectionListVerbosity\x12:\n\x04tags\x18\x01 \x03(\x0b\x32,.mediforproto.DetectionListRequest.TagsEntry\x12\x12\n\nmeta_query\x18\n \x01(\t\x12+\n\ndate_range\x18\x0b \x01(\x0b\x32\x17.mediforproto.DateRange\x12\x15\n\rdetection_ids\x18\x07 \x03(\t\x12\x12\n\nwant_fused\x18\x04 \x01(\x08\x12\'\n\x08order_by\x18\x05 \x03(\x0b\x32\x15.mediforproto.SortCol\x12\x10\n\x08\x66user_id\x18\x06 \x01(\t\x12@\n\x15\x66usion_threshold_type\x18\x08 \x01(\x0e\x32!.mediforproto.FusionThresholdType\x12\x1e\n\x16\x66usion_threshold_value\x18\t \x01(\x02\x12\x11\n\tpage_size\x18\x02 \x01(\x05\x12\x12\n\npage_token\x18\x03 \x01(\t\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"c\n\rDetectionList\x12/\n\ndetections\x18\x01 \x03(\x0b\x32\x1b.mediforproto.DetectionInfo\x12\r\n\x05total\x18\x03 \x01(\x05\x12\x12\n\npage_token\x18\x02 \x01(\t\"\xea\x01\n\rFusionRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12%\n\x07request\x18\x02 \x01(\x0b\x32\x14.mediforproto.Fusion\x12\x10\n\x08\x66user_id\x18\x04 \x03(\t\x12\x33\n\x04tags\x18\x03 \x03(\x0b\x32%.mediforproto.FusionRequest.TagsEntry\x12\x14\n\x0c\x64\x65tection_id\x18\x05 \x01(\t\x12\x1c\n\x14\x64\x65tection_id_out_dir\x18\x06 \x01(\t\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xa5\x01\n\x0f\x46userFusionInfo\x12\x10\n\x08\x66user_id\x18\x01 \x01(\t\x12+\n\x05stage\x18\x02 \x01(\x0e\x32\x1c.mediforproto.DetectionStage\x12-\n\x06status\x18\x03 \x01(\x0e\x32\x1d.mediforproto.DetectionStatus\x12$\n\x06\x66usion\x18\x04 \x01(\x0b\x32\x14.mediforproto.Fusion\"\xd4\x01\n\nFusionInfo\x12\n\n\x02id\x18\x01 \x01(\t\x12\x33\n\x0c\x66usion_infos\x18\x02 \x03(\x0b\x32\x1d.mediforproto.FuserFusionInfo\x12\x30\n\x04tags\x18\x03 \x03(\x0b\x32\".mediforproto.FusionInfo.TagsEntry\x12\x11\n\thas_fused\x18\x04 \x01(\x08\x12\x13\n\x0b\x66used_score\x18\x05 \x01(\x01\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"6\n\x11\x46useAllIDsRequest\x12\x10\n\x08\x66user_id\x18\x01 \x03(\t\x12\x0f\n\x07out_dir\x18\x02 \x01(\t\"\x14\n\x12\x46useAllIDsResponse\"\xc7\x01\n\x1aUpdateDetectionTagsRequest\x12\x14\n\x0c\x64\x65tection_id\x18\x01 \x01(\t\x12\x0f\n\x07replace\x18\x02 \x01(\x08\x12@\n\x04tags\x18\x03 \x03(\x0b\x32\x32.mediforproto.UpdateDetectionTagsRequest.TagsEntry\x12\x13\n\x0b\x64\x65lete_tags\x18\x04 \x03(\t\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\xb2\x01\n\x17\x44\x65tectionTagInfoRequest\x12L\n\x0crequire_tags\x18\x01 \x03(\x0b\x32\x36.mediforproto.DetectionTagInfoRequest.RequireTagsEntry\x12\x15\n\rskip_prefixes\x18\x02 \x03(\t\x1a\x32\n\x10RequireTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"\x89\x02\n\x10\x44\x65tectionTagInfo\x12\x41\n\ntag_counts\x18\x01 \x03(\x0b\x32-.mediforproto.DetectionTagInfo.TagCountsEntry\x12J\n\x0fuser_tag_counts\x18\x02 \x03(\x0b\x32\x31.mediforproto.DetectionTagInfo.UserTagCountsEntry\x1a\x30\n\x0eTagCountsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\x1a\x34\n\x12UserTagCountsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x05:\x02\x38\x01\".\n\x16\x44\x65leteDetectionRequest\x12\x14\n\x0c\x64\x65tection_id\x18\x01 \x01(\t\"\x91\x02\n\x0c\x41nalyticMeta\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07version\x18\x02 \x01(\t\x12\x0b\n\x03\x63pu\x18\x03 \x01(\x01\x12\x0b\n\x03ram\x18\x04 \x01(\x01\x12\x0b\n\x03gpu\x18\x05 \x01(\x05\x12&\n\x05media\x18\x06 \x03(\x0e\x32\x17.mediforproto.MediaType\x12\x13\n\x0b\x64\x65scription\x18\x07 \x01(\t\x12\x0c\n\x04name\x18\x08 \x01(\t\x12?\n\x0buser_fields\x18\t \x03(\x0b\x32*.mediforproto.AnalyticMeta.UserFieldsEntry\x1a\x31\n\x0fUserFieldsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"=\n\x0c\x41nalyticList\x12-\n\tanalytics\x18\x01 \x03(\x0b\x32\x1a.mediforproto.AnalyticMeta\"\xed\x03\n\x15ListDetectionsRequest\x12/\n\x0cscore_filter\x18\x01 \x01(\x0b\x32\x19.mediforproto.ScoreFilter\x12.\n\x0cmeta_filters\x18\x02 \x03(\x0b\x32\x18.mediforproto.MetaFilter\x12;\n\x04tags\x18\x03 \x03(\x0b\x32-.mediforproto.ListDetectionsRequest.TagsEntry\x12J\n\x0c\x65xclude_tags\x18\t \x03(\x0b\x32\x34.mediforproto.ListDetectionsRequest.ExcludeTagsEntry\x12\x12\n\nmeta_query\x18\n \x01(\t\x12\'\n\x08order_by\x18\x04 \x03(\x0b\x32\x15.mediforproto.SortCol\x12\x13\n\x0b\x61nalytic_id\x18\x05 \x01(\t\x12\x10\n\x08\x66user_id\x18\x06 \x01(\t\x12\x11\n\tpage_size\x18\x07 \x01(\x05\x12\x12\n\npage_token\x18\x08 \x01(\t\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x32\n\x10\x45xcludeTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"I\n\x0bScoreFilter\x12\x0f\n\x07has_min\x18\x01 \x01(\x08\x12\x0b\n\x03min\x18\x02 \x01(\x01\x12\x0f\n\x07has_max\x18\x03 \x01(\x08\x12\x0b\n\x03max\x18\x04 \x01(\x01\"Z\n\nMetaFilter\x12\x10\n\x08meta_key\x18\x01 \x01(\t\x12\x0f\n\x07has_min\x18\x02 \x01(\x08\x12\x0b\n\x03min\x18\x03 \x01(\t\x12\x0f\n\x07has_max\x18\x04 \x01(\x08\x12\x0b\n\x03max\x18\x05 \x01(\t\"\xb5\x01\n\x1eUpdateDetectionMetadataRequest\x12\x14\n\x0c\x64\x65tection_id\x18\x01 \x01(\t\x12L\n\x08metadata\x18\x02 \x03(\x0b\x32:.mediforproto.UpdateDetectionMetadataRequest.MetadataEntry\x1a/\n\rMetadataEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"B\n\x17GetAnalyticStatsRequest\x12\x14\n\x0c\x61nalytic_ids\x18\x01 \x03(\t\x12\x11\n\tfuser_ids\x18\x02 \x03(\t\"\x81\x01\n\x18GetAnalyticStatsResponse\x12\x33\n\x0e\x61nalytic_stats\x18\x01 \x03(\x0b\x32\x1b.mediforproto.AnalyticStats\x12\x30\n\x0b\x66user_stats\x18\x02 \x03(\x0b\x32\x1b.mediforproto.AnalyticStats\"s\n\rAnalyticStats\x12\n\n\x02id\x18\x01 \x01(\t\x12\x0f\n\x07pending\x18\x02 \x01(\x05\x12\x0f\n\x07running\x18\x03 \x01(\x05\x12\x11\n\tsucceeded\x18\x04 \x01(\x05\x12\x11\n\topted_out\x18\x06 \x01(\x05\x12\x0e\n\x06\x66\x61iled\x18\x05 \x01(\x05\"\xb7\x02\n\x13GetHistogramRequest\x12\x13\n\x0b\x61nalytic_id\x18\x01 \x01(\t\x12\x10\n\x08\x66user_id\x18\x02 \x01(\t\x12\x39\n\x04tags\x18\x03 \x03(\x0b\x32+.mediforproto.GetHistogramRequest.TagsEntry\x12H\n\x0c\x65xclude_tags\x18\x05 \x03(\x0b\x32\x32.mediforproto.GetHistogramRequest.ExcludeTagsEntry\x12\x13\n\x0bnum_buckets\x18\x04 \x01(\x05\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x32\n\x10\x45xcludeTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"=\n\x14GetHistogramResponse\x12%\n\x07\x62uckets\x18\x01 \x03(\x0b\x32\x14.mediforproto.Bucket\"5\n\x06\x42ucket\x12\x0b\n\x03min\x18\x01 \x01(\x01\x12\x0b\n\x03max\x18\x02 \x01(\x01\x12\x11\n\tfrequency\x18\x03 \x01(\x05\"\x1e\n\x1c\x44\x65leteFailedAnalyticsRequest\"\xd6\x01\n\x1d\x44\x65leteFailedAnalyticsResponse\x12\\\n\x11\x64\x65leted_analytics\x18\x01 \x03(\x0b\x32\x41.mediforproto.DeleteFailedAnalyticsResponse.DeletedAnalyticsEntry\x1aW\n\x15\x44\x65letedAnalyticsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12-\n\x05value\x18\x02 \x01(\x0b\x32\x1e.mediforproto.DeletedAnalytics:\x02\x38\x01\"0\n\x10\x44\x65letedAnalytics\x12\x1c\n\x14\x64\x65leted_analytic_ids\x18\x01 \x03(\t\"\x99\x02\n\x1dGetAnalyticsWithScoresRequest\x12\x43\n\x04tags\x18\x01 \x03(\x0b\x32\x35.mediforproto.GetAnalyticsWithScoresRequest.TagsEntry\x12R\n\x0c\x65xclude_tags\x18\x02 \x03(\x0b\x32<.mediforproto.GetAnalyticsWithScoresRequest.ExcludeTagsEntry\x1a+\n\tTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x32\n\x10\x45xcludeTagsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"I\n\x1eGetAnalyticsWithScoresResponse\x12\x14\n\x0c\x61nalytic_ids\x18\x01 \x03(\t\x12\x11\n\tfuser_ids\x18\x02 \x03(\t*\x81\x01\n\x0e\x44\x65tectionStage\x12\x18\n\x14\x44\x45TECTION_STAGE_NONE\x10\x00\x12\x1a\n\x16\x44\x45TECTION_STAGE_QUEUED\x10\x01\x12\x1b\n\x17\x44\x45TECTION_STAGE_CLAIMED\x10\x02\x12\x1c\n\x18\x44\x45TECTION_STAGE_FINISHED\x10\x03*h\n\x0f\x44\x65tectionStatus\x12\x19\n\x15\x44\x45TECTION_STATUS_NONE\x10\x00\x12\x1c\n\x18\x44\x45TECTION_STATUS_SUCCESS\x10\x01\x12\x1c\n\x18\x44\x45TECTION_STATUS_FAILURE\x10\x02*.\n\x07SortKey\x12\t\n\x05SCORE\x10\x00\x12\x08\n\x04META\x10\x01\x12\x0e\n\nMETA_QUERY\x10\x02*`\n\x13\x46usionThresholdType\x12\x17\n\x13\x46USION_NO_THRESHOLD\x10\x00\x12\x17\n\x13\x46USION_LT_THRESHOLD\x10\x01\x12\x17\n\x13\x46USION_GT_THRESHOLD\x10\x02*E\n\tMediaType\x12\t\n\x05IMAGE\x10\x00\x12\t\n\x05VIDEO\x10\x01\x12\x10\n\x0c\x46USION_IMAGE\x10\x02\x12\x10\n\x0c\x46USION_VIDEO\x10\x03*W\n\x16\x44\x65tectionListVerbosity\x12\x1c\n\x18\x44\x45TECTION_VERBOSITY_FULL\x10\x00\x12\x1f\n\x1b\x44\x45TECTION_VERBOSITY_MINIMAL\x10\x01\x32\xf7\n\n\x08Pipeline\x12\x45\n\x06\x44\x65tect\x12\x1e.mediforproto.DetectionRequest\x1a\x1b.mediforproto.DetectionInfo\x12S\n\x10GetDetectionInfo\x12\".mediforproto.DetectionInfoRequest\x1a\x1b.mediforproto.DetectionInfo\x12S\n\x10GetDetectionList\x12\".mediforproto.DetectionListRequest\x1a\x1b.mediforproto.DetectionList\x12L\n\x0f\x44\x65leteDetection\x12$.mediforproto.DeleteDetectionRequest\x1a\x13.mediforproto.Empty\x12=\n\x04\x46use\x12\x1b.mediforproto.FusionRequest\x1a\x18.mediforproto.FusionInfo\x12\x41\n\x08\x46useByID\x12\x1b.mediforproto.FusionRequest\x1a\x18.mediforproto.FusionInfo\x12O\n\nFuseAllIDs\x12\x1f.mediforproto.FuseAllIDsRequest\x1a .mediforproto.FuseAllIDsResponse\x12\\\n\x13UpdateDetectionTags\x12(.mediforproto.UpdateDetectionTagsRequest\x1a\x1b.mediforproto.DetectionInfo\x12\\\n\x13GetDetectionTagInfo\x12%.mediforproto.DetectionTagInfoRequest\x1a\x1e.mediforproto.DetectionTagInfo\x12\x42\n\x0fGetAnalyticMeta\x12\x13.mediforproto.Empty\x1a\x1a.mediforproto.AnalyticList\x12R\n\x0eListDetections\x12#.mediforproto.ListDetectionsRequest\x1a\x1b.mediforproto.DetectionList\x12\x64\n\x17UpdateDetectionMetadata\x12,.mediforproto.UpdateDetectionMetadataRequest\x1a\x1b.mediforproto.DetectionInfo\x12\x61\n\x10GetAnalyticStats\x12%.mediforproto.GetAnalyticStatsRequest\x1a&.mediforproto.GetAnalyticStatsResponse\x12U\n\x0cGetHistogram\x12!.mediforproto.GetHistogramRequest\x1a\".mediforproto.GetHistogramResponse\x12p\n\x15\x44\x65leteFailedAnalytics\x12*.mediforproto.DeleteFailedAnalyticsRequest\x1a+.mediforproto.DeleteFailedAnalyticsResponse\x12s\n\x16GetAnalyticsWithScores\x12+.mediforproto.GetAnalyticsWithScoresRequest\x1a,.mediforproto.GetAnalyticsWithScoresResponseB4Z2github.com/mediaforensics/medifor/pkg/mediforprotob\x06proto3')
   ,
   dependencies=[medifor_dot_v1_dot_analytic__pb2.DESCRIPTOR,medifor_dot_v1_dot_fusion__pb2.DESCRIPTOR,])
 
 _DETECTIONSTAGE = _descriptor.EnumDescriptor(
   name='DetectionStage',
-  full_name='workflowproto.DetectionStage',
+  full_name='mediforproto.DetectionStage',
   filename=None,
   file=DESCRIPTOR,
   values=[
@@ -51,15 +51,15 @@ _DETECTIONSTAGE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=3525,
-  serialized_end=3654,
+  serialized_start=6131,
+  serialized_end=6260,
 )
 _sym_db.RegisterEnumDescriptor(_DETECTIONSTAGE)
 
 DetectionStage = enum_type_wrapper.EnumTypeWrapper(_DETECTIONSTAGE)
 _DETECTIONSTATUS = _descriptor.EnumDescriptor(
   name='DetectionStatus',
-  full_name='workflowproto.DetectionStatus',
+  full_name='mediforproto.DetectionStatus',
   filename=None,
   file=DESCRIPTOR,
   values=[
@@ -78,15 +78,15 @@ _DETECTIONSTATUS = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=3656,
-  serialized_end=3760,
+  serialized_start=6262,
+  serialized_end=6366,
 )
 _sym_db.RegisterEnumDescriptor(_DETECTIONSTATUS)
 
 DetectionStatus = enum_type_wrapper.EnumTypeWrapper(_DETECTIONSTATUS)
 _SORTKEY = _descriptor.EnumDescriptor(
   name='SortKey',
-  full_name='workflowproto.SortKey',
+  full_name='mediforproto.SortKey',
   filename=None,
   file=DESCRIPTOR,
   values=[
@@ -105,15 +105,15 @@ _SORTKEY = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=3762,
-  serialized_end=3808,
+  serialized_start=6368,
+  serialized_end=6414,
 )
 _sym_db.RegisterEnumDescriptor(_SORTKEY)
 
 SortKey = enum_type_wrapper.EnumTypeWrapper(_SORTKEY)
 _FUSIONTHRESHOLDTYPE = _descriptor.EnumDescriptor(
   name='FusionThresholdType',
-  full_name='workflowproto.FusionThresholdType',
+  full_name='mediforproto.FusionThresholdType',
   filename=None,
   file=DESCRIPTOR,
   values=[
@@ -132,15 +132,15 @@ _FUSIONTHRESHOLDTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=3810,
-  serialized_end=3906,
+  serialized_start=6416,
+  serialized_end=6512,
 )
 _sym_db.RegisterEnumDescriptor(_FUSIONTHRESHOLDTYPE)
 
 FusionThresholdType = enum_type_wrapper.EnumTypeWrapper(_FUSIONTHRESHOLDTYPE)
 _MEDIATYPE = _descriptor.EnumDescriptor(
   name='MediaType',
-  full_name='workflowproto.MediaType',
+  full_name='mediforproto.MediaType',
   filename=None,
   file=DESCRIPTOR,
   values=[
@@ -163,12 +163,35 @@ _MEDIATYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=3908,
-  serialized_end=3977,
+  serialized_start=6514,
+  serialized_end=6583,
 )
 _sym_db.RegisterEnumDescriptor(_MEDIATYPE)
 
 MediaType = enum_type_wrapper.EnumTypeWrapper(_MEDIATYPE)
+_DETECTIONLISTVERBOSITY = _descriptor.EnumDescriptor(
+  name='DetectionListVerbosity',
+  full_name='mediforproto.DetectionListVerbosity',
+  filename=None,
+  file=DESCRIPTOR,
+  values=[
+    _descriptor.EnumValueDescriptor(
+      name='DETECTION_VERBOSITY_FULL', index=0, number=0,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='DETECTION_VERBOSITY_MINIMAL', index=1, number=1,
+      serialized_options=None,
+      type=None),
+  ],
+  containing_type=None,
+  serialized_options=None,
+  serialized_start=6585,
+  serialized_end=6672,
+)
+_sym_db.RegisterEnumDescriptor(_DETECTIONLISTVERBOSITY)
+
+DetectionListVerbosity = enum_type_wrapper.EnumTypeWrapper(_DETECTIONLISTVERBOSITY)
 DETECTION_STAGE_NONE = 0
 DETECTION_STAGE_QUEUED = 1
 DETECTION_STAGE_CLAIMED = 2
@@ -186,39 +209,41 @@ IMAGE = 0
 VIDEO = 1
 FUSION_IMAGE = 2
 FUSION_VIDEO = 3
+DETECTION_VERBOSITY_FULL = 0
+DETECTION_VERBOSITY_MINIMAL = 1
 
 
 
 _SORTCOL = _descriptor.Descriptor(
   name='SortCol',
-  full_name='workflowproto.SortCol',
+  full_name='mediforproto.SortCol',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='workflowproto.SortCol.key', index=0,
+      name='key', full_name='mediforproto.SortCol.key', index=0,
       number=1, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='is_asc', full_name='workflowproto.SortCol.is_asc', index=1,
+      name='is_asc', full_name='mediforproto.SortCol.is_asc', index=1,
       number=2, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='type_cast', full_name='workflowproto.SortCol.type_cast', index=2,
+      name='type_cast', full_name='mediforproto.SortCol.type_cast', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='meta_key', full_name='workflowproto.SortCol.meta_key', index=3,
+      name='meta_key', full_name='mediforproto.SortCol.meta_key', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -236,27 +261,27 @@ _SORTCOL = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=96,
-  serialized_end=195,
+  serialized_start=95,
+  serialized_end=193,
 )
 
 
 _DETECTIONREQUEST_TAGSENTRY = _descriptor.Descriptor(
   name='TagsEntry',
-  full_name='workflowproto.DetectionRequest.TagsEntry',
+  full_name='mediforproto.DetectionRequest.TagsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='workflowproto.DetectionRequest.TagsEntry.key', index=0,
+      name='key', full_name='mediforproto.DetectionRequest.TagsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='value', full_name='workflowproto.DetectionRequest.TagsEntry.value', index=1,
+      name='value', full_name='mediforproto.DetectionRequest.TagsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -274,26 +299,26 @@ _DETECTIONREQUEST_TAGSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=521,
-  serialized_end=564,
+  serialized_start=516,
+  serialized_end=559,
 )
 
 _DETECTIONREQUEST_USERTAGSENTRY = _descriptor.Descriptor(
   name='UserTagsEntry',
-  full_name='workflowproto.DetectionRequest.UserTagsEntry',
+  full_name='mediforproto.DetectionRequest.UserTagsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='workflowproto.DetectionRequest.UserTagsEntry.key', index=0,
+      name='key', full_name='mediforproto.DetectionRequest.UserTagsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='value', full_name='workflowproto.DetectionRequest.UserTagsEntry.value', index=1,
+      name='value', full_name='mediforproto.DetectionRequest.UserTagsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -311,26 +336,26 @@ _DETECTIONREQUEST_USERTAGSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=566,
-  serialized_end=613,
+  serialized_start=561,
+  serialized_end=608,
 )
 
 _DETECTIONREQUEST_METAENTRY = _descriptor.Descriptor(
   name='MetaEntry',
-  full_name='workflowproto.DetectionRequest.MetaEntry',
+  full_name='mediforproto.DetectionRequest.MetaEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='workflowproto.DetectionRequest.MetaEntry.key', index=0,
+      name='key', full_name='mediforproto.DetectionRequest.MetaEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='value', full_name='workflowproto.DetectionRequest.MetaEntry.value', index=1,
+      name='value', full_name='mediforproto.DetectionRequest.MetaEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -348,68 +373,68 @@ _DETECTIONREQUEST_METAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=615,
-  serialized_end=658,
+  serialized_start=610,
+  serialized_end=653,
 )
 
 _DETECTIONREQUEST = _descriptor.Descriptor(
   name='DetectionRequest',
-  full_name='workflowproto.DetectionRequest',
+  full_name='mediforproto.DetectionRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='workflowproto.DetectionRequest.id', index=0,
+      name='id', full_name='mediforproto.DetectionRequest.id', index=0,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='request', full_name='workflowproto.DetectionRequest.request', index=1,
+      name='request', full_name='mediforproto.DetectionRequest.request', index=1,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='analytic_id', full_name='workflowproto.DetectionRequest.analytic_id', index=2,
+      name='analytic_id', full_name='mediforproto.DetectionRequest.analytic_id', index=2,
       number=2, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='fuser_id', full_name='workflowproto.DetectionRequest.fuser_id', index=3,
+      name='fuser_id', full_name='mediforproto.DetectionRequest.fuser_id', index=3,
       number=8, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='tags', full_name='workflowproto.DetectionRequest.tags', index=4,
+      name='tags', full_name='mediforproto.DetectionRequest.tags', index=4,
       number=4, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='user_tags', full_name='workflowproto.DetectionRequest.user_tags', index=5,
+      name='user_tags', full_name='mediforproto.DetectionRequest.user_tags', index=5,
       number=6, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='meta', full_name='workflowproto.DetectionRequest.meta', index=6,
+      name='meta', full_name='mediforproto.DetectionRequest.meta', index=6,
       number=7, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='analytic_timeout_sec', full_name='workflowproto.DetectionRequest.analytic_timeout_sec', index=7,
+      name='analytic_timeout_sec', full_name='mediforproto.DetectionRequest.analytic_timeout_sec', index=7,
       number=5, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -427,41 +452,41 @@ _DETECTIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=198,
-  serialized_end=658,
+  serialized_start=196,
+  serialized_end=653,
 )
 
 
 _ANALYTICDETECTIONINFO = _descriptor.Descriptor(
   name='AnalyticDetectionInfo',
-  full_name='workflowproto.AnalyticDetectionInfo',
+  full_name='mediforproto.AnalyticDetectionInfo',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='analytic_id', full_name='workflowproto.AnalyticDetectionInfo.analytic_id', index=0,
+      name='analytic_id', full_name='mediforproto.AnalyticDetectionInfo.analytic_id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='stage', full_name='workflowproto.AnalyticDetectionInfo.stage', index=1,
+      name='stage', full_name='mediforproto.AnalyticDetectionInfo.stage', index=1,
       number=2, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='status', full_name='workflowproto.AnalyticDetectionInfo.status', index=2,
+      name='status', full_name='mediforproto.AnalyticDetectionInfo.status', index=2,
       number=3, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='detection', full_name='workflowproto.AnalyticDetectionInfo.detection', index=3,
+      name='detection', full_name='mediforproto.AnalyticDetectionInfo.detection', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -479,27 +504,27 @@ _ANALYTICDETECTIONINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=661,
-  serialized_end=843,
+  serialized_start=656,
+  serialized_end=836,
 )
 
 
 _DETECTIONINFO_TAGSENTRY = _descriptor.Descriptor(
   name='TagsEntry',
-  full_name='workflowproto.DetectionInfo.TagsEntry',
+  full_name='mediforproto.DetectionInfo.TagsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='workflowproto.DetectionInfo.TagsEntry.key', index=0,
+      name='key', full_name='mediforproto.DetectionInfo.TagsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='value', full_name='workflowproto.DetectionInfo.TagsEntry.value', index=1,
+      name='value', full_name='mediforproto.DetectionInfo.TagsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -517,26 +542,26 @@ _DETECTIONINFO_TAGSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=521,
-  serialized_end=564,
+  serialized_start=516,
+  serialized_end=559,
 )
 
 _DETECTIONINFO_USERTAGSENTRY = _descriptor.Descriptor(
   name='UserTagsEntry',
-  full_name='workflowproto.DetectionInfo.UserTagsEntry',
+  full_name='mediforproto.DetectionInfo.UserTagsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='workflowproto.DetectionInfo.UserTagsEntry.key', index=0,
+      name='key', full_name='mediforproto.DetectionInfo.UserTagsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='value', full_name='workflowproto.DetectionInfo.UserTagsEntry.value', index=1,
+      name='value', full_name='mediforproto.DetectionInfo.UserTagsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -554,26 +579,26 @@ _DETECTIONINFO_USERTAGSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=566,
-  serialized_end=613,
+  serialized_start=561,
+  serialized_end=608,
 )
 
 _DETECTIONINFO_METAENTRY = _descriptor.Descriptor(
   name='MetaEntry',
-  full_name='workflowproto.DetectionInfo.MetaEntry',
+  full_name='mediforproto.DetectionInfo.MetaEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='workflowproto.DetectionInfo.MetaEntry.key', index=0,
+      name='key', full_name='mediforproto.DetectionInfo.MetaEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='value', full_name='workflowproto.DetectionInfo.MetaEntry.value', index=1,
+      name='value', full_name='mediforproto.DetectionInfo.MetaEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -591,82 +616,89 @@ _DETECTIONINFO_METAENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=615,
-  serialized_end=658,
+  serialized_start=610,
+  serialized_end=653,
 )
 
 _DETECTIONINFO = _descriptor.Descriptor(
   name='DetectionInfo',
-  full_name='workflowproto.DetectionInfo',
+  full_name='mediforproto.DetectionInfo',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='workflowproto.DetectionInfo.id', index=0,
+      name='id', full_name='mediforproto.DetectionInfo.id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='analytic_info', full_name='workflowproto.DetectionInfo.analytic_info', index=1,
+      name='req_resources', full_name='mediforproto.DetectionInfo.req_resources', index=1,
+      number=11, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='analytic_info', full_name='mediforproto.DetectionInfo.analytic_info', index=2,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='fusion_info', full_name='workflowproto.DetectionInfo.fusion_info', index=2,
+      name='fusion_info', full_name='mediforproto.DetectionInfo.fusion_info', index=3,
       number=8, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='tags', full_name='workflowproto.DetectionInfo.tags', index=3,
+      name='tags', full_name='mediforproto.DetectionInfo.tags', index=4,
       number=3, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='user_tags', full_name='workflowproto.DetectionInfo.user_tags', index=4,
+      name='user_tags', full_name='mediforproto.DetectionInfo.user_tags', index=5,
       number=6, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='meta', full_name='workflowproto.DetectionInfo.meta', index=5,
+      name='meta', full_name='mediforproto.DetectionInfo.meta', index=6,
       number=7, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='has_fused', full_name='workflowproto.DetectionInfo.has_fused', index=6,
+      name='has_fused', full_name='mediforproto.DetectionInfo.has_fused', index=7,
       number=4, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='fused_score', full_name='workflowproto.DetectionInfo.fused_score', index=7,
+      name='fused_score', full_name='mediforproto.DetectionInfo.fused_score', index=8,
       number=5, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='analytics_total', full_name='workflowproto.DetectionInfo.analytics_total', index=8,
+      name='analytics_total', full_name='mediforproto.DetectionInfo.analytics_total', index=9,
       number=9, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='analytics_finished', full_name='workflowproto.DetectionInfo.analytics_finished', index=9,
+      name='analytics_finished', full_name='mediforproto.DetectionInfo.analytics_finished', index=10,
       number=10, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -684,27 +716,27 @@ _DETECTIONINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=846,
-  serialized_end=1390,
+  serialized_start=839,
+  serialized_end=1425,
 )
 
 
 _DETECTIONINFOREQUEST = _descriptor.Descriptor(
   name='DetectionInfoRequest',
-  full_name='workflowproto.DetectionInfoRequest',
+  full_name='mediforproto.DetectionInfoRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='workflowproto.DetectionInfoRequest.id', index=0,
+      name='id', full_name='mediforproto.DetectionInfoRequest.id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='want_fused', full_name='workflowproto.DetectionInfoRequest.want_fused', index=1,
+      name='want_fused', full_name='mediforproto.DetectionInfoRequest.want_fused', index=1,
       number=2, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
@@ -722,27 +754,65 @@ _DETECTIONINFOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1392,
-  serialized_end=1446,
+  serialized_start=1427,
+  serialized_end=1481,
 )
 
 
-_DETECTIONLISTREQUEST_TAGSENTRY = _descriptor.Descriptor(
-  name='TagsEntry',
-  full_name='workflowproto.DetectionListRequest.TagsEntry',
+_DATERANGE = _descriptor.Descriptor(
+  name='DateRange',
+  full_name='mediforproto.DateRange',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='workflowproto.DetectionListRequest.TagsEntry.key', index=0,
+      name='start_seconds_utc', full_name='mediforproto.DateRange.start_seconds_utc', index=0,
+      number=1, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='end_seconds_utc', full_name='mediforproto.DateRange.end_seconds_utc', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1483,
+  serialized_end=1546,
+)
+
+
+_DETECTIONLISTREQUEST_TAGSENTRY = _descriptor.Descriptor(
+  name='TagsEntry',
+  full_name='mediforproto.DetectionListRequest.TagsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='mediforproto.DetectionListRequest.TagsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='value', full_name='workflowproto.DetectionListRequest.TagsEntry.value', index=1,
+      name='value', full_name='mediforproto.DetectionListRequest.TagsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -760,75 +830,96 @@ _DETECTIONLISTREQUEST_TAGSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=521,
-  serialized_end=564,
+  serialized_start=516,
+  serialized_end=559,
 )
 
 _DETECTIONLISTREQUEST = _descriptor.Descriptor(
   name='DetectionListRequest',
-  full_name='workflowproto.DetectionListRequest',
+  full_name='mediforproto.DetectionListRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='tags', full_name='workflowproto.DetectionListRequest.tags', index=0,
+      name='verbosity', full_name='mediforproto.DetectionListRequest.verbosity', index=0,
+      number=12, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='tags', full_name='mediforproto.DetectionListRequest.tags', index=1,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='detection_ids', full_name='workflowproto.DetectionListRequest.detection_ids', index=1,
+      name='meta_query', full_name='mediforproto.DetectionListRequest.meta_query', index=2,
+      number=10, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='date_range', full_name='mediforproto.DetectionListRequest.date_range', index=3,
+      number=11, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='detection_ids', full_name='mediforproto.DetectionListRequest.detection_ids', index=4,
       number=7, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='want_fused', full_name='workflowproto.DetectionListRequest.want_fused', index=2,
+      name='want_fused', full_name='mediforproto.DetectionListRequest.want_fused', index=5,
       number=4, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='order_by', full_name='workflowproto.DetectionListRequest.order_by', index=3,
+      name='order_by', full_name='mediforproto.DetectionListRequest.order_by', index=6,
       number=5, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='fuser_id', full_name='workflowproto.DetectionListRequest.fuser_id', index=4,
+      name='fuser_id', full_name='mediforproto.DetectionListRequest.fuser_id', index=7,
       number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='fusion_threshold_type', full_name='workflowproto.DetectionListRequest.fusion_threshold_type', index=5,
+      name='fusion_threshold_type', full_name='mediforproto.DetectionListRequest.fusion_threshold_type', index=8,
       number=8, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='fusion_threshold_value', full_name='workflowproto.DetectionListRequest.fusion_threshold_value', index=6,
+      name='fusion_threshold_value', full_name='mediforproto.DetectionListRequest.fusion_threshold_value', index=9,
       number=9, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='page_size', full_name='workflowproto.DetectionListRequest.page_size', index=7,
+      name='page_size', full_name='mediforproto.DetectionListRequest.page_size', index=10,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='page_token', full_name='workflowproto.DetectionListRequest.page_token', index=8,
+      name='page_token', full_name='mediforproto.DetectionListRequest.page_token', index=11,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -846,34 +937,34 @@ _DETECTIONLISTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1449,
-  serialized_end=1818,
+  serialized_start=1549,
+  serialized_end=2037,
 )
 
 
 _DETECTIONLIST = _descriptor.Descriptor(
   name='DetectionList',
-  full_name='workflowproto.DetectionList',
+  full_name='mediforproto.DetectionList',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='detections', full_name='workflowproto.DetectionList.detections', index=0,
+      name='detections', full_name='mediforproto.DetectionList.detections', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='total', full_name='workflowproto.DetectionList.total', index=1,
+      name='total', full_name='mediforproto.DetectionList.total', index=1,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='page_token', full_name='workflowproto.DetectionList.page_token', index=2,
+      name='page_token', full_name='mediforproto.DetectionList.page_token', index=2,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -891,27 +982,27 @@ _DETECTIONLIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1820,
-  serialized_end=1920,
+  serialized_start=2039,
+  serialized_end=2138,
 )
 
 
 _FUSIONREQUEST_TAGSENTRY = _descriptor.Descriptor(
   name='TagsEntry',
-  full_name='workflowproto.FusionRequest.TagsEntry',
+  full_name='mediforproto.FusionRequest.TagsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='workflowproto.FusionRequest.TagsEntry.key', index=0,
+      name='key', full_name='mediforproto.FusionRequest.TagsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='value', full_name='workflowproto.FusionRequest.TagsEntry.value', index=1,
+      name='value', full_name='mediforproto.FusionRequest.TagsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -929,54 +1020,54 @@ _FUSIONREQUEST_TAGSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=521,
-  serialized_end=564,
+  serialized_start=516,
+  serialized_end=559,
 )
 
 _FUSIONREQUEST = _descriptor.Descriptor(
   name='FusionRequest',
-  full_name='workflowproto.FusionRequest',
+  full_name='mediforproto.FusionRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='workflowproto.FusionRequest.id', index=0,
+      name='id', full_name='mediforproto.FusionRequest.id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='request', full_name='workflowproto.FusionRequest.request', index=1,
+      name='request', full_name='mediforproto.FusionRequest.request', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='fuser_id', full_name='workflowproto.FusionRequest.fuser_id', index=2,
+      name='fuser_id', full_name='mediforproto.FusionRequest.fuser_id', index=2,
       number=4, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='tags', full_name='workflowproto.FusionRequest.tags', index=3,
+      name='tags', full_name='mediforproto.FusionRequest.tags', index=3,
       number=3, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='detection_id', full_name='workflowproto.FusionRequest.detection_id', index=4,
+      name='detection_id', full_name='mediforproto.FusionRequest.detection_id', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='detection_id_out_dir', full_name='workflowproto.FusionRequest.detection_id_out_dir', index=5,
+      name='detection_id_out_dir', full_name='mediforproto.FusionRequest.detection_id_out_dir', index=5,
       number=6, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -994,41 +1085,41 @@ _FUSIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1923,
-  serialized_end=2158,
+  serialized_start=2141,
+  serialized_end=2375,
 )
 
 
 _FUSERFUSIONINFO = _descriptor.Descriptor(
   name='FuserFusionInfo',
-  full_name='workflowproto.FuserFusionInfo',
+  full_name='mediforproto.FuserFusionInfo',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='fuser_id', full_name='workflowproto.FuserFusionInfo.fuser_id', index=0,
+      name='fuser_id', full_name='mediforproto.FuserFusionInfo.fuser_id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='stage', full_name='workflowproto.FuserFusionInfo.stage', index=1,
+      name='stage', full_name='mediforproto.FuserFusionInfo.stage', index=1,
       number=2, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='status', full_name='workflowproto.FuserFusionInfo.status', index=2,
+      name='status', full_name='mediforproto.FuserFusionInfo.status', index=2,
       number=3, type=14, cpp_type=8, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='fusion', full_name='workflowproto.FuserFusionInfo.fusion', index=3,
+      name='fusion', full_name='mediforproto.FuserFusionInfo.fusion', index=3,
       number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -1046,27 +1137,27 @@ _FUSERFUSIONINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2161,
-  serialized_end=2328,
+  serialized_start=2378,
+  serialized_end=2543,
 )
 
 
 _FUSIONINFO_TAGSENTRY = _descriptor.Descriptor(
   name='TagsEntry',
-  full_name='workflowproto.FusionInfo.TagsEntry',
+  full_name='mediforproto.FusionInfo.TagsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='workflowproto.FusionInfo.TagsEntry.key', index=0,
+      name='key', full_name='mediforproto.FusionInfo.TagsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='value', full_name='workflowproto.FusionInfo.TagsEntry.value', index=1,
+      name='value', full_name='mediforproto.FusionInfo.TagsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1084,47 +1175,47 @@ _FUSIONINFO_TAGSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=521,
-  serialized_end=564,
+  serialized_start=516,
+  serialized_end=559,
 )
 
 _FUSIONINFO = _descriptor.Descriptor(
   name='FusionInfo',
-  full_name='workflowproto.FusionInfo',
+  full_name='mediforproto.FusionInfo',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='workflowproto.FusionInfo.id', index=0,
+      name='id', full_name='mediforproto.FusionInfo.id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='fusion_infos', full_name='workflowproto.FusionInfo.fusion_infos', index=1,
+      name='fusion_infos', full_name='mediforproto.FusionInfo.fusion_infos', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='tags', full_name='workflowproto.FusionInfo.tags', index=2,
+      name='tags', full_name='mediforproto.FusionInfo.tags', index=2,
       number=3, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='has_fused', full_name='workflowproto.FusionInfo.has_fused', index=3,
+      name='has_fused', full_name='mediforproto.FusionInfo.has_fused', index=3,
       number=4, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='fused_score', full_name='workflowproto.FusionInfo.fused_score', index=4,
+      name='fused_score', full_name='mediforproto.FusionInfo.fused_score', index=4,
       number=5, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
@@ -1142,27 +1233,27 @@ _FUSIONINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2331,
-  serialized_end=2545,
+  serialized_start=2546,
+  serialized_end=2758,
 )
 
 
 _FUSEALLIDSREQUEST = _descriptor.Descriptor(
   name='FuseAllIDsRequest',
-  full_name='workflowproto.FuseAllIDsRequest',
+  full_name='mediforproto.FuseAllIDsRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='fuser_id', full_name='workflowproto.FuseAllIDsRequest.fuser_id', index=0,
+      name='fuser_id', full_name='mediforproto.FuseAllIDsRequest.fuser_id', index=0,
       number=1, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='out_dir', full_name='workflowproto.FuseAllIDsRequest.out_dir', index=1,
+      name='out_dir', full_name='mediforproto.FuseAllIDsRequest.out_dir', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1180,14 +1271,14 @@ _FUSEALLIDSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2547,
-  serialized_end=2601,
+  serialized_start=2760,
+  serialized_end=2814,
 )
 
 
 _FUSEALLIDSRESPONSE = _descriptor.Descriptor(
   name='FuseAllIDsResponse',
-  full_name='workflowproto.FuseAllIDsResponse',
+  full_name='mediforproto.FuseAllIDsResponse',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -1204,27 +1295,27 @@ _FUSEALLIDSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2603,
-  serialized_end=2623,
+  serialized_start=2816,
+  serialized_end=2836,
 )
 
 
 _UPDATEDETECTIONTAGSREQUEST_TAGSENTRY = _descriptor.Descriptor(
   name='TagsEntry',
-  full_name='workflowproto.UpdateDetectionTagsRequest.TagsEntry',
+  full_name='mediforproto.UpdateDetectionTagsRequest.TagsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='workflowproto.UpdateDetectionTagsRequest.TagsEntry.key', index=0,
+      name='key', full_name='mediforproto.UpdateDetectionTagsRequest.TagsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='value', full_name='workflowproto.UpdateDetectionTagsRequest.TagsEntry.value', index=1,
+      name='value', full_name='mediforproto.UpdateDetectionTagsRequest.TagsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1242,40 +1333,40 @@ _UPDATEDETECTIONTAGSREQUEST_TAGSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=521,
-  serialized_end=564,
+  serialized_start=516,
+  serialized_end=559,
 )
 
 _UPDATEDETECTIONTAGSREQUEST = _descriptor.Descriptor(
   name='UpdateDetectionTagsRequest',
-  full_name='workflowproto.UpdateDetectionTagsRequest',
+  full_name='mediforproto.UpdateDetectionTagsRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='detection_id', full_name='workflowproto.UpdateDetectionTagsRequest.detection_id', index=0,
+      name='detection_id', full_name='mediforproto.UpdateDetectionTagsRequest.detection_id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='replace', full_name='workflowproto.UpdateDetectionTagsRequest.replace', index=1,
+      name='replace', full_name='mediforproto.UpdateDetectionTagsRequest.replace', index=1,
       number=2, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='tags', full_name='workflowproto.UpdateDetectionTagsRequest.tags', index=2,
+      name='tags', full_name='mediforproto.UpdateDetectionTagsRequest.tags', index=2,
       number=3, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='delete_tags', full_name='workflowproto.UpdateDetectionTagsRequest.delete_tags', index=3,
+      name='delete_tags', full_name='mediforproto.UpdateDetectionTagsRequest.delete_tags', index=3,
       number=4, type=9, cpp_type=9, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -1293,22 +1384,73 @@ _UPDATEDETECTIONTAGSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2626,
-  serialized_end=2826,
+  serialized_start=2839,
+  serialized_end=3038,
 )
 
 
-_DETECTIONTAGINFOREQUEST = _descriptor.Descriptor(
-  name='DetectionTagInfoRequest',
-  full_name='workflowproto.DetectionTagInfoRequest',
+_DETECTIONTAGINFOREQUEST_REQUIRETAGSENTRY = _descriptor.Descriptor(
+  name='RequireTagsEntry',
+  full_name='mediforproto.DetectionTagInfoRequest.RequireTagsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='mediforproto.DetectionTagInfoRequest.RequireTagsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='mediforproto.DetectionTagInfoRequest.RequireTagsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
   nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3169,
+  serialized_end=3219,
+)
+
+_DETECTIONTAGINFOREQUEST = _descriptor.Descriptor(
+  name='DetectionTagInfoRequest',
+  full_name='mediforproto.DetectionTagInfoRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='require_tags', full_name='mediforproto.DetectionTagInfoRequest.require_tags', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='skip_prefixes', full_name='mediforproto.DetectionTagInfoRequest.skip_prefixes', index=1,
+      number=2, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_DETECTIONTAGINFOREQUEST_REQUIRETAGSENTRY, ],
   enum_types=[
   ],
   serialized_options=None,
@@ -1317,27 +1459,27 @@ _DETECTIONTAGINFOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2828,
-  serialized_end=2853,
+  serialized_start=3041,
+  serialized_end=3219,
 )
 
 
 _DETECTIONTAGINFO_TAGCOUNTSENTRY = _descriptor.Descriptor(
   name='TagCountsEntry',
-  full_name='workflowproto.DetectionTagInfo.TagCountsEntry',
+  full_name='mediforproto.DetectionTagInfo.TagCountsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='workflowproto.DetectionTagInfo.TagCountsEntry.key', index=0,
+      name='key', full_name='mediforproto.DetectionTagInfo.TagCountsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='value', full_name='workflowproto.DetectionTagInfo.TagCountsEntry.value', index=1,
+      name='value', full_name='mediforproto.DetectionTagInfo.TagCountsEntry.value', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -1355,26 +1497,26 @@ _DETECTIONTAGINFO_TAGCOUNTSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3021,
-  serialized_end=3069,
+  serialized_start=3385,
+  serialized_end=3433,
 )
 
 _DETECTIONTAGINFO_USERTAGCOUNTSENTRY = _descriptor.Descriptor(
   name='UserTagCountsEntry',
-  full_name='workflowproto.DetectionTagInfo.UserTagCountsEntry',
+  full_name='mediforproto.DetectionTagInfo.UserTagCountsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='workflowproto.DetectionTagInfo.UserTagCountsEntry.key', index=0,
+      name='key', full_name='mediforproto.DetectionTagInfo.UserTagCountsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='value', full_name='workflowproto.DetectionTagInfo.UserTagCountsEntry.value', index=1,
+      name='value', full_name='mediforproto.DetectionTagInfo.UserTagCountsEntry.value', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -1392,26 +1534,26 @@ _DETECTIONTAGINFO_USERTAGCOUNTSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3071,
-  serialized_end=3123,
+  serialized_start=3435,
+  serialized_end=3487,
 )
 
 _DETECTIONTAGINFO = _descriptor.Descriptor(
   name='DetectionTagInfo',
-  full_name='workflowproto.DetectionTagInfo',
+  full_name='mediforproto.DetectionTagInfo',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='tag_counts', full_name='workflowproto.DetectionTagInfo.tag_counts', index=0,
+      name='tag_counts', full_name='mediforproto.DetectionTagInfo.tag_counts', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='user_tag_counts', full_name='workflowproto.DetectionTagInfo.user_tag_counts', index=1,
+      name='user_tag_counts', full_name='mediforproto.DetectionTagInfo.user_tag_counts', index=1,
       number=2, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -1429,20 +1571,20 @@ _DETECTIONTAGINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2856,
-  serialized_end=3123,
+  serialized_start=3222,
+  serialized_end=3487,
 )
 
 
 _DELETEDETECTIONREQUEST = _descriptor.Descriptor(
   name='DeleteDetectionRequest',
-  full_name='workflowproto.DeleteDetectionRequest',
+  full_name='mediforproto.DeleteDetectionRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='detection_id', full_name='workflowproto.DeleteDetectionRequest.detection_id', index=0,
+      name='detection_id', full_name='mediforproto.DeleteDetectionRequest.detection_id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1460,27 +1602,27 @@ _DELETEDETECTIONREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3125,
-  serialized_end=3171,
+  serialized_start=3489,
+  serialized_end=3535,
 )
 
 
 _ANALYTICMETA_USERFIELDSENTRY = _descriptor.Descriptor(
   name='UserFieldsEntry',
-  full_name='workflowproto.AnalyticMeta.UserFieldsEntry',
+  full_name='mediforproto.AnalyticMeta.UserFieldsEntry',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='workflowproto.AnalyticMeta.UserFieldsEntry.key', index=0,
+      name='key', full_name='mediforproto.AnalyticMeta.UserFieldsEntry.key', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='value', full_name='workflowproto.AnalyticMeta.UserFieldsEntry.value', index=1,
+      name='value', full_name='mediforproto.AnalyticMeta.UserFieldsEntry.value', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -1498,75 +1640,75 @@ _ANALYTICMETA_USERFIELDSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3400,
-  serialized_end=3449,
+  serialized_start=3762,
+  serialized_end=3811,
 )
 
 _ANALYTICMETA = _descriptor.Descriptor(
   name='AnalyticMeta',
-  full_name='workflowproto.AnalyticMeta',
+  full_name='mediforproto.AnalyticMeta',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='workflowproto.AnalyticMeta.id', index=0,
+      name='id', full_name='mediforproto.AnalyticMeta.id', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='version', full_name='workflowproto.AnalyticMeta.version', index=1,
+      name='version', full_name='mediforproto.AnalyticMeta.version', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='cpu', full_name='workflowproto.AnalyticMeta.cpu', index=2,
+      name='cpu', full_name='mediforproto.AnalyticMeta.cpu', index=2,
       number=3, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='ram', full_name='workflowproto.AnalyticMeta.ram', index=3,
+      name='ram', full_name='mediforproto.AnalyticMeta.ram', index=3,
       number=4, type=1, cpp_type=5, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='gpu', full_name='workflowproto.AnalyticMeta.gpu', index=4,
+      name='gpu', full_name='mediforproto.AnalyticMeta.gpu', index=4,
       number=5, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='media', full_name='workflowproto.AnalyticMeta.media', index=5,
+      name='media', full_name='mediforproto.AnalyticMeta.media', index=5,
       number=6, type=14, cpp_type=8, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='description', full_name='workflowproto.AnalyticMeta.description', index=6,
+      name='description', full_name='mediforproto.AnalyticMeta.description', index=6,
       number=7, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='name', full_name='workflowproto.AnalyticMeta.name', index=7,
+      name='name', full_name='mediforproto.AnalyticMeta.name', index=7,
       number=8, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='user_fields', full_name='workflowproto.AnalyticMeta.user_fields', index=8,
+      name='user_fields', full_name='mediforproto.AnalyticMeta.user_fields', index=8,
       number=9, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -1584,20 +1726,20 @@ _ANALYTICMETA = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3174,
-  serialized_end=3449,
+  serialized_start=3538,
+  serialized_end=3811,
 )
 
 
 _ANALYTICLIST = _descriptor.Descriptor(
   name='AnalyticList',
-  full_name='workflowproto.AnalyticList',
+  full_name='mediforproto.AnalyticList',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='analytics', full_name='workflowproto.AnalyticList.analytics', index=0,
+      name='analytics', full_name='mediforproto.AnalyticList.analytics', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -1615,14 +1757,719 @@ _ANALYTICLIST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3451,
-  serialized_end=3513,
+  serialized_start=3813,
+  serialized_end=3874,
 )
 
 
-_EMPTY = _descriptor.Descriptor(
-  name='Empty',
-  full_name='workflowproto.Empty',
+_LISTDETECTIONSREQUEST_TAGSENTRY = _descriptor.Descriptor(
+  name='TagsEntry',
+  full_name='mediforproto.ListDetectionsRequest.TagsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='mediforproto.ListDetectionsRequest.TagsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='mediforproto.ListDetectionsRequest.TagsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=516,
+  serialized_end=559,
+)
+
+_LISTDETECTIONSREQUEST_EXCLUDETAGSENTRY = _descriptor.Descriptor(
+  name='ExcludeTagsEntry',
+  full_name='mediforproto.ListDetectionsRequest.ExcludeTagsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='mediforproto.ListDetectionsRequest.ExcludeTagsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='mediforproto.ListDetectionsRequest.ExcludeTagsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4320,
+  serialized_end=4370,
+)
+
+_LISTDETECTIONSREQUEST = _descriptor.Descriptor(
+  name='ListDetectionsRequest',
+  full_name='mediforproto.ListDetectionsRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='score_filter', full_name='mediforproto.ListDetectionsRequest.score_filter', index=0,
+      number=1, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='meta_filters', full_name='mediforproto.ListDetectionsRequest.meta_filters', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='tags', full_name='mediforproto.ListDetectionsRequest.tags', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='exclude_tags', full_name='mediforproto.ListDetectionsRequest.exclude_tags', index=3,
+      number=9, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='meta_query', full_name='mediforproto.ListDetectionsRequest.meta_query', index=4,
+      number=10, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='order_by', full_name='mediforproto.ListDetectionsRequest.order_by', index=5,
+      number=4, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='analytic_id', full_name='mediforproto.ListDetectionsRequest.analytic_id', index=6,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='fuser_id', full_name='mediforproto.ListDetectionsRequest.fuser_id', index=7,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='page_size', full_name='mediforproto.ListDetectionsRequest.page_size', index=8,
+      number=7, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='page_token', full_name='mediforproto.ListDetectionsRequest.page_token', index=9,
+      number=8, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_LISTDETECTIONSREQUEST_TAGSENTRY, _LISTDETECTIONSREQUEST_EXCLUDETAGSENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3877,
+  serialized_end=4370,
+)
+
+
+_SCOREFILTER = _descriptor.Descriptor(
+  name='ScoreFilter',
+  full_name='mediforproto.ScoreFilter',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='has_min', full_name='mediforproto.ScoreFilter.has_min', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='min', full_name='mediforproto.ScoreFilter.min', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='has_max', full_name='mediforproto.ScoreFilter.has_max', index=2,
+      number=3, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='max', full_name='mediforproto.ScoreFilter.max', index=3,
+      number=4, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4372,
+  serialized_end=4445,
+)
+
+
+_METAFILTER = _descriptor.Descriptor(
+  name='MetaFilter',
+  full_name='mediforproto.MetaFilter',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='meta_key', full_name='mediforproto.MetaFilter.meta_key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='has_min', full_name='mediforproto.MetaFilter.has_min', index=1,
+      number=2, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='min', full_name='mediforproto.MetaFilter.min', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='has_max', full_name='mediforproto.MetaFilter.has_max', index=3,
+      number=4, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='max', full_name='mediforproto.MetaFilter.max', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4447,
+  serialized_end=4537,
+)
+
+
+_UPDATEDETECTIONMETADATAREQUEST_METADATAENTRY = _descriptor.Descriptor(
+  name='MetadataEntry',
+  full_name='mediforproto.UpdateDetectionMetadataRequest.MetadataEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='mediforproto.UpdateDetectionMetadataRequest.MetadataEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='mediforproto.UpdateDetectionMetadataRequest.MetadataEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4674,
+  serialized_end=4721,
+)
+
+_UPDATEDETECTIONMETADATAREQUEST = _descriptor.Descriptor(
+  name='UpdateDetectionMetadataRequest',
+  full_name='mediforproto.UpdateDetectionMetadataRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='detection_id', full_name='mediforproto.UpdateDetectionMetadataRequest.detection_id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='metadata', full_name='mediforproto.UpdateDetectionMetadataRequest.metadata', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_UPDATEDETECTIONMETADATAREQUEST_METADATAENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4540,
+  serialized_end=4721,
+)
+
+
+_GETANALYTICSTATSREQUEST = _descriptor.Descriptor(
+  name='GetAnalyticStatsRequest',
+  full_name='mediforproto.GetAnalyticStatsRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='analytic_ids', full_name='mediforproto.GetAnalyticStatsRequest.analytic_ids', index=0,
+      number=1, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='fuser_ids', full_name='mediforproto.GetAnalyticStatsRequest.fuser_ids', index=1,
+      number=2, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4723,
+  serialized_end=4789,
+)
+
+
+_GETANALYTICSTATSRESPONSE = _descriptor.Descriptor(
+  name='GetAnalyticStatsResponse',
+  full_name='mediforproto.GetAnalyticStatsResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='analytic_stats', full_name='mediforproto.GetAnalyticStatsResponse.analytic_stats', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='fuser_stats', full_name='mediforproto.GetAnalyticStatsResponse.fuser_stats', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4792,
+  serialized_end=4921,
+)
+
+
+_ANALYTICSTATS = _descriptor.Descriptor(
+  name='AnalyticStats',
+  full_name='mediforproto.AnalyticStats',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='mediforproto.AnalyticStats.id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='pending', full_name='mediforproto.AnalyticStats.pending', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='running', full_name='mediforproto.AnalyticStats.running', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='succeeded', full_name='mediforproto.AnalyticStats.succeeded', index=3,
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='opted_out', full_name='mediforproto.AnalyticStats.opted_out', index=4,
+      number=6, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='failed', full_name='mediforproto.AnalyticStats.failed', index=5,
+      number=5, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4923,
+  serialized_end=5038,
+)
+
+
+_GETHISTOGRAMREQUEST_TAGSENTRY = _descriptor.Descriptor(
+  name='TagsEntry',
+  full_name='mediforproto.GetHistogramRequest.TagsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='mediforproto.GetHistogramRequest.TagsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='mediforproto.GetHistogramRequest.TagsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=516,
+  serialized_end=559,
+)
+
+_GETHISTOGRAMREQUEST_EXCLUDETAGSENTRY = _descriptor.Descriptor(
+  name='ExcludeTagsEntry',
+  full_name='mediforproto.GetHistogramRequest.ExcludeTagsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='mediforproto.GetHistogramRequest.ExcludeTagsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='mediforproto.GetHistogramRequest.ExcludeTagsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4320,
+  serialized_end=4370,
+)
+
+_GETHISTOGRAMREQUEST = _descriptor.Descriptor(
+  name='GetHistogramRequest',
+  full_name='mediforproto.GetHistogramRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='analytic_id', full_name='mediforproto.GetHistogramRequest.analytic_id', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='fuser_id', full_name='mediforproto.GetHistogramRequest.fuser_id', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='tags', full_name='mediforproto.GetHistogramRequest.tags', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='exclude_tags', full_name='mediforproto.GetHistogramRequest.exclude_tags', index=3,
+      number=5, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='num_buckets', full_name='mediforproto.GetHistogramRequest.num_buckets', index=4,
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_GETHISTOGRAMREQUEST_TAGSENTRY, _GETHISTOGRAMREQUEST_EXCLUDETAGSENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=5041,
+  serialized_end=5352,
+)
+
+
+_GETHISTOGRAMRESPONSE = _descriptor.Descriptor(
+  name='GetHistogramResponse',
+  full_name='mediforproto.GetHistogramResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='buckets', full_name='mediforproto.GetHistogramResponse.buckets', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=5354,
+  serialized_end=5415,
+)
+
+
+_BUCKET = _descriptor.Descriptor(
+  name='Bucket',
+  full_name='mediforproto.Bucket',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='min', full_name='mediforproto.Bucket.min', index=0,
+      number=1, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='max', full_name='mediforproto.Bucket.max', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='frequency', full_name='mediforproto.Bucket.frequency', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=5417,
+  serialized_end=5470,
+)
+
+
+_DELETEFAILEDANALYTICSREQUEST = _descriptor.Descriptor(
+  name='DeleteFailedAnalyticsRequest',
+  full_name='mediforproto.DeleteFailedAnalyticsRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -1639,8 +2486,257 @@ _EMPTY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=3515,
-  serialized_end=3522,
+  serialized_start=5472,
+  serialized_end=5502,
+)
+
+
+_DELETEFAILEDANALYTICSRESPONSE_DELETEDANALYTICSENTRY = _descriptor.Descriptor(
+  name='DeletedAnalyticsEntry',
+  full_name='mediforproto.DeleteFailedAnalyticsResponse.DeletedAnalyticsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='mediforproto.DeleteFailedAnalyticsResponse.DeletedAnalyticsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='mediforproto.DeleteFailedAnalyticsResponse.DeletedAnalyticsEntry.value', index=1,
+      number=2, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=5632,
+  serialized_end=5719,
+)
+
+_DELETEFAILEDANALYTICSRESPONSE = _descriptor.Descriptor(
+  name='DeleteFailedAnalyticsResponse',
+  full_name='mediforproto.DeleteFailedAnalyticsResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='deleted_analytics', full_name='mediforproto.DeleteFailedAnalyticsResponse.deleted_analytics', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_DELETEFAILEDANALYTICSRESPONSE_DELETEDANALYTICSENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=5505,
+  serialized_end=5719,
+)
+
+
+_DELETEDANALYTICS = _descriptor.Descriptor(
+  name='DeletedAnalytics',
+  full_name='mediforproto.DeletedAnalytics',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='deleted_analytic_ids', full_name='mediforproto.DeletedAnalytics.deleted_analytic_ids', index=0,
+      number=1, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=5721,
+  serialized_end=5769,
+)
+
+
+_GETANALYTICSWITHSCORESREQUEST_TAGSENTRY = _descriptor.Descriptor(
+  name='TagsEntry',
+  full_name='mediforproto.GetAnalyticsWithScoresRequest.TagsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='mediforproto.GetAnalyticsWithScoresRequest.TagsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='mediforproto.GetAnalyticsWithScoresRequest.TagsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=516,
+  serialized_end=559,
+)
+
+_GETANALYTICSWITHSCORESREQUEST_EXCLUDETAGSENTRY = _descriptor.Descriptor(
+  name='ExcludeTagsEntry',
+  full_name='mediforproto.GetAnalyticsWithScoresRequest.ExcludeTagsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='mediforproto.GetAnalyticsWithScoresRequest.ExcludeTagsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='mediforproto.GetAnalyticsWithScoresRequest.ExcludeTagsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=4320,
+  serialized_end=4370,
+)
+
+_GETANALYTICSWITHSCORESREQUEST = _descriptor.Descriptor(
+  name='GetAnalyticsWithScoresRequest',
+  full_name='mediforproto.GetAnalyticsWithScoresRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='tags', full_name='mediforproto.GetAnalyticsWithScoresRequest.tags', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='exclude_tags', full_name='mediforproto.GetAnalyticsWithScoresRequest.exclude_tags', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[_GETANALYTICSWITHSCORESREQUEST_TAGSENTRY, _GETANALYTICSWITHSCORESREQUEST_EXCLUDETAGSENTRY, ],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=5772,
+  serialized_end=6053,
+)
+
+
+_GETANALYTICSWITHSCORESRESPONSE = _descriptor.Descriptor(
+  name='GetAnalyticsWithScoresResponse',
+  full_name='mediforproto.GetAnalyticsWithScoresResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='analytic_ids', full_name='mediforproto.GetAnalyticsWithScoresResponse.analytic_ids', index=0,
+      number=1, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='fuser_ids', full_name='mediforproto.GetAnalyticsWithScoresResponse.fuser_ids', index=1,
+      number=2, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=6055,
+  serialized_end=6128,
 )
 
 _SORTCOL.fields_by_name['key'].enum_type = _SORTKEY
@@ -1657,13 +2753,16 @@ _ANALYTICDETECTIONINFO.fields_by_name['detection'].message_type = medifor_dot_v1
 _DETECTIONINFO_TAGSENTRY.containing_type = _DETECTIONINFO
 _DETECTIONINFO_USERTAGSENTRY.containing_type = _DETECTIONINFO
 _DETECTIONINFO_METAENTRY.containing_type = _DETECTIONINFO
+_DETECTIONINFO.fields_by_name['req_resources'].message_type = medifor_dot_v1_dot_analytic__pb2._RESOURCE
 _DETECTIONINFO.fields_by_name['analytic_info'].message_type = _ANALYTICDETECTIONINFO
 _DETECTIONINFO.fields_by_name['fusion_info'].message_type = _FUSERFUSIONINFO
 _DETECTIONINFO.fields_by_name['tags'].message_type = _DETECTIONINFO_TAGSENTRY
 _DETECTIONINFO.fields_by_name['user_tags'].message_type = _DETECTIONINFO_USERTAGSENTRY
 _DETECTIONINFO.fields_by_name['meta'].message_type = _DETECTIONINFO_METAENTRY
 _DETECTIONLISTREQUEST_TAGSENTRY.containing_type = _DETECTIONLISTREQUEST
+_DETECTIONLISTREQUEST.fields_by_name['verbosity'].enum_type = _DETECTIONLISTVERBOSITY
 _DETECTIONLISTREQUEST.fields_by_name['tags'].message_type = _DETECTIONLISTREQUEST_TAGSENTRY
+_DETECTIONLISTREQUEST.fields_by_name['date_range'].message_type = _DATERANGE
 _DETECTIONLISTREQUEST.fields_by_name['order_by'].message_type = _SORTCOL
 _DETECTIONLISTREQUEST.fields_by_name['fusion_threshold_type'].enum_type = _FUSIONTHRESHOLDTYPE
 _DETECTIONLIST.fields_by_name['detections'].message_type = _DETECTIONINFO
@@ -1678,6 +2777,8 @@ _FUSIONINFO.fields_by_name['fusion_infos'].message_type = _FUSERFUSIONINFO
 _FUSIONINFO.fields_by_name['tags'].message_type = _FUSIONINFO_TAGSENTRY
 _UPDATEDETECTIONTAGSREQUEST_TAGSENTRY.containing_type = _UPDATEDETECTIONTAGSREQUEST
 _UPDATEDETECTIONTAGSREQUEST.fields_by_name['tags'].message_type = _UPDATEDETECTIONTAGSREQUEST_TAGSENTRY
+_DETECTIONTAGINFOREQUEST_REQUIRETAGSENTRY.containing_type = _DETECTIONTAGINFOREQUEST
+_DETECTIONTAGINFOREQUEST.fields_by_name['require_tags'].message_type = _DETECTIONTAGINFOREQUEST_REQUIRETAGSENTRY
 _DETECTIONTAGINFO_TAGCOUNTSENTRY.containing_type = _DETECTIONTAGINFO
 _DETECTIONTAGINFO_USERTAGCOUNTSENTRY.containing_type = _DETECTIONTAGINFO
 _DETECTIONTAGINFO.fields_by_name['tag_counts'].message_type = _DETECTIONTAGINFO_TAGCOUNTSENTRY
@@ -1686,11 +2787,35 @@ _ANALYTICMETA_USERFIELDSENTRY.containing_type = _ANALYTICMETA
 _ANALYTICMETA.fields_by_name['media'].enum_type = _MEDIATYPE
 _ANALYTICMETA.fields_by_name['user_fields'].message_type = _ANALYTICMETA_USERFIELDSENTRY
 _ANALYTICLIST.fields_by_name['analytics'].message_type = _ANALYTICMETA
+_LISTDETECTIONSREQUEST_TAGSENTRY.containing_type = _LISTDETECTIONSREQUEST
+_LISTDETECTIONSREQUEST_EXCLUDETAGSENTRY.containing_type = _LISTDETECTIONSREQUEST
+_LISTDETECTIONSREQUEST.fields_by_name['score_filter'].message_type = _SCOREFILTER
+_LISTDETECTIONSREQUEST.fields_by_name['meta_filters'].message_type = _METAFILTER
+_LISTDETECTIONSREQUEST.fields_by_name['tags'].message_type = _LISTDETECTIONSREQUEST_TAGSENTRY
+_LISTDETECTIONSREQUEST.fields_by_name['exclude_tags'].message_type = _LISTDETECTIONSREQUEST_EXCLUDETAGSENTRY
+_LISTDETECTIONSREQUEST.fields_by_name['order_by'].message_type = _SORTCOL
+_UPDATEDETECTIONMETADATAREQUEST_METADATAENTRY.containing_type = _UPDATEDETECTIONMETADATAREQUEST
+_UPDATEDETECTIONMETADATAREQUEST.fields_by_name['metadata'].message_type = _UPDATEDETECTIONMETADATAREQUEST_METADATAENTRY
+_GETANALYTICSTATSRESPONSE.fields_by_name['analytic_stats'].message_type = _ANALYTICSTATS
+_GETANALYTICSTATSRESPONSE.fields_by_name['fuser_stats'].message_type = _ANALYTICSTATS
+_GETHISTOGRAMREQUEST_TAGSENTRY.containing_type = _GETHISTOGRAMREQUEST
+_GETHISTOGRAMREQUEST_EXCLUDETAGSENTRY.containing_type = _GETHISTOGRAMREQUEST
+_GETHISTOGRAMREQUEST.fields_by_name['tags'].message_type = _GETHISTOGRAMREQUEST_TAGSENTRY
+_GETHISTOGRAMREQUEST.fields_by_name['exclude_tags'].message_type = _GETHISTOGRAMREQUEST_EXCLUDETAGSENTRY
+_GETHISTOGRAMRESPONSE.fields_by_name['buckets'].message_type = _BUCKET
+_DELETEFAILEDANALYTICSRESPONSE_DELETEDANALYTICSENTRY.fields_by_name['value'].message_type = _DELETEDANALYTICS
+_DELETEFAILEDANALYTICSRESPONSE_DELETEDANALYTICSENTRY.containing_type = _DELETEFAILEDANALYTICSRESPONSE
+_DELETEFAILEDANALYTICSRESPONSE.fields_by_name['deleted_analytics'].message_type = _DELETEFAILEDANALYTICSRESPONSE_DELETEDANALYTICSENTRY
+_GETANALYTICSWITHSCORESREQUEST_TAGSENTRY.containing_type = _GETANALYTICSWITHSCORESREQUEST
+_GETANALYTICSWITHSCORESREQUEST_EXCLUDETAGSENTRY.containing_type = _GETANALYTICSWITHSCORESREQUEST
+_GETANALYTICSWITHSCORESREQUEST.fields_by_name['tags'].message_type = _GETANALYTICSWITHSCORESREQUEST_TAGSENTRY
+_GETANALYTICSWITHSCORESREQUEST.fields_by_name['exclude_tags'].message_type = _GETANALYTICSWITHSCORESREQUEST_EXCLUDETAGSENTRY
 DESCRIPTOR.message_types_by_name['SortCol'] = _SORTCOL
 DESCRIPTOR.message_types_by_name['DetectionRequest'] = _DETECTIONREQUEST
 DESCRIPTOR.message_types_by_name['AnalyticDetectionInfo'] = _ANALYTICDETECTIONINFO
 DESCRIPTOR.message_types_by_name['DetectionInfo'] = _DETECTIONINFO
 DESCRIPTOR.message_types_by_name['DetectionInfoRequest'] = _DETECTIONINFOREQUEST
+DESCRIPTOR.message_types_by_name['DateRange'] = _DATERANGE
 DESCRIPTOR.message_types_by_name['DetectionListRequest'] = _DETECTIONLISTREQUEST
 DESCRIPTOR.message_types_by_name['DetectionList'] = _DETECTIONLIST
 DESCRIPTOR.message_types_by_name['FusionRequest'] = _FUSIONREQUEST
@@ -1704,18 +2829,33 @@ DESCRIPTOR.message_types_by_name['DetectionTagInfo'] = _DETECTIONTAGINFO
 DESCRIPTOR.message_types_by_name['DeleteDetectionRequest'] = _DELETEDETECTIONREQUEST
 DESCRIPTOR.message_types_by_name['AnalyticMeta'] = _ANALYTICMETA
 DESCRIPTOR.message_types_by_name['AnalyticList'] = _ANALYTICLIST
-DESCRIPTOR.message_types_by_name['Empty'] = _EMPTY
+DESCRIPTOR.message_types_by_name['ListDetectionsRequest'] = _LISTDETECTIONSREQUEST
+DESCRIPTOR.message_types_by_name['ScoreFilter'] = _SCOREFILTER
+DESCRIPTOR.message_types_by_name['MetaFilter'] = _METAFILTER
+DESCRIPTOR.message_types_by_name['UpdateDetectionMetadataRequest'] = _UPDATEDETECTIONMETADATAREQUEST
+DESCRIPTOR.message_types_by_name['GetAnalyticStatsRequest'] = _GETANALYTICSTATSREQUEST
+DESCRIPTOR.message_types_by_name['GetAnalyticStatsResponse'] = _GETANALYTICSTATSRESPONSE
+DESCRIPTOR.message_types_by_name['AnalyticStats'] = _ANALYTICSTATS
+DESCRIPTOR.message_types_by_name['GetHistogramRequest'] = _GETHISTOGRAMREQUEST
+DESCRIPTOR.message_types_by_name['GetHistogramResponse'] = _GETHISTOGRAMRESPONSE
+DESCRIPTOR.message_types_by_name['Bucket'] = _BUCKET
+DESCRIPTOR.message_types_by_name['DeleteFailedAnalyticsRequest'] = _DELETEFAILEDANALYTICSREQUEST
+DESCRIPTOR.message_types_by_name['DeleteFailedAnalyticsResponse'] = _DELETEFAILEDANALYTICSRESPONSE
+DESCRIPTOR.message_types_by_name['DeletedAnalytics'] = _DELETEDANALYTICS
+DESCRIPTOR.message_types_by_name['GetAnalyticsWithScoresRequest'] = _GETANALYTICSWITHSCORESREQUEST
+DESCRIPTOR.message_types_by_name['GetAnalyticsWithScoresResponse'] = _GETANALYTICSWITHSCORESRESPONSE
 DESCRIPTOR.enum_types_by_name['DetectionStage'] = _DETECTIONSTAGE
 DESCRIPTOR.enum_types_by_name['DetectionStatus'] = _DETECTIONSTATUS
 DESCRIPTOR.enum_types_by_name['SortKey'] = _SORTKEY
 DESCRIPTOR.enum_types_by_name['FusionThresholdType'] = _FUSIONTHRESHOLDTYPE
 DESCRIPTOR.enum_types_by_name['MediaType'] = _MEDIATYPE
+DESCRIPTOR.enum_types_by_name['DetectionListVerbosity'] = _DETECTIONLISTVERBOSITY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 SortCol = _reflection.GeneratedProtocolMessageType('SortCol', (_message.Message,), dict(
   DESCRIPTOR = _SORTCOL,
   __module__ = 'medifor.v1.pipeline_pb2'
-  # @@protoc_insertion_point(class_scope:workflowproto.SortCol)
+  # @@protoc_insertion_point(class_scope:mediforproto.SortCol)
   ))
 _sym_db.RegisterMessage(SortCol)
 
@@ -1724,26 +2864,26 @@ DetectionRequest = _reflection.GeneratedProtocolMessageType('DetectionRequest', 
   TagsEntry = _reflection.GeneratedProtocolMessageType('TagsEntry', (_message.Message,), dict(
     DESCRIPTOR = _DETECTIONREQUEST_TAGSENTRY,
     __module__ = 'medifor.v1.pipeline_pb2'
-    # @@protoc_insertion_point(class_scope:workflowproto.DetectionRequest.TagsEntry)
+    # @@protoc_insertion_point(class_scope:mediforproto.DetectionRequest.TagsEntry)
     ))
   ,
 
   UserTagsEntry = _reflection.GeneratedProtocolMessageType('UserTagsEntry', (_message.Message,), dict(
     DESCRIPTOR = _DETECTIONREQUEST_USERTAGSENTRY,
     __module__ = 'medifor.v1.pipeline_pb2'
-    # @@protoc_insertion_point(class_scope:workflowproto.DetectionRequest.UserTagsEntry)
+    # @@protoc_insertion_point(class_scope:mediforproto.DetectionRequest.UserTagsEntry)
     ))
   ,
 
   MetaEntry = _reflection.GeneratedProtocolMessageType('MetaEntry', (_message.Message,), dict(
     DESCRIPTOR = _DETECTIONREQUEST_METAENTRY,
     __module__ = 'medifor.v1.pipeline_pb2'
-    # @@protoc_insertion_point(class_scope:workflowproto.DetectionRequest.MetaEntry)
+    # @@protoc_insertion_point(class_scope:mediforproto.DetectionRequest.MetaEntry)
     ))
   ,
   DESCRIPTOR = _DETECTIONREQUEST,
   __module__ = 'medifor.v1.pipeline_pb2'
-  # @@protoc_insertion_point(class_scope:workflowproto.DetectionRequest)
+  # @@protoc_insertion_point(class_scope:mediforproto.DetectionRequest)
   ))
 _sym_db.RegisterMessage(DetectionRequest)
 _sym_db.RegisterMessage(DetectionRequest.TagsEntry)
@@ -1753,7 +2893,7 @@ _sym_db.RegisterMessage(DetectionRequest.MetaEntry)
 AnalyticDetectionInfo = _reflection.GeneratedProtocolMessageType('AnalyticDetectionInfo', (_message.Message,), dict(
   DESCRIPTOR = _ANALYTICDETECTIONINFO,
   __module__ = 'medifor.v1.pipeline_pb2'
-  # @@protoc_insertion_point(class_scope:workflowproto.AnalyticDetectionInfo)
+  # @@protoc_insertion_point(class_scope:mediforproto.AnalyticDetectionInfo)
   ))
 _sym_db.RegisterMessage(AnalyticDetectionInfo)
 
@@ -1762,26 +2902,26 @@ DetectionInfo = _reflection.GeneratedProtocolMessageType('DetectionInfo', (_mess
   TagsEntry = _reflection.GeneratedProtocolMessageType('TagsEntry', (_message.Message,), dict(
     DESCRIPTOR = _DETECTIONINFO_TAGSENTRY,
     __module__ = 'medifor.v1.pipeline_pb2'
-    # @@protoc_insertion_point(class_scope:workflowproto.DetectionInfo.TagsEntry)
+    # @@protoc_insertion_point(class_scope:mediforproto.DetectionInfo.TagsEntry)
     ))
   ,
 
   UserTagsEntry = _reflection.GeneratedProtocolMessageType('UserTagsEntry', (_message.Message,), dict(
     DESCRIPTOR = _DETECTIONINFO_USERTAGSENTRY,
     __module__ = 'medifor.v1.pipeline_pb2'
-    # @@protoc_insertion_point(class_scope:workflowproto.DetectionInfo.UserTagsEntry)
+    # @@protoc_insertion_point(class_scope:mediforproto.DetectionInfo.UserTagsEntry)
     ))
   ,
 
   MetaEntry = _reflection.GeneratedProtocolMessageType('MetaEntry', (_message.Message,), dict(
     DESCRIPTOR = _DETECTIONINFO_METAENTRY,
     __module__ = 'medifor.v1.pipeline_pb2'
-    # @@protoc_insertion_point(class_scope:workflowproto.DetectionInfo.MetaEntry)
+    # @@protoc_insertion_point(class_scope:mediforproto.DetectionInfo.MetaEntry)
     ))
   ,
   DESCRIPTOR = _DETECTIONINFO,
   __module__ = 'medifor.v1.pipeline_pb2'
-  # @@protoc_insertion_point(class_scope:workflowproto.DetectionInfo)
+  # @@protoc_insertion_point(class_scope:mediforproto.DetectionInfo)
   ))
 _sym_db.RegisterMessage(DetectionInfo)
 _sym_db.RegisterMessage(DetectionInfo.TagsEntry)
@@ -1791,21 +2931,28 @@ _sym_db.RegisterMessage(DetectionInfo.MetaEntry)
 DetectionInfoRequest = _reflection.GeneratedProtocolMessageType('DetectionInfoRequest', (_message.Message,), dict(
   DESCRIPTOR = _DETECTIONINFOREQUEST,
   __module__ = 'medifor.v1.pipeline_pb2'
-  # @@protoc_insertion_point(class_scope:workflowproto.DetectionInfoRequest)
+  # @@protoc_insertion_point(class_scope:mediforproto.DetectionInfoRequest)
   ))
 _sym_db.RegisterMessage(DetectionInfoRequest)
+
+DateRange = _reflection.GeneratedProtocolMessageType('DateRange', (_message.Message,), dict(
+  DESCRIPTOR = _DATERANGE,
+  __module__ = 'medifor.v1.pipeline_pb2'
+  # @@protoc_insertion_point(class_scope:mediforproto.DateRange)
+  ))
+_sym_db.RegisterMessage(DateRange)
 
 DetectionListRequest = _reflection.GeneratedProtocolMessageType('DetectionListRequest', (_message.Message,), dict(
 
   TagsEntry = _reflection.GeneratedProtocolMessageType('TagsEntry', (_message.Message,), dict(
     DESCRIPTOR = _DETECTIONLISTREQUEST_TAGSENTRY,
     __module__ = 'medifor.v1.pipeline_pb2'
-    # @@protoc_insertion_point(class_scope:workflowproto.DetectionListRequest.TagsEntry)
+    # @@protoc_insertion_point(class_scope:mediforproto.DetectionListRequest.TagsEntry)
     ))
   ,
   DESCRIPTOR = _DETECTIONLISTREQUEST,
   __module__ = 'medifor.v1.pipeline_pb2'
-  # @@protoc_insertion_point(class_scope:workflowproto.DetectionListRequest)
+  # @@protoc_insertion_point(class_scope:mediforproto.DetectionListRequest)
   ))
 _sym_db.RegisterMessage(DetectionListRequest)
 _sym_db.RegisterMessage(DetectionListRequest.TagsEntry)
@@ -1813,7 +2960,7 @@ _sym_db.RegisterMessage(DetectionListRequest.TagsEntry)
 DetectionList = _reflection.GeneratedProtocolMessageType('DetectionList', (_message.Message,), dict(
   DESCRIPTOR = _DETECTIONLIST,
   __module__ = 'medifor.v1.pipeline_pb2'
-  # @@protoc_insertion_point(class_scope:workflowproto.DetectionList)
+  # @@protoc_insertion_point(class_scope:mediforproto.DetectionList)
   ))
 _sym_db.RegisterMessage(DetectionList)
 
@@ -1822,12 +2969,12 @@ FusionRequest = _reflection.GeneratedProtocolMessageType('FusionRequest', (_mess
   TagsEntry = _reflection.GeneratedProtocolMessageType('TagsEntry', (_message.Message,), dict(
     DESCRIPTOR = _FUSIONREQUEST_TAGSENTRY,
     __module__ = 'medifor.v1.pipeline_pb2'
-    # @@protoc_insertion_point(class_scope:workflowproto.FusionRequest.TagsEntry)
+    # @@protoc_insertion_point(class_scope:mediforproto.FusionRequest.TagsEntry)
     ))
   ,
   DESCRIPTOR = _FUSIONREQUEST,
   __module__ = 'medifor.v1.pipeline_pb2'
-  # @@protoc_insertion_point(class_scope:workflowproto.FusionRequest)
+  # @@protoc_insertion_point(class_scope:mediforproto.FusionRequest)
   ))
 _sym_db.RegisterMessage(FusionRequest)
 _sym_db.RegisterMessage(FusionRequest.TagsEntry)
@@ -1835,7 +2982,7 @@ _sym_db.RegisterMessage(FusionRequest.TagsEntry)
 FuserFusionInfo = _reflection.GeneratedProtocolMessageType('FuserFusionInfo', (_message.Message,), dict(
   DESCRIPTOR = _FUSERFUSIONINFO,
   __module__ = 'medifor.v1.pipeline_pb2'
-  # @@protoc_insertion_point(class_scope:workflowproto.FuserFusionInfo)
+  # @@protoc_insertion_point(class_scope:mediforproto.FuserFusionInfo)
   ))
 _sym_db.RegisterMessage(FuserFusionInfo)
 
@@ -1844,12 +2991,12 @@ FusionInfo = _reflection.GeneratedProtocolMessageType('FusionInfo', (_message.Me
   TagsEntry = _reflection.GeneratedProtocolMessageType('TagsEntry', (_message.Message,), dict(
     DESCRIPTOR = _FUSIONINFO_TAGSENTRY,
     __module__ = 'medifor.v1.pipeline_pb2'
-    # @@protoc_insertion_point(class_scope:workflowproto.FusionInfo.TagsEntry)
+    # @@protoc_insertion_point(class_scope:mediforproto.FusionInfo.TagsEntry)
     ))
   ,
   DESCRIPTOR = _FUSIONINFO,
   __module__ = 'medifor.v1.pipeline_pb2'
-  # @@protoc_insertion_point(class_scope:workflowproto.FusionInfo)
+  # @@protoc_insertion_point(class_scope:mediforproto.FusionInfo)
   ))
 _sym_db.RegisterMessage(FusionInfo)
 _sym_db.RegisterMessage(FusionInfo.TagsEntry)
@@ -1857,14 +3004,14 @@ _sym_db.RegisterMessage(FusionInfo.TagsEntry)
 FuseAllIDsRequest = _reflection.GeneratedProtocolMessageType('FuseAllIDsRequest', (_message.Message,), dict(
   DESCRIPTOR = _FUSEALLIDSREQUEST,
   __module__ = 'medifor.v1.pipeline_pb2'
-  # @@protoc_insertion_point(class_scope:workflowproto.FuseAllIDsRequest)
+  # @@protoc_insertion_point(class_scope:mediforproto.FuseAllIDsRequest)
   ))
 _sym_db.RegisterMessage(FuseAllIDsRequest)
 
 FuseAllIDsResponse = _reflection.GeneratedProtocolMessageType('FuseAllIDsResponse', (_message.Message,), dict(
   DESCRIPTOR = _FUSEALLIDSRESPONSE,
   __module__ = 'medifor.v1.pipeline_pb2'
-  # @@protoc_insertion_point(class_scope:workflowproto.FuseAllIDsResponse)
+  # @@protoc_insertion_point(class_scope:mediforproto.FuseAllIDsResponse)
   ))
 _sym_db.RegisterMessage(FuseAllIDsResponse)
 
@@ -1873,41 +3020,49 @@ UpdateDetectionTagsRequest = _reflection.GeneratedProtocolMessageType('UpdateDet
   TagsEntry = _reflection.GeneratedProtocolMessageType('TagsEntry', (_message.Message,), dict(
     DESCRIPTOR = _UPDATEDETECTIONTAGSREQUEST_TAGSENTRY,
     __module__ = 'medifor.v1.pipeline_pb2'
-    # @@protoc_insertion_point(class_scope:workflowproto.UpdateDetectionTagsRequest.TagsEntry)
+    # @@protoc_insertion_point(class_scope:mediforproto.UpdateDetectionTagsRequest.TagsEntry)
     ))
   ,
   DESCRIPTOR = _UPDATEDETECTIONTAGSREQUEST,
   __module__ = 'medifor.v1.pipeline_pb2'
-  # @@protoc_insertion_point(class_scope:workflowproto.UpdateDetectionTagsRequest)
+  # @@protoc_insertion_point(class_scope:mediforproto.UpdateDetectionTagsRequest)
   ))
 _sym_db.RegisterMessage(UpdateDetectionTagsRequest)
 _sym_db.RegisterMessage(UpdateDetectionTagsRequest.TagsEntry)
 
 DetectionTagInfoRequest = _reflection.GeneratedProtocolMessageType('DetectionTagInfoRequest', (_message.Message,), dict(
+
+  RequireTagsEntry = _reflection.GeneratedProtocolMessageType('RequireTagsEntry', (_message.Message,), dict(
+    DESCRIPTOR = _DETECTIONTAGINFOREQUEST_REQUIRETAGSENTRY,
+    __module__ = 'medifor.v1.pipeline_pb2'
+    # @@protoc_insertion_point(class_scope:mediforproto.DetectionTagInfoRequest.RequireTagsEntry)
+    ))
+  ,
   DESCRIPTOR = _DETECTIONTAGINFOREQUEST,
   __module__ = 'medifor.v1.pipeline_pb2'
-  # @@protoc_insertion_point(class_scope:workflowproto.DetectionTagInfoRequest)
+  # @@protoc_insertion_point(class_scope:mediforproto.DetectionTagInfoRequest)
   ))
 _sym_db.RegisterMessage(DetectionTagInfoRequest)
+_sym_db.RegisterMessage(DetectionTagInfoRequest.RequireTagsEntry)
 
 DetectionTagInfo = _reflection.GeneratedProtocolMessageType('DetectionTagInfo', (_message.Message,), dict(
 
   TagCountsEntry = _reflection.GeneratedProtocolMessageType('TagCountsEntry', (_message.Message,), dict(
     DESCRIPTOR = _DETECTIONTAGINFO_TAGCOUNTSENTRY,
     __module__ = 'medifor.v1.pipeline_pb2'
-    # @@protoc_insertion_point(class_scope:workflowproto.DetectionTagInfo.TagCountsEntry)
+    # @@protoc_insertion_point(class_scope:mediforproto.DetectionTagInfo.TagCountsEntry)
     ))
   ,
 
   UserTagCountsEntry = _reflection.GeneratedProtocolMessageType('UserTagCountsEntry', (_message.Message,), dict(
     DESCRIPTOR = _DETECTIONTAGINFO_USERTAGCOUNTSENTRY,
     __module__ = 'medifor.v1.pipeline_pb2'
-    # @@protoc_insertion_point(class_scope:workflowproto.DetectionTagInfo.UserTagCountsEntry)
+    # @@protoc_insertion_point(class_scope:mediforproto.DetectionTagInfo.UserTagCountsEntry)
     ))
   ,
   DESCRIPTOR = _DETECTIONTAGINFO,
   __module__ = 'medifor.v1.pipeline_pb2'
-  # @@protoc_insertion_point(class_scope:workflowproto.DetectionTagInfo)
+  # @@protoc_insertion_point(class_scope:mediforproto.DetectionTagInfo)
   ))
 _sym_db.RegisterMessage(DetectionTagInfo)
 _sym_db.RegisterMessage(DetectionTagInfo.TagCountsEntry)
@@ -1916,7 +3071,7 @@ _sym_db.RegisterMessage(DetectionTagInfo.UserTagCountsEntry)
 DeleteDetectionRequest = _reflection.GeneratedProtocolMessageType('DeleteDetectionRequest', (_message.Message,), dict(
   DESCRIPTOR = _DELETEDETECTIONREQUEST,
   __module__ = 'medifor.v1.pipeline_pb2'
-  # @@protoc_insertion_point(class_scope:workflowproto.DeleteDetectionRequest)
+  # @@protoc_insertion_point(class_scope:mediforproto.DeleteDetectionRequest)
   ))
 _sym_db.RegisterMessage(DeleteDetectionRequest)
 
@@ -1925,12 +3080,12 @@ AnalyticMeta = _reflection.GeneratedProtocolMessageType('AnalyticMeta', (_messag
   UserFieldsEntry = _reflection.GeneratedProtocolMessageType('UserFieldsEntry', (_message.Message,), dict(
     DESCRIPTOR = _ANALYTICMETA_USERFIELDSENTRY,
     __module__ = 'medifor.v1.pipeline_pb2'
-    # @@protoc_insertion_point(class_scope:workflowproto.AnalyticMeta.UserFieldsEntry)
+    # @@protoc_insertion_point(class_scope:mediforproto.AnalyticMeta.UserFieldsEntry)
     ))
   ,
   DESCRIPTOR = _ANALYTICMETA,
   __module__ = 'medifor.v1.pipeline_pb2'
-  # @@protoc_insertion_point(class_scope:workflowproto.AnalyticMeta)
+  # @@protoc_insertion_point(class_scope:mediforproto.AnalyticMeta)
   ))
 _sym_db.RegisterMessage(AnalyticMeta)
 _sym_db.RegisterMessage(AnalyticMeta.UserFieldsEntry)
@@ -1938,18 +3093,181 @@ _sym_db.RegisterMessage(AnalyticMeta.UserFieldsEntry)
 AnalyticList = _reflection.GeneratedProtocolMessageType('AnalyticList', (_message.Message,), dict(
   DESCRIPTOR = _ANALYTICLIST,
   __module__ = 'medifor.v1.pipeline_pb2'
-  # @@protoc_insertion_point(class_scope:workflowproto.AnalyticList)
+  # @@protoc_insertion_point(class_scope:mediforproto.AnalyticList)
   ))
 _sym_db.RegisterMessage(AnalyticList)
 
-Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), dict(
-  DESCRIPTOR = _EMPTY,
+ListDetectionsRequest = _reflection.GeneratedProtocolMessageType('ListDetectionsRequest', (_message.Message,), dict(
+
+  TagsEntry = _reflection.GeneratedProtocolMessageType('TagsEntry', (_message.Message,), dict(
+    DESCRIPTOR = _LISTDETECTIONSREQUEST_TAGSENTRY,
+    __module__ = 'medifor.v1.pipeline_pb2'
+    # @@protoc_insertion_point(class_scope:mediforproto.ListDetectionsRequest.TagsEntry)
+    ))
+  ,
+
+  ExcludeTagsEntry = _reflection.GeneratedProtocolMessageType('ExcludeTagsEntry', (_message.Message,), dict(
+    DESCRIPTOR = _LISTDETECTIONSREQUEST_EXCLUDETAGSENTRY,
+    __module__ = 'medifor.v1.pipeline_pb2'
+    # @@protoc_insertion_point(class_scope:mediforproto.ListDetectionsRequest.ExcludeTagsEntry)
+    ))
+  ,
+  DESCRIPTOR = _LISTDETECTIONSREQUEST,
   __module__ = 'medifor.v1.pipeline_pb2'
-  # @@protoc_insertion_point(class_scope:workflowproto.Empty)
+  # @@protoc_insertion_point(class_scope:mediforproto.ListDetectionsRequest)
   ))
-_sym_db.RegisterMessage(Empty)
+_sym_db.RegisterMessage(ListDetectionsRequest)
+_sym_db.RegisterMessage(ListDetectionsRequest.TagsEntry)
+_sym_db.RegisterMessage(ListDetectionsRequest.ExcludeTagsEntry)
+
+ScoreFilter = _reflection.GeneratedProtocolMessageType('ScoreFilter', (_message.Message,), dict(
+  DESCRIPTOR = _SCOREFILTER,
+  __module__ = 'medifor.v1.pipeline_pb2'
+  # @@protoc_insertion_point(class_scope:mediforproto.ScoreFilter)
+  ))
+_sym_db.RegisterMessage(ScoreFilter)
+
+MetaFilter = _reflection.GeneratedProtocolMessageType('MetaFilter', (_message.Message,), dict(
+  DESCRIPTOR = _METAFILTER,
+  __module__ = 'medifor.v1.pipeline_pb2'
+  # @@protoc_insertion_point(class_scope:mediforproto.MetaFilter)
+  ))
+_sym_db.RegisterMessage(MetaFilter)
+
+UpdateDetectionMetadataRequest = _reflection.GeneratedProtocolMessageType('UpdateDetectionMetadataRequest', (_message.Message,), dict(
+
+  MetadataEntry = _reflection.GeneratedProtocolMessageType('MetadataEntry', (_message.Message,), dict(
+    DESCRIPTOR = _UPDATEDETECTIONMETADATAREQUEST_METADATAENTRY,
+    __module__ = 'medifor.v1.pipeline_pb2'
+    # @@protoc_insertion_point(class_scope:mediforproto.UpdateDetectionMetadataRequest.MetadataEntry)
+    ))
+  ,
+  DESCRIPTOR = _UPDATEDETECTIONMETADATAREQUEST,
+  __module__ = 'medifor.v1.pipeline_pb2'
+  # @@protoc_insertion_point(class_scope:mediforproto.UpdateDetectionMetadataRequest)
+  ))
+_sym_db.RegisterMessage(UpdateDetectionMetadataRequest)
+_sym_db.RegisterMessage(UpdateDetectionMetadataRequest.MetadataEntry)
+
+GetAnalyticStatsRequest = _reflection.GeneratedProtocolMessageType('GetAnalyticStatsRequest', (_message.Message,), dict(
+  DESCRIPTOR = _GETANALYTICSTATSREQUEST,
+  __module__ = 'medifor.v1.pipeline_pb2'
+  # @@protoc_insertion_point(class_scope:mediforproto.GetAnalyticStatsRequest)
+  ))
+_sym_db.RegisterMessage(GetAnalyticStatsRequest)
+
+GetAnalyticStatsResponse = _reflection.GeneratedProtocolMessageType('GetAnalyticStatsResponse', (_message.Message,), dict(
+  DESCRIPTOR = _GETANALYTICSTATSRESPONSE,
+  __module__ = 'medifor.v1.pipeline_pb2'
+  # @@protoc_insertion_point(class_scope:mediforproto.GetAnalyticStatsResponse)
+  ))
+_sym_db.RegisterMessage(GetAnalyticStatsResponse)
+
+AnalyticStats = _reflection.GeneratedProtocolMessageType('AnalyticStats', (_message.Message,), dict(
+  DESCRIPTOR = _ANALYTICSTATS,
+  __module__ = 'medifor.v1.pipeline_pb2'
+  # @@protoc_insertion_point(class_scope:mediforproto.AnalyticStats)
+  ))
+_sym_db.RegisterMessage(AnalyticStats)
+
+GetHistogramRequest = _reflection.GeneratedProtocolMessageType('GetHistogramRequest', (_message.Message,), dict(
+
+  TagsEntry = _reflection.GeneratedProtocolMessageType('TagsEntry', (_message.Message,), dict(
+    DESCRIPTOR = _GETHISTOGRAMREQUEST_TAGSENTRY,
+    __module__ = 'medifor.v1.pipeline_pb2'
+    # @@protoc_insertion_point(class_scope:mediforproto.GetHistogramRequest.TagsEntry)
+    ))
+  ,
+
+  ExcludeTagsEntry = _reflection.GeneratedProtocolMessageType('ExcludeTagsEntry', (_message.Message,), dict(
+    DESCRIPTOR = _GETHISTOGRAMREQUEST_EXCLUDETAGSENTRY,
+    __module__ = 'medifor.v1.pipeline_pb2'
+    # @@protoc_insertion_point(class_scope:mediforproto.GetHistogramRequest.ExcludeTagsEntry)
+    ))
+  ,
+  DESCRIPTOR = _GETHISTOGRAMREQUEST,
+  __module__ = 'medifor.v1.pipeline_pb2'
+  # @@protoc_insertion_point(class_scope:mediforproto.GetHistogramRequest)
+  ))
+_sym_db.RegisterMessage(GetHistogramRequest)
+_sym_db.RegisterMessage(GetHistogramRequest.TagsEntry)
+_sym_db.RegisterMessage(GetHistogramRequest.ExcludeTagsEntry)
+
+GetHistogramResponse = _reflection.GeneratedProtocolMessageType('GetHistogramResponse', (_message.Message,), dict(
+  DESCRIPTOR = _GETHISTOGRAMRESPONSE,
+  __module__ = 'medifor.v1.pipeline_pb2'
+  # @@protoc_insertion_point(class_scope:mediforproto.GetHistogramResponse)
+  ))
+_sym_db.RegisterMessage(GetHistogramResponse)
+
+Bucket = _reflection.GeneratedProtocolMessageType('Bucket', (_message.Message,), dict(
+  DESCRIPTOR = _BUCKET,
+  __module__ = 'medifor.v1.pipeline_pb2'
+  # @@protoc_insertion_point(class_scope:mediforproto.Bucket)
+  ))
+_sym_db.RegisterMessage(Bucket)
+
+DeleteFailedAnalyticsRequest = _reflection.GeneratedProtocolMessageType('DeleteFailedAnalyticsRequest', (_message.Message,), dict(
+  DESCRIPTOR = _DELETEFAILEDANALYTICSREQUEST,
+  __module__ = 'medifor.v1.pipeline_pb2'
+  # @@protoc_insertion_point(class_scope:mediforproto.DeleteFailedAnalyticsRequest)
+  ))
+_sym_db.RegisterMessage(DeleteFailedAnalyticsRequest)
+
+DeleteFailedAnalyticsResponse = _reflection.GeneratedProtocolMessageType('DeleteFailedAnalyticsResponse', (_message.Message,), dict(
+
+  DeletedAnalyticsEntry = _reflection.GeneratedProtocolMessageType('DeletedAnalyticsEntry', (_message.Message,), dict(
+    DESCRIPTOR = _DELETEFAILEDANALYTICSRESPONSE_DELETEDANALYTICSENTRY,
+    __module__ = 'medifor.v1.pipeline_pb2'
+    # @@protoc_insertion_point(class_scope:mediforproto.DeleteFailedAnalyticsResponse.DeletedAnalyticsEntry)
+    ))
+  ,
+  DESCRIPTOR = _DELETEFAILEDANALYTICSRESPONSE,
+  __module__ = 'medifor.v1.pipeline_pb2'
+  # @@protoc_insertion_point(class_scope:mediforproto.DeleteFailedAnalyticsResponse)
+  ))
+_sym_db.RegisterMessage(DeleteFailedAnalyticsResponse)
+_sym_db.RegisterMessage(DeleteFailedAnalyticsResponse.DeletedAnalyticsEntry)
+
+DeletedAnalytics = _reflection.GeneratedProtocolMessageType('DeletedAnalytics', (_message.Message,), dict(
+  DESCRIPTOR = _DELETEDANALYTICS,
+  __module__ = 'medifor.v1.pipeline_pb2'
+  # @@protoc_insertion_point(class_scope:mediforproto.DeletedAnalytics)
+  ))
+_sym_db.RegisterMessage(DeletedAnalytics)
+
+GetAnalyticsWithScoresRequest = _reflection.GeneratedProtocolMessageType('GetAnalyticsWithScoresRequest', (_message.Message,), dict(
+
+  TagsEntry = _reflection.GeneratedProtocolMessageType('TagsEntry', (_message.Message,), dict(
+    DESCRIPTOR = _GETANALYTICSWITHSCORESREQUEST_TAGSENTRY,
+    __module__ = 'medifor.v1.pipeline_pb2'
+    # @@protoc_insertion_point(class_scope:mediforproto.GetAnalyticsWithScoresRequest.TagsEntry)
+    ))
+  ,
+
+  ExcludeTagsEntry = _reflection.GeneratedProtocolMessageType('ExcludeTagsEntry', (_message.Message,), dict(
+    DESCRIPTOR = _GETANALYTICSWITHSCORESREQUEST_EXCLUDETAGSENTRY,
+    __module__ = 'medifor.v1.pipeline_pb2'
+    # @@protoc_insertion_point(class_scope:mediforproto.GetAnalyticsWithScoresRequest.ExcludeTagsEntry)
+    ))
+  ,
+  DESCRIPTOR = _GETANALYTICSWITHSCORESREQUEST,
+  __module__ = 'medifor.v1.pipeline_pb2'
+  # @@protoc_insertion_point(class_scope:mediforproto.GetAnalyticsWithScoresRequest)
+  ))
+_sym_db.RegisterMessage(GetAnalyticsWithScoresRequest)
+_sym_db.RegisterMessage(GetAnalyticsWithScoresRequest.TagsEntry)
+_sym_db.RegisterMessage(GetAnalyticsWithScoresRequest.ExcludeTagsEntry)
+
+GetAnalyticsWithScoresResponse = _reflection.GeneratedProtocolMessageType('GetAnalyticsWithScoresResponse', (_message.Message,), dict(
+  DESCRIPTOR = _GETANALYTICSWITHSCORESRESPONSE,
+  __module__ = 'medifor.v1.pipeline_pb2'
+  # @@protoc_insertion_point(class_scope:mediforproto.GetAnalyticsWithScoresResponse)
+  ))
+_sym_db.RegisterMessage(GetAnalyticsWithScoresResponse)
 
 
+DESCRIPTOR._options = None
 _DETECTIONREQUEST_TAGSENTRY._options = None
 _DETECTIONREQUEST_USERTAGSENTRY._options = None
 _DETECTIONREQUEST_METAENTRY._options = None
@@ -1960,22 +3278,31 @@ _DETECTIONLISTREQUEST_TAGSENTRY._options = None
 _FUSIONREQUEST_TAGSENTRY._options = None
 _FUSIONINFO_TAGSENTRY._options = None
 _UPDATEDETECTIONTAGSREQUEST_TAGSENTRY._options = None
+_DETECTIONTAGINFOREQUEST_REQUIRETAGSENTRY._options = None
 _DETECTIONTAGINFO_TAGCOUNTSENTRY._options = None
 _DETECTIONTAGINFO_USERTAGCOUNTSENTRY._options = None
 _ANALYTICMETA_USERFIELDSENTRY._options = None
+_LISTDETECTIONSREQUEST_TAGSENTRY._options = None
+_LISTDETECTIONSREQUEST_EXCLUDETAGSENTRY._options = None
+_UPDATEDETECTIONMETADATAREQUEST_METADATAENTRY._options = None
+_GETHISTOGRAMREQUEST_TAGSENTRY._options = None
+_GETHISTOGRAMREQUEST_EXCLUDETAGSENTRY._options = None
+_DELETEFAILEDANALYTICSRESPONSE_DELETEDANALYTICSENTRY._options = None
+_GETANALYTICSWITHSCORESREQUEST_TAGSENTRY._options = None
+_GETANALYTICSWITHSCORESREQUEST_EXCLUDETAGSENTRY._options = None
 
 _PIPELINE = _descriptor.ServiceDescriptor(
   name='Pipeline',
-  full_name='workflowproto.Pipeline',
+  full_name='mediforproto.Pipeline',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=3980,
-  serialized_end=4796,
+  serialized_start=6675,
+  serialized_end=8074,
   methods=[
   _descriptor.MethodDescriptor(
     name='Detect',
-    full_name='workflowproto.Pipeline.Detect',
+    full_name='mediforproto.Pipeline.Detect',
     index=0,
     containing_service=None,
     input_type=_DETECTIONREQUEST,
@@ -1984,7 +3311,7 @@ _PIPELINE = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='GetDetectionInfo',
-    full_name='workflowproto.Pipeline.GetDetectionInfo',
+    full_name='mediforproto.Pipeline.GetDetectionInfo',
     index=1,
     containing_service=None,
     input_type=_DETECTIONINFOREQUEST,
@@ -1993,7 +3320,7 @@ _PIPELINE = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='GetDetectionList',
-    full_name='workflowproto.Pipeline.GetDetectionList',
+    full_name='mediforproto.Pipeline.GetDetectionList',
     index=2,
     containing_service=None,
     input_type=_DETECTIONLISTREQUEST,
@@ -2002,16 +3329,16 @@ _PIPELINE = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='DeleteDetection',
-    full_name='workflowproto.Pipeline.DeleteDetection',
+    full_name='mediforproto.Pipeline.DeleteDetection',
     index=3,
     containing_service=None,
     input_type=_DELETEDETECTIONREQUEST,
-    output_type=_EMPTY,
+    output_type=medifor_dot_v1_dot_analytic__pb2._EMPTY,
     serialized_options=None,
   ),
   _descriptor.MethodDescriptor(
     name='Fuse',
-    full_name='workflowproto.Pipeline.Fuse',
+    full_name='mediforproto.Pipeline.Fuse',
     index=4,
     containing_service=None,
     input_type=_FUSIONREQUEST,
@@ -2020,7 +3347,7 @@ _PIPELINE = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='FuseByID',
-    full_name='workflowproto.Pipeline.FuseByID',
+    full_name='mediforproto.Pipeline.FuseByID',
     index=5,
     containing_service=None,
     input_type=_FUSIONREQUEST,
@@ -2029,7 +3356,7 @@ _PIPELINE = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='FuseAllIDs',
-    full_name='workflowproto.Pipeline.FuseAllIDs',
+    full_name='mediforproto.Pipeline.FuseAllIDs',
     index=6,
     containing_service=None,
     input_type=_FUSEALLIDSREQUEST,
@@ -2038,7 +3365,7 @@ _PIPELINE = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='UpdateDetectionTags',
-    full_name='workflowproto.Pipeline.UpdateDetectionTags',
+    full_name='mediforproto.Pipeline.UpdateDetectionTags',
     index=7,
     containing_service=None,
     input_type=_UPDATEDETECTIONTAGSREQUEST,
@@ -2047,7 +3374,7 @@ _PIPELINE = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='GetDetectionTagInfo',
-    full_name='workflowproto.Pipeline.GetDetectionTagInfo',
+    full_name='mediforproto.Pipeline.GetDetectionTagInfo',
     index=8,
     containing_service=None,
     input_type=_DETECTIONTAGINFOREQUEST,
@@ -2056,11 +3383,65 @@ _PIPELINE = _descriptor.ServiceDescriptor(
   ),
   _descriptor.MethodDescriptor(
     name='GetAnalyticMeta',
-    full_name='workflowproto.Pipeline.GetAnalyticMeta',
+    full_name='mediforproto.Pipeline.GetAnalyticMeta',
     index=9,
     containing_service=None,
-    input_type=_EMPTY,
+    input_type=medifor_dot_v1_dot_analytic__pb2._EMPTY,
     output_type=_ANALYTICLIST,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='ListDetections',
+    full_name='mediforproto.Pipeline.ListDetections',
+    index=10,
+    containing_service=None,
+    input_type=_LISTDETECTIONSREQUEST,
+    output_type=_DETECTIONLIST,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='UpdateDetectionMetadata',
+    full_name='mediforproto.Pipeline.UpdateDetectionMetadata',
+    index=11,
+    containing_service=None,
+    input_type=_UPDATEDETECTIONMETADATAREQUEST,
+    output_type=_DETECTIONINFO,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetAnalyticStats',
+    full_name='mediforproto.Pipeline.GetAnalyticStats',
+    index=12,
+    containing_service=None,
+    input_type=_GETANALYTICSTATSREQUEST,
+    output_type=_GETANALYTICSTATSRESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetHistogram',
+    full_name='mediforproto.Pipeline.GetHistogram',
+    index=13,
+    containing_service=None,
+    input_type=_GETHISTOGRAMREQUEST,
+    output_type=_GETHISTOGRAMRESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='DeleteFailedAnalytics',
+    full_name='mediforproto.Pipeline.DeleteFailedAnalytics',
+    index=14,
+    containing_service=None,
+    input_type=_DELETEFAILEDANALYTICSREQUEST,
+    output_type=_DELETEFAILEDANALYTICSRESPONSE,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='GetAnalyticsWithScores',
+    full_name='mediforproto.Pipeline.GetAnalyticsWithScores',
+    index=15,
+    containing_service=None,
+    input_type=_GETANALYTICSWITHSCORESREQUEST,
+    output_type=_GETANALYTICSWITHSCORESRESPONSE,
     serialized_options=None,
   ),
 ])

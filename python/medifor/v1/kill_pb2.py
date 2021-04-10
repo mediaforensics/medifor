@@ -19,8 +19,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='medifor/v1/kill.proto',
   package='mediforproto',
   syntax='proto3',
-  serialized_options=_b('\n\030com.mediforprogram.protoB\tKillProto'),
-  serialized_pb=_b('\n\x15medifor/v1/kill.proto\x12\x0cmediforproto\x1a\x19medifor/v1/analytic.proto2<\n\x08Killable\x12\x30\n\x04Kill\x12\x13.mediforproto.Empty\x1a\x13.mediforproto.EmptyB%\n\x18\x63om.mediforprogram.protoB\tKillProtob\x06proto3')
+  serialized_options=_b('\n\030com.mediforprogram.protoB\tKillProtoZ2github.com/mediaforensics/medifor/pkg/mediforproto'),
+  serialized_pb=_b('\n\x15medifor/v1/kill.proto\x12\x0cmediforproto\x1a\x19medifor/v1/analytic.proto2<\n\x08Killable\x12\x30\n\x04Kill\x12\x13.mediforproto.Empty\x1a\x13.mediforproto.EmptyBY\n\x18\x63om.mediforprogram.protoB\tKillProtoZ2github.com/mediaforensics/medifor/pkg/mediforprotob\x06proto3')
   ,
   dependencies=[medifor_dot_v1_dot_analytic__pb2.DESCRIPTOR,])
 
