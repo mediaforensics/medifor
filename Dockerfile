@@ -1,15 +1,19 @@
 FROM golang:1.14-buster as gobuild
 
-WORKDIR /go
-
-ENV GOPATH ""
-
+WORKDIR /go/src/github.com/mediaforensics/medifor/
 COPY . ./
-RUN cd cmd/analyticproxy && go build; cd -; \
-    cd cmd/medifor && go build; cd - \
-    cd cmd/analyticworker && go build; cd -  \
-    cd cmd/analyticworkflow && go build; cd - \
-    cd cmd/fusionworker && go build; cd -
+
+RUN apt-get update && apt-get upgrade -y && apt-get install -y protobuf-compiler
+RUN go get -u github.com/golang/protobuf/protoc-gen-go
+RUN cd pkg && ./protoc.sh
+
+#ENV GOPATH ""
+
+RUN mkdir -p /app/bin/
+RUN for cmdname in `ls cmd/`; \
+      do \
+        cd cmd/$cmdname && go build && cp $cmdname /app/bin/ && cd -; \
+    done
 
 FROM python:3.8-slim-buster as pybuild
 
@@ -28,11 +32,7 @@ RUN mkdir -p /app/bin \
  && apt-get update \
  && apt-get install -y libmagic1
 
-COPY --from=gobuild /go/cmd/analyticproxy/analyticproxy /app/bin/
-COPY --from=gobuild /go/cmd/medifor/medifor /app/bin/
-COPY --from=gobuild /go/cmd/analyticworker/analyticworker /app/bin
-COPY --from=gobuild /go/cmd/analyticworkflow/analyticworkflow /app/bin
-COPY --from=gobuild /go/cmd/fusionworker/fusionworker /app/bin
+COPY --from=gobuild /app/bin/ /app/bin/
 COPY --from=pybuild /usr/local/lib/python3.8/ /usr/local/lib/python3.8/
 
 ENV PATH ${PATH}:/app/bin

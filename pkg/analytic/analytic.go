@@ -9,9 +9,9 @@ import (
 	"sort"
 
 	"github.com/golang/protobuf/jsonpb"
-	"github.com/pkg/errors"
 	"github.com/mediaforensics/medifor/pkg/medifor"
 	pb "github.com/mediaforensics/medifor/pkg/mediforproto"
+	"github.com/pkg/errors"
 )
 
 // AnalyticInboxes returns a slice of inbox queue names for the given formats and analytic ID.
@@ -37,26 +37,28 @@ type ResourceHandler func(r *pb.Resource)
 
 // reflectResources recursively descends into the given proto, looking for
 // Resource types, calling a given function when it finds one.
-func reflectResources(v reflect.Value, handler ResourceHandler) error {
+func reflectResources(v reflect.Value, handler ResourceHandler, seenPtrs map[uintptr]bool) error {
 	resourceType := reflect.TypeOf(pb.Resource{})
 
 	switch v.Kind() {
-	case reflect.Ptr, reflect.Interface:
+	case reflect.Interface:
 		if v.IsNil() {
 			return nil
 		}
-		return errors.Wrap(reflectResources(v.Elem(), handler), "reflect pointer")
+		return errors.Wrap(reflectResources(v.Elem(), handler, seenPtrs), "reflect interface")
+	case reflect.Ptr:
+		if v.IsNil() {
+			return nil
+		}
+		if seenPtrs[v.Pointer()] {
+			return nil
+		}
+		seenPtrs[v.Pointer()] = true
+		return errors.Wrap(reflectResources(v.Elem(), handler, seenPtrs), "reflect pointer")
 	case reflect.Array, reflect.Slice:
 		for i := 0; i < v.Len(); i++ {
-			if err := reflectResources(v.Index(i), handler); err != nil {
+			if err := reflectResources(v.Index(i), handler, seenPtrs); err != nil {
 				return errors.Wrap(err, "reflect array/slice")
-			}
-		}
-		return nil
-	case reflect.Map:
-		for _, k := range v.MapKeys() {
-			if err := reflectResources(v.MapIndex(k), handler); err != nil {
-				return errors.Wrap(err, "reflect map")
 			}
 		}
 		return nil
@@ -67,7 +69,7 @@ func reflectResources(v reflect.Value, handler ResourceHandler) error {
 			return nil
 		}
 		for i := 0; i < v.NumField(); i++ {
-			if err := reflectResources(v.Field(i), handler); err != nil {
+			if err := reflectResources(v.Field(i), handler, seenPtrs); err != nil {
 				return errors.Wrap(err, "reflect struct")
 			}
 		}
@@ -77,13 +79,24 @@ func reflectResources(v reflect.Value, handler ResourceHandler) error {
 	}
 }
 
-// FindResources finds all Resource types in a proto and calls the given handler for each.
-func FindResources(val interface{}) ([]*pb.Resource, error) {
+// FindDetectionRequestResources finds all Resource types in a detection proto's request field.
+func FindDetectionRequestResources(det *pb.Detection) ([]*pb.Resource, error) {
+	return findResourcesImpl(det.GetRequest())
+}
+
+// FindDetectionResources finds all Resource types in a detection proto.
+func FindDetectionResources(det *pb.Detection) ([]*pb.Resource, error) {
+	return findResourcesImpl(det)
+}
+
+// findResourcesImpl finds all Resource types in a proto and calls the given handler for each.
+func findResourcesImpl(val interface{}) ([]*pb.Resource, error) {
 	var resources []*pb.Resource
 	handler := func(r *pb.Resource) {
 		resources = append(resources, r)
 	}
-	if err := reflectResources(reflect.ValueOf(val), handler); err != nil {
+	seen := make(map[uintptr]bool)
+	if err := reflectResources(reflect.ValueOf(val), handler, seen); err != nil {
 		return nil, errors.Wrap(err, "search for Resource elements in proto")
 	}
 	return resources, nil

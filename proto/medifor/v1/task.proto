@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package mediforproto;
 
+option go_package = "github.com/mediaforensics/medifor/pkg/mediforproto";
 
 import "medifor/v1/analytic.proto"; // -I gitlab.mediforprogram.com/medifor/medifor-proto/proto
 import "medifor/v1/fusion.proto"; // -I gitlab.mediforprogram.com/medifor/medifor-proto/proto

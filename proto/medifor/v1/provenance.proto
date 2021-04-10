@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package mediforproto;
 
+option go_package = "github.com/mediaforensics/medifor/pkg/mediforproto";
 option java_package = "com.mediforprogram.proto";
 option java_outer_classname = "ProvenanceProto";
 
