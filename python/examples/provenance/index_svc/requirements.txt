@@ -1,6 +1,6 @@
 Flask==1.1.1
 faiss==1.5.3
 requests==2.22.0
-numpy==1.17.3
+numpy==1.22.0
 
 # Also need libomp (brew install libomp on Mac)
