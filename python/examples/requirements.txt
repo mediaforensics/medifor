@@ -1,4 +1,4 @@
-setuptools==39.0.1
+setuptools==65.5.1
 grpcio==1.15.0
 grpcio-tools==1.15.0
 grpcio-health-checking==1.15.0
