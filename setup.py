@@ -24,7 +24,7 @@ setup(name=pkg_name,
       license='Apache License, Version 2.0',
       packages=find_packages(),
       install_requires=[
-          'setuptools==39.0.1',
+          'setuptools==65.5.1',
           'grpcio==1.15.0',
           'grpcio_health_checking==1.15.0',
           'protobuf>=3.6.1',
